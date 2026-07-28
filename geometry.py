@@ -163,20 +163,20 @@ class SuspensionParameters:
 
 @dataclass(frozen=True)
 class VehicleParameters:
-    total_mass_kg: float
-    track_width_mm: float
+    total_mass_kg: float 
+    track_width_mm: float 
     com_x_from_body_left_mm: float
     com_height_mm: float
-    lateral_com_offset_mm: float
+    lateral_com_offset_mm: float # Поперечное смещение центра масс
     wheel_torque_nm: float
     brake_torque_nm: float
-    driven_wheels: int
-    drivetrain_efficiency: float
-    ground_friction: float
-    obstacle_friction: float
-    rolling_resistance: float
-    support_margin_mm: float
-    safety_factor: float
+    driven_wheels: int # Количество ведущих колёс (1–6)
+    drivetrain_efficiency: float # КПД привода (0–1)
+    ground_friction: float # Коэффициент сцепления с грунтом
+    obstacle_friction: float  # Коэффициент сцепления с вертикальной стенкой
+    rolling_resistance: float # Коэффициент сопротивления качению
+    support_margin_mm: float # Запас до края опоры
+    safety_factor: float # Коэффициент безопасности
 
 
 @dataclass(frozen=True)
@@ -250,7 +250,7 @@ def _validate_parameters(
     if vehicle.support_margin_mm < 0.0:
         raise ValueError("Запас до края опоры не может быть отрицательным.")
 
-
+# РАсчёт положения шарниров и колёс относительно главного шарнира
 def _relative_points(
     suspension: SuspensionParameters,
     rocker_rotation_deg: float,
@@ -270,7 +270,7 @@ def _relative_points(
         bogie_rotation=bogie_rotation_deg,
     )
 
-
+# Возвращает сетку углов с определённым шагом, в заданном диапазоне
 def _rotation_values(minimum: float, maximum: float) -> list[float]:
     count = max(1, ceil((maximum - minimum) / ANGLE_SEARCH_STEP_DEG))
     return [
@@ -278,7 +278,7 @@ def _rotation_values(minimum: float, maximum: float) -> list[float]:
         for index in range(count + 1)
     ]
 
-
+# Возвращает список уникальных углов с учётом заданной точности
 def _unique_angles(values: list[float], tolerance: float = 1e-7) -> list[float]:
     result: list[float] = []
     for value in sorted(values):
@@ -347,7 +347,7 @@ def _wheel_order_is_valid(points: ChassisPoints) -> bool:
         and points.middle_wheel.x > points.rear_wheel.x + 1e-6
     )
 
-
+# Проверка на продольную устойчивость: центр масс должен находиться между крайними колёсами с запасом
 def _longitudinal_stability_is_valid(
     points: ChassisPoints,
     com_x_mm: float,
