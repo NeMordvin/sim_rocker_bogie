@@ -1,9 +1,9 @@
-"""Двухмерная геометрическая модель шасси rocker-bogie.
+"""Кинематическая модель подвески rocker-bogie.
 
-Модель намеренно не использует массу, момент двигателей и трение. Она отвечает
-только на вопрос: существует ли непрерывная последовательность положений без
-пересечения корпуса и рычагов с препятствием. Для глубокого рва дополнительно
-проверяется положение проекции центра масс внутри продольного интервала опор.
+Модуль строит непрерывный геометрический путь одной стороны подвески. Корпус
+не входит в геометрические ограничения: учитываются только колёса, рычаги,
+шарниры и препятствие. Квазистатические силы, устойчивость двух сторон и
+классический дифференциал рассчитываются отдельно в :mod:`statics`.
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ from dataclasses import dataclass, replace
 from functools import lru_cache
 from itertools import product
 from math import asin, atan2, cos, degrees, hypot, pi, radians, sin, sqrt
-from typing import Callable, Literal, Protocol
+from typing import Literal, Protocol
 
 import numpy as np
 from scipy.optimize import least_squares
@@ -55,24 +55,21 @@ class ChassisDesign:
     bogie_rear_knee_x_mm: float = 95.0
     bogie_front_knee_x_mm: float = 285.0
 
-    body_length_mm: float = 560.0
-    body_height_mm: float = 230.0
-    attachment_x_mm: float = 310.0
-    attachment_y_mm: float = 65.0
+    # Расчётный диаметр всех рычагов. Он используется как геометрическая
+    # оболочка при проверке касания препятствия, а не как расчёт прочности.
+    arm_diameter_mm: float = 30.0
 
-    rocker_thickness_mm: float = 30.0
-    bogie_thickness_mm: float = 30.0
-
-    # Координаты общего центра масс относительно левого нижнего угла корпуса.
-    com_x_from_body_left_mm: float = 280.0
-    com_y_from_body_bottom_mm: float = 130.0
+    # Общий центр масс задаётся относительно середины оси главных шарниров:
+    # X — вперёд к одиночному колесу, Z — вверх. Поперечная координата
+    # хранится в PhysicalParameters, поскольку относится ко всему роверу.
+    com_x_from_main_pivot_mm: float = 0.0
+    com_z_from_main_pivot_mm: float = 130.0
 
     bogie_min_angle_deg: float = -80.0
     bogie_max_angle_deg: float = 80.0
-    body_pitch_min_deg: float = -65.0
-    body_pitch_max_deg: float = 65.0
+    rocker_min_angle_deg: float = -65.0
+    rocker_max_angle_deg: float = 65.0
 
-    support_margin_mm: float = 10.0
     obstacle_clearance_mm: float = 3.0
     self_clearance_mm: float = 3.0
     max_total_length_mm: float = 1200.0
@@ -115,7 +112,7 @@ class SolverSettings:
 
     @classmethod
     def fine(cls) -> "SolverSettings":
-        """Более точные настройки для итогового расчёта и анимации."""
+        """Более точные настройки для итогового расчёта и ключевых кадров."""
         return cls(
             progress_step_mm=16.0,
             angle_step_deg=2.0,
@@ -152,7 +149,7 @@ class ChassisFrame:
     rear_wheel: Point
     bogie_rear_knee: Point
     bogie_front_knee: Point
-    body_corners: tuple[Point, Point, Point, Point]
+    body_corners: tuple[Point, ...]
     center_of_mass: Point
 
     @property
@@ -169,30 +166,6 @@ class TraversalResult:
     poses: tuple[Pose, ...]
     minimum_support_margin_mm: float
     failure_reason: str = ""
-
-
-@dataclass(frozen=True)
-class CapabilityResult:
-    value_mm: float
-    traversal: TraversalResult | None
-    reached_search_cap: bool
-
-
-@dataclass(frozen=True)
-class DesignEvaluation:
-    design: ChassisDesign
-    step_single_first_mm: float
-    step_bogie_first_mm: float
-    ditch_single_first_mm: float
-    ditch_bogie_first_mm: float
-
-    @property
-    def bidirectional_step_mm(self) -> float:
-        return min(self.step_single_first_mm, self.step_bogie_first_mm)
-
-    @property
-    def bidirectional_ditch_mm(self) -> float:
-        return min(self.ditch_single_first_mm, self.ditch_bogie_first_mm)
 
 
 class Terrain(Protocol):
@@ -362,15 +335,6 @@ def _point_to_segment_distance(point: Point, start: Point, end: Point) -> float:
     return hypot(point.x - closest.x, point.y - closest.y)
 
 
-def _body_bounds(design: ChassisDesign, direction: int) -> tuple[float, ...]:
-    x_first = -design.attachment_x_mm
-    x_second = x_first + design.body_length_mm
-    x_values = (x_first * direction, x_second * direction)
-    y_min = -design.attachment_y_mm
-    y_max = y_min + design.body_height_mm
-    return min(x_values), max(x_values), y_min, y_max
-
-
 def _design_local_points(
     design: ChassisDesign,
     direction: int,
@@ -397,8 +361,8 @@ def _design_local_points(
             0.0,
         ),
         "com": Point(
-            -design.attachment_x_mm + design.com_x_from_body_left_mm,
-            -design.attachment_y_mm + design.com_y_from_body_bottom_mm,
+            design.com_x_from_main_pivot_mm,
+            design.com_z_from_main_pivot_mm,
         ),
     }
     return {name: _mirror(point, direction) for name, point in points.items()}
@@ -409,12 +373,7 @@ def calculate_frame(
     pose: Pose,
     direction: int = 1,
 ) -> ChassisFrame:
-    """Строит все точки механизма для одного кадра.
-
-    При одинаковом профиле под обоими бортами углы левого и правого rocker
-    равны. Классический дифференциал задаёт корпусу их средний угол, поэтому
-    в этой 2D-модели корпус и rocker имеют один абсолютный угол.
-    """
+    """Строит точки одной стороны подвески для одного положения."""
     local = _design_local_points(design, direction)
     main = Point(pose.main_pivot_x_mm, pose.main_pivot_y_mm)
 
@@ -442,17 +401,6 @@ def calculate_frame(
         _rotate(local["front_knee_from_bogie"], bogie_absolute_angle),
     )
 
-    x_min, x_max, y_min, y_max = _body_bounds(design, direction)
-    body_local = (
-        Point(x_min, y_min),
-        Point(x_max, y_min),
-        Point(x_max, y_max),
-        Point(x_min, y_max),
-    )
-    body = tuple(
-        _add(main, _rotate(point, pose.body_pitch_deg))
-        for point in body_local
-    )
     center_of_mass = _add(
         main,
         _rotate(local["com"], pose.body_pitch_deg),
@@ -466,7 +414,7 @@ def calculate_frame(
         rear_wheel=rear,
         bogie_rear_knee=rear_knee,
         bogie_front_knee=front_knee,
-        body_corners=body,
+        body_corners=(),
         center_of_mass=center_of_mass,
     )
 
@@ -496,16 +444,24 @@ def neutral_dimensions(design: ChassisDesign) -> dict[str, float]:
         frame.middle_wheel.x + radius,
         frame.rear_wheel.x - radius,
         frame.rear_wheel.x + radius,
-        *(point.x for point in frame.body_corners),
+        frame.main_pivot.x - design.arm_diameter_mm / 2.0,
+        frame.main_pivot.x + design.arm_diameter_mm / 2.0,
+        frame.bogie_pivot.x - design.arm_diameter_mm / 2.0,
+        frame.bogie_pivot.x + design.arm_diameter_mm / 2.0,
+        frame.bogie_rear_knee.x - design.arm_diameter_mm / 2.0,
+        frame.bogie_rear_knee.x + design.arm_diameter_mm / 2.0,
+        frame.bogie_front_knee.x - design.arm_diameter_mm / 2.0,
+        frame.bogie_front_knee.x + design.arm_diameter_mm / 2.0,
     ]
     y_values = [
         0.0,
         frame.front_wheel.y + radius,
         frame.middle_wheel.y + radius,
         frame.rear_wheel.y + radius,
-        *(point.y for point in frame.body_corners),
-        frame.bogie_pivot.y + design.bogie_thickness_mm / 2.0,
-        frame.main_pivot.y + design.rocker_thickness_mm / 2.0,
+        frame.bogie_rear_knee.y + design.arm_diameter_mm / 2.0,
+        frame.bogie_front_knee.y + design.arm_diameter_mm / 2.0,
+        frame.bogie_pivot.y + design.arm_diameter_mm / 2.0,
+        frame.main_pivot.y + design.arm_diameter_mm / 2.0,
     ]
 
     local = _design_local_points(design, 1)
@@ -521,11 +477,10 @@ def neutral_dimensions(design: ChassisDesign) -> dict[str, float]:
         "rocker_bogie_angle_deg": degrees(atan2(bogie.y, bogie.x)),
         "bogie_middle_angle_deg": degrees(atan2(middle.y, middle.x)),
         "bogie_rear_angle_deg": degrees(atan2(rear.y, rear.x)),
-        "body_ground_clearance_mm": (
-            design.wheel_radius_mm
-            + design.main_pivot_y_mm
-            - design.attachment_y_mm
-        ),
+        "rocker_front_length_mm": hypot(front.x, front.y),
+        "rocker_bogie_length_mm": hypot(bogie.x, bogie.y),
+        "bogie_middle_length_mm": hypot(middle.x, middle.y),
+        "bogie_rear_length_mm": hypot(rear.x, rear.y),
     }
 
 
@@ -539,10 +494,7 @@ def validate_design(design: ChassisDesign) -> tuple[str, ...]:
         "X переднего колеса": design.front_wheel_x_mm,
         "высота главного шарнира": design.main_pivot_y_mm,
         "высота шарнира bogie": design.bogie_pivot_y_mm,
-        "длина корпуса": design.body_length_mm,
-        "высота корпуса": design.body_height_mm,
-        "толщина rocker": design.rocker_thickness_mm,
-        "толщина bogie": design.bogie_thickness_mm,
+        "диаметр рычагов": design.arm_diameter_mm,
         "максимальная длина": design.max_total_length_mm,
     }
     for name, value in positive.items():
@@ -570,20 +522,11 @@ def validate_design(design: ChassisDesign) -> tuple[str, ...]:
         <= design.bogie_front_knee_x_mm
     ):
         errors.append("Шарнир rocker должен лежать на верхней перемычке bogie.")
-    if not 0.0 <= design.attachment_x_mm <= design.body_length_mm:
-        errors.append("Крепление по X находится за пределами корпуса.")
-    if not 0.0 <= design.attachment_y_mm <= design.body_height_mm:
-        errors.append("Крепление по Y находится за пределами корпуса.")
-    if not 0.0 <= design.com_x_from_body_left_mm <= design.body_length_mm:
-        errors.append("Координата X центра масс находится за пределами корпуса.")
-    if not 0.0 <= design.com_y_from_body_bottom_mm <= design.body_height_mm:
-        errors.append("Координата Y центра масс находится за пределами корпуса.")
     if design.bogie_min_angle_deg >= design.bogie_max_angle_deg:
         errors.append("Минимальный угол bogie должен быть меньше максимального.")
-    if design.body_pitch_min_deg >= design.body_pitch_max_deg:
-        errors.append("Минимальный угол корпуса должен быть меньше максимального.")
+    if design.rocker_min_angle_deg >= design.rocker_max_angle_deg:
+        errors.append("Минимальный угол rocker должен быть меньше максимального.")
     if min(
-        design.support_margin_mm,
         design.obstacle_clearance_mm,
         design.self_clearance_mm,
     ) < 0.0:
@@ -608,8 +551,6 @@ def validate_design(design: ChassisDesign) -> tuple[str, ...]:
                 f"{dimensions['total_length_mm']:.1f} мм превышает ограничение "
                 f"{design.max_total_length_mm:.1f} мм."
             )
-        if dimensions["body_ground_clearance_mm"] <= design.obstacle_clearance_mm:
-            errors.append("Днище корпуса в исходном положении касается земли.")
 
     return tuple(errors)
 
@@ -635,7 +576,7 @@ def _local_collision_samples(
     tuple[Point, ...],
     tuple[Point, ...],
 ]:
-    """Точки rocker, корпуса и bogie для проверки толщины и столкновений."""
+    """Точки rocker и bogie для проверки толщины и столкновений."""
     local = _design_local_points(design, direction)
     origin = Point(0.0, 0.0)
 
@@ -643,23 +584,6 @@ def _local_collision_samples(
         *_sample_segment(local["front"], origin, sample_count),
         *_sample_segment(origin, local["bogie_pivot"], sample_count),
     )
-
-    x_min, x_max, y_min, y_max = _body_bounds(design, direction)
-    corners = (
-        Point(x_min, y_min),
-        Point(x_max, y_min),
-        Point(x_max, y_max),
-        Point(x_min, y_max),
-    )
-    body: list[Point] = []
-    for index in range(4):
-        body.extend(
-            _sample_segment(
-                corners[index],
-                corners[(index + 1) % 4],
-                sample_count,
-            )
-        )
 
     rear = local["rear_from_bogie"]
     rear_knee = local["rear_knee_from_bogie"]
@@ -670,7 +594,7 @@ def _local_collision_samples(
         *_sample_segment(rear_knee, front_knee, sample_count),
         *_sample_segment(front_knee, middle, sample_count),
     )
-    return tuple(rocker), tuple(body), tuple(bogie)
+    return tuple(rocker), (), tuple(bogie)
 
 
 def _rotate_arrays(
@@ -755,7 +679,7 @@ def _evaluate_angle_candidates(
             - wheel_y[:, wheel_index]
         )
 
-    rocker_samples, body_samples, bogie_samples = _local_collision_samples(
+    rocker_samples, _, bogie_samples = _local_collision_samples(
         design,
         direction,
         settings.structure_samples_per_segment,
@@ -763,14 +687,10 @@ def _evaluate_angle_candidates(
 
     structure_required = np.full(count, -np.inf)
 
-    fixed_groups = (
-        (
-            rocker_samples,
-            design.rocker_thickness_mm / 2.0
-            + design.obstacle_clearance_mm,
-        ),
-        (body_samples, design.obstacle_clearance_mm),
-    )
+    fixed_groups = ((
+        rocker_samples,
+        design.arm_diameter_mm / 2.0 + design.obstacle_clearance_mm,
+    ),)
     for points, clearance_radius in fixed_groups:
         sample_x, sample_y = _points_to_arrays(points)
         rotated_x, rotated_y = _rotate_arrays(sample_x, sample_y, pitch_rad[None, :])
@@ -792,7 +712,7 @@ def _evaluate_angle_candidates(
     bogie_required = (
         terrain.clearance_y(
             rotated_bogie_x + main_x,
-            design.bogie_thickness_mm / 2.0
+            design.arm_diameter_mm / 2.0
             + design.obstacle_clearance_mm,
         )
         - rotated_bogie_y
@@ -946,57 +866,6 @@ def _evaluate_angle_candidates(
         )
         wheel_distance_valid &= distance >= minimum_distance
 
-    # Проверка пересечения колёс с прямоугольным корпусом.
-    body_bounds = _body_bounds(design, direction)
-    front_body_x = np.full(count, local["front"].x)
-    front_body_y = np.full(count, local["front"].y)
-    middle_body_dx, middle_body_dy = rotate_single(
-        local["middle_from_bogie"],
-        bogie_relative_rad,
-    )
-    rear_body_dx, rear_body_dy = rotate_single(
-        local["rear_from_bogie"],
-        bogie_relative_rad,
-    )
-    middle_body_x = local["bogie_pivot"].x + middle_body_dx
-    middle_body_y = local["bogie_pivot"].y + middle_body_dy
-    rear_body_x = local["bogie_pivot"].x + rear_body_dx
-    rear_body_y = local["bogie_pivot"].y + rear_body_dy
-    body_distance_valid = np.ones(count, dtype=bool)
-    for x_values, y_values in (
-        (front_body_x, front_body_y),
-        (middle_body_x, middle_body_y),
-        (rear_body_x, rear_body_y),
-    ):
-        distance = _point_rectangle_distance(
-            x_values,
-            y_values,
-            body_bounds,
-        )
-        body_distance_valid &= (
-            distance
-            >= design.wheel_radius_mm + design.self_clearance_mm
-        )
-
-    # Bogie не должен войти в корпус при большом повороте.
-    bogie_body_x, bogie_body_y = _rotate_arrays(
-        bogie_sample_x,
-        bogie_sample_y,
-        bogie_relative_rad[None, :],
-    )
-    bogie_body_x += local["bogie_pivot"].x
-    bogie_body_y += local["bogie_pivot"].y
-    bogie_body_distance = _point_rectangle_distance(
-        bogie_body_x,
-        bogie_body_y,
-        body_bounds,
-    )
-    bogie_body_valid = np.all(
-        bogie_body_distance
-        >= design.bogie_thickness_mm / 2.0 + design.self_clearance_mm,
-        axis=0,
-    )
-
     if isinstance(terrain, StepTerrain):
         # Ступень обрабатывается отдельным решателем
         # _simulate_step_contact_traversal(), где обязательны контакты всех
@@ -1004,19 +873,11 @@ def _evaluate_angle_candidates(
         return []
 
     contact_valid = contact_count >= 2
-    stability_valid = (
-        np.isfinite(support_margin)
-        & (support_margin >= design.support_margin_mm)
-    )
-
     valid = (
         contact_valid
         & np.isfinite(main_y)
-        & stability_valid
         & order_valid
         & wheel_distance_valid
-        & body_distance_valid
-        & bogie_body_valid
     )
 
     poses: list[Pose] = []
@@ -1077,9 +938,9 @@ def _angle_candidates(
             pitch = state.pose.body_pitch_deg + float(pitch_offset)
             bogie = state.pose.bogie_angle_deg + float(bogie_offset)
             if not (
-                design.body_pitch_min_deg
+                design.rocker_min_angle_deg
                 <= pitch
-                <= design.body_pitch_max_deg
+                <= design.rocker_max_angle_deg
             ):
                 continue
             if not (
@@ -1188,8 +1049,8 @@ def _enrich_step_wall_angles(
                 pitch_roots.extend(
                     _angle_in_bounds(
                         angle,
-                        design.body_pitch_min_deg,
-                        design.body_pitch_max_deg,
+                        design.rocker_min_angle_deg,
+                        design.rocker_max_angle_deg,
                     )
                 )
             bogie_values = np.unique(base_pairs[:, 1])
@@ -1486,19 +1347,15 @@ def _step_frame_has_clearance(
         if clearance < -tolerance:
             return False
 
-    rocker_samples, body_samples, bogie_samples = _local_collision_samples(
+    rocker_samples, _, bogie_samples = _local_collision_samples(
         design,
         direction,
         settings.structure_samples_per_segment,
     )
-    fixed_groups = (
-        (
-            rocker_samples,
-            design.rocker_thickness_mm / 2.0
-            + design.obstacle_clearance_mm,
-        ),
-        (body_samples, design.obstacle_clearance_mm),
-    )
+    fixed_groups = ((
+        rocker_samples,
+        design.arm_diameter_mm / 2.0 + design.obstacle_clearance_mm,
+    ),)
     main = frame.main_pivot
     for points, clearance_radius in fixed_groups:
         for point in points:
@@ -1513,7 +1370,7 @@ def _step_frame_has_clearance(
 
     bogie_angle = pose.body_pitch_deg + pose.bogie_angle_deg
     bogie_clearance = (
-        design.bogie_thickness_mm / 2.0
+        design.arm_diameter_mm / 2.0
         + design.obstacle_clearance_mm
     )
     for point in bogie_samples:
@@ -1551,34 +1408,6 @@ def _step_frame_has_clearance(
     )
     if np.any(np.diff(ordered_world_x) <= 1e-3):
         return False
-
-    # Проверка колёс и bogie относительно корпуса выполняется в системе
-    # координат корпуса, поэтому не зависит от его абсолютного наклона.
-    body_bounds = _body_bounds(design, direction)
-    for wheel in frame.wheels:
-        relative = Point(
-            wheel.x - frame.main_pivot.x,
-            wheel.y - frame.main_pivot.y,
-        )
-        body_point = _rotate(relative, -pose.body_pitch_deg)
-        if _scalar_rectangle_distance(body_point, body_bounds) < (
-            radius + design.self_clearance_mm - tolerance
-        ):
-            return False
-
-    bogie_body_clearance = (
-        design.bogie_thickness_mm / 2.0
-        + design.self_clearance_mm
-    )
-    for point in bogie_samples:
-        body_point = _add(
-            local["bogie_pivot"],
-            _rotate(point, pose.bogie_angle_deg),
-        )
-        if _scalar_rectangle_distance(body_point, body_bounds) < (
-            bogie_body_clearance - tolerance
-        ):
-            return False
 
     return True
 
@@ -1663,7 +1492,6 @@ def _solve_step_contact_target(
     vertical_limit = max(
         4000.0,
         terrain.height_mm
-        + design.body_height_mm
         + design.main_pivot_y_mm
         + 4.0 * design.front_wheel_x_mm,
     )
@@ -1671,7 +1499,7 @@ def _solve_step_contact_target(
         [
             -5000.0,
             0.0,
-            design.body_pitch_min_deg,
+            design.rocker_min_angle_deg,
             design.bogie_min_angle_deg,
         ]
     )
@@ -1679,7 +1507,7 @@ def _solve_step_contact_target(
         [
             5000.0,
             vertical_limit,
-            design.body_pitch_max_deg,
+            design.rocker_max_angle_deg,
             design.bogie_max_angle_deg,
         ]
     )
@@ -2418,133 +2246,6 @@ def simulate_traversal(
     )
 
 
-def find_obstacle_limit(
-    design: ChassisDesign,
-    obstacle_kind: ObstacleKind,
-    direction: int,
-    maximum_value_mm: float,
-    settings: SolverSettings | None = None,
-    iterations: int = 7,
-) -> CapabilityResult:
-    """Бинарным поиском находит максимальную ступень или ширину рва."""
-    if maximum_value_mm <= 0.0:
-        raise ValueError("Верхняя граница поиска должна быть больше нуля.")
-    settings = settings or SolverSettings.fine()
-
-    lower = 0.0
-    upper = float(maximum_value_mm)
-    best: TraversalResult | None = None
-
-    cap_terrain: Terrain
-    if obstacle_kind == "step":
-        cap_terrain = StepTerrain(maximum_value_mm)
-    else:
-        cap_terrain = DitchTerrain(maximum_value_mm)
-    cap_result = simulate_traversal(
-        design,
-        cap_terrain,
-        direction=direction,
-        settings=settings,
-    )
-    if cap_result.success:
-        return CapabilityResult(
-            value_mm=maximum_value_mm,
-            traversal=cap_result,
-            reached_search_cap=True,
-        )
-
-    for _ in range(max(1, iterations)):
-        middle = (lower + upper) / 2.0
-        terrain: Terrain
-        if obstacle_kind == "step":
-            terrain = StepTerrain(middle)
-        else:
-            terrain = DitchTerrain(middle)
-        traversal = simulate_traversal(
-            design,
-            terrain,
-            direction=direction,
-            settings=settings,
-        )
-        if traversal.success:
-            lower = middle
-            best = traversal
-        else:
-            upper = middle
-
-    # Повторный расчёт на найденной нижней границе даёт путь для анимации.
-    if lower > 1e-6:
-        final_terrain: Terrain
-        if obstacle_kind == "step":
-            final_terrain = StepTerrain(lower)
-        else:
-            final_terrain = DitchTerrain(lower)
-        final_result = simulate_traversal(
-            design,
-            final_terrain,
-            direction=direction,
-            settings=settings,
-        )
-        if final_result.success:
-            best = final_result
-
-    return CapabilityResult(
-        value_mm=lower,
-        traversal=best,
-        reached_search_cap=False,
-    )
-
-
-def evaluate_design(
-    design: ChassisDesign,
-    maximum_step_mm: float,
-    maximum_ditch_mm: float,
-    settings: SolverSettings | None = None,
-    iterations: int = 6,
-) -> DesignEvaluation:
-    """Рассчитывает ступень и ров при обоих направлениях движения."""
-    settings = settings or SolverSettings.coarse()
-    step_single = find_obstacle_limit(
-        design,
-        "step",
-        1,
-        maximum_step_mm,
-        settings,
-        iterations,
-    )
-    step_bogie = find_obstacle_limit(
-        design,
-        "step",
-        -1,
-        maximum_step_mm,
-        settings,
-        iterations,
-    )
-    ditch_single = find_obstacle_limit(
-        design,
-        "ditch",
-        1,
-        maximum_ditch_mm,
-        settings,
-        iterations,
-    )
-    ditch_bogie = find_obstacle_limit(
-        design,
-        "ditch",
-        -1,
-        maximum_ditch_mm,
-        settings,
-        iterations,
-    )
-    return DesignEvaluation(
-        design=design,
-        step_single_first_mm=step_single.value_mm,
-        step_bogie_first_mm=step_bogie.value_mm,
-        ditch_single_first_mm=ditch_single.value_mm,
-        ditch_bogie_first_mm=ditch_bogie.value_mm,
-    )
-
-
 def latin_hypercube_designs(
     base: ChassisDesign,
     free_ranges: dict[str, tuple[float, float]],
@@ -2590,103 +2291,3 @@ def latin_hypercube_designs(
                 break
         attempts += 1
     return designs
-
-
-def optimize_designs(
-    base: ChassisDesign,
-    free_ranges: dict[str, tuple[float, float]],
-    count: int,
-    seed: int,
-    maximum_step_mm: float,
-    maximum_ditch_mm: float,
-    step_weight: float = 0.5,
-    progress_callback: Callable[[int, int], None] | None = None,
-) -> tuple[list[DesignEvaluation], DesignEvaluation | None]:
-    """Перебирает варианты и выбирает сбалансированный общий результат."""
-    designs = latin_hypercube_designs(base, free_ranges, count, seed)
-    evaluations: list[DesignEvaluation] = []
-    total = len(designs)
-    for index, design in enumerate(designs, start=1):
-        evaluations.append(
-            evaluate_design(
-                design,
-                maximum_step_mm,
-                maximum_ditch_mm,
-                settings=SolverSettings.coarse(),
-                iterations=5,
-            )
-        )
-        if progress_callback is not None:
-            progress_callback(index, total)
-
-    if not evaluations:
-        return [], None
-
-    best_step = max(
-        evaluation.bidirectional_step_mm for evaluation in evaluations
-    )
-    best_ditch = max(
-        evaluation.bidirectional_ditch_mm for evaluation in evaluations
-    )
-    step_weight = min(1.0, max(0.0, step_weight))
-
-    def score(evaluation: DesignEvaluation) -> float:
-        step_ratio = (
-            evaluation.bidirectional_step_mm / best_step
-            if best_step > 1e-9
-            else 0.0
-        )
-        ditch_ratio = (
-            evaluation.bidirectional_ditch_mm / best_ditch
-            if best_ditch > 1e-9
-            else 0.0
-        )
-        # Геометрическое среднее не позволяет полностью пожертвовать одним
-        # препятствием ради второго.
-        epsilon = 1e-9
-        return (
-            max(step_ratio, epsilon) ** step_weight
-            * max(ditch_ratio, epsilon) ** (1.0 - step_weight)
-        )
-
-    ranked = sorted(evaluations, key=score, reverse=True)
-    return ranked, ranked[0]
-
-
-def pareto_front(
-    evaluations: list[DesignEvaluation],
-) -> list[DesignEvaluation]:
-    """Возвращает варианты, не уступающие другим сразу по двум критериям."""
-    result: list[DesignEvaluation] = []
-    for candidate in evaluations:
-        dominated = any(
-            other.bidirectional_step_mm
-            >= candidate.bidirectional_step_mm
-            and other.bidirectional_ditch_mm
-            >= candidate.bidirectional_ditch_mm
-            and (
-                other.bidirectional_step_mm
-                > candidate.bidirectional_step_mm
-                or other.bidirectional_ditch_mm
-                > candidate.bidirectional_ditch_mm
-            )
-            for other in evaluations
-        )
-        if not dominated:
-            result.append(candidate)
-    return sorted(
-        result,
-        key=lambda evaluation: evaluation.bidirectional_step_mm,
-    )
-
-
-def downsample_poses(
-    poses: tuple[Pose, ...],
-    maximum_frames: int = 80,
-) -> tuple[Pose, ...]:
-    """Сокращает число кадров без удаления первого и последнего."""
-    if len(poses) <= maximum_frames:
-        return poses
-    indices = np.linspace(0, len(poses) - 1, maximum_frames)
-    unique = sorted({round(index) for index in indices})
-    return tuple(poses[index] for index in unique)

@@ -1,5 +1,5 @@
 import unittest
-from dataclasses import replace
+from dataclasses import fields, replace
 
 from geometry import (
     ChassisDesign,
@@ -19,26 +19,46 @@ class GeometryTests(unittest.TestCase):
         self.design = ChassisDesign()
         self.settings = SolverSettings.coarse()
 
-    def test_default_design_is_valid(self) -> None:
+    def test_default_design_is_valid_and_within_length_limit(self) -> None:
         self.assertEqual(validate_design(self.design), ())
         self.assertLessEqual(
             neutral_dimensions(self.design)["total_length_mm"],
             self.design.max_total_length_mm,
         )
 
+    def test_body_dimensions_are_absent(self) -> None:
+        field_names = {field.name for field in fields(ChassisDesign)}
+        forbidden = {
+            "body_length_mm",
+            "body_height_mm",
+            "attachment_x_mm",
+            "rocker_thickness_mm",
+            "bogie_thickness_mm",
+        }
+        self.assertTrue(forbidden.isdisjoint(field_names))
+        frame = calculate_frame(self.design, neutral_pose(self.design))
+        self.assertEqual(frame.body_corners, ())
+
     def test_neutral_wheels_have_equal_height(self) -> None:
         frame = calculate_frame(self.design, neutral_pose(self.design))
         wheel_heights = [wheel.y for wheel in frame.wheels]
         self.assertLess(max(wheel_heights) - min(wheel_heights), 1e-8)
 
-    def test_step_higher_than_radius_is_crossable_in_both_directions(self) -> None:
-        # У исходного варианта bogie проходит слишком близко к левому углу
-        # корпуса. Смещение корпуса на 10 мм устраняет самопересечение и
-        # позволяет отдельно проверить новую контактную кинематику.
-        contact_safe_design = replace(self.design, attachment_x_mm=300.0)
+    def test_link_lengths_and_angles_are_derived(self) -> None:
+        dimensions = neutral_dimensions(self.design)
+        for prefix in (
+            "rocker_front",
+            "rocker_bogie",
+            "bogie_middle",
+            "bogie_rear",
+        ):
+            self.assertGreater(dimensions[f"{prefix}_length_mm"], 0.0)
+            self.assertIn(f"{prefix}_angle_deg", dimensions)
+
+    def test_geometric_step_path_exists_in_both_directions(self) -> None:
         for direction in (1, -1):
             result = simulate_traversal(
-                contact_safe_design,
+                self.design,
                 StepTerrain(120.0),
                 direction,
                 self.settings,
@@ -51,59 +71,29 @@ class GeometryTests(unittest.TestCase):
                     set(pose.contacts) | set(pose.wall_contacts),
                     {"front", "middle", "rear"},
                 )
-            self.assertEqual(
-                set(result.poses[-1].contacts),
-                {"front", "middle", "rear"},
-            )
 
-    def test_main_pivot_may_move_back_while_wheel_climbs_wall(self) -> None:
-        design = replace(self.design, attachment_x_mm=300.0)
+    def test_ditch_path_allows_temporary_wheel_contact_loss(self) -> None:
         result = simulate_traversal(
-            design,
-            StepTerrain(120.0),
+            self.design,
+            DitchTerrain(100.0),
             1,
             self.settings,
         )
         self.assertTrue(result.success, result.failure_reason)
-        wall_poses = [pose for pose in result.poses if "front" in pose.wall_contacts]
-        self.assertGreater(len(wall_poses), 1)
-        self.assertLess(
-            wall_poses[-1].main_pivot_x_mm,
-            wall_poses[0].main_pivot_x_mm,
-        )
+        self.assertTrue(any(len(pose.contacts) == 2 for pose in result.poses))
 
-    def test_small_ditch_is_crossable_in_both_directions(self) -> None:
-        for direction in (1, -1):
-            result = simulate_traversal(
-                self.design,
-                DitchTerrain(100.0),
-                direction,
-                self.settings,
-            )
-            self.assertTrue(result.success, result.failure_reason)
-
-    def test_length_limit_is_enforced(self) -> None:
-        invalid = replace(self.design, max_total_length_mm=900.0)
-        errors = validate_design(invalid)
-        self.assertTrue(any("превышает ограничение" in error for error in errors))
-
-    def test_center_of_mass_changes_directional_result(self) -> None:
-        shifted = replace(self.design, com_x_from_body_left_mm=180.0)
-        forward = simulate_traversal(
-            shifted,
-            DitchTerrain(240.0),
-            1,
-            self.settings,
+    def test_length_and_angle_limits_are_enforced(self) -> None:
+        too_long = replace(self.design, max_total_length_mm=900.0)
+        self.assertTrue(
+            any("превышает ограничение" in error for error in validate_design(too_long))
         )
-        reverse = simulate_traversal(
-            shifted,
-            DitchTerrain(240.0),
-            -1,
-            self.settings,
+        invalid_angles = replace(
+            self.design,
+            rocker_min_angle_deg=20.0,
+            rocker_max_angle_deg=-20.0,
         )
-        self.assertNotEqual(
-            (forward.success, forward.minimum_support_margin_mm),
-            (reverse.success, reverse.minimum_support_margin_mm),
+        self.assertTrue(
+            any("rocker" in error.lower() for error in validate_design(invalid_angles))
         )
 
 

@@ -1,8 +1,8 @@
-"""Отрисовка шасси и анимации прохождения препятствий в Plotly."""
+"""Отрисовка геометрии подвески и отдельных ключевых кадров."""
 
 from __future__ import annotations
 
-from math import atan2, cos, pi, sin
+from math import atan2, cos, hypot, pi, sin
 
 import numpy as np
 import plotly.graph_objects as go
@@ -18,12 +18,11 @@ from geometry import (
     TraversalResult,
     WHEEL_LABELS,
     calculate_frame,
-    downsample_poses,
     neutral_pose,
 )
+from statics import StaticFrameResult
 
 
-BODY_COLOR = "rgba(178, 34, 34, 0.55)"
 ROCKER_COLOR = "rgba(48, 96, 190, 0.88)"
 BOGIE_COLOR = "rgba(225, 132, 25, 0.90)"
 WHEEL_COLOR = "rgba(72, 76, 86, 0.92)"
@@ -174,18 +173,11 @@ def _rover_traces(
     direction: int,
     terrain: Terrain,
     showlegend: bool,
+    center_of_mass: Point | None = None,
 ) -> list[go.Scatter]:
     frame = calculate_frame(design, pose, direction)
-    body = _closed_polygon_trace(
-        list(frame.body_corners),
-        "Корпус",
-        BODY_COLOR,
-        "firebrick",
-        showlegend,
-    )
-
-    rocker_radius = design.rocker_thickness_mm / 2.0
-    bogie_radius = design.bogie_thickness_mm / 2.0
+    rocker_radius = design.arm_diameter_mm / 2.0
+    bogie_radius = design.arm_diameter_mm / 2.0
     rocker_segments = (
         (frame.front_wheel, frame.main_pivot),
         (frame.main_pivot, frame.bogie_pivot),
@@ -196,7 +188,7 @@ def _rover_traces(
         (frame.bogie_front_knee, frame.middle_wheel),
     )
 
-    traces: list[go.Scatter] = [body]
+    traces: list[go.Scatter] = []
     for index, (start, end) in enumerate(rocker_segments):
         traces.append(
             _closed_polygon_trace(
@@ -241,10 +233,11 @@ def _rover_traces(
             showlegend=showlegend,
         )
     )
+    displayed_com = center_of_mass or frame.center_of_mass
     traces.append(
         go.Scatter(
-            x=[frame.center_of_mass.x],
-            y=[frame.center_of_mass.y],
+            x=[displayed_com.x],
+            y=[displayed_com.y],
             mode="markers+text",
             text=["ЦМ"],
             textposition="top center",
@@ -255,8 +248,8 @@ def _rover_traces(
     )
     traces.append(
         go.Scatter(
-            x=[frame.center_of_mass.x, frame.center_of_mass.x],
-            y=[frame.center_of_mass.y, 0.0],
+            x=[displayed_com.x, displayed_com.x],
+            y=[displayed_com.y, 0.0],
             mode="lines",
             name="Проекция ЦМ",
             line={"color": "purple", "width": 2, "dash": "dot"},
@@ -290,9 +283,7 @@ def _figure_ranges(
     for pose in poses:
         frame = calculate_frame(design, pose, direction)
         x_values.extend(point.x for point in frame.wheels)
-        x_values.extend(point.x for point in frame.body_corners)
         y_values.extend(point.y for point in frame.wheels)
-        y_values.extend(point.y for point in frame.body_corners)
 
     if isinstance(terrain, DitchTerrain):
         x_values.extend((0.0, terrain.width_mm))
@@ -360,121 +351,91 @@ def create_design_figure(
     return figure
 
 
-def create_traversal_animation(
+def create_key_frame_figure(
     design: ChassisDesign,
     traversal: TraversalResult,
-    maximum_frames: int = 80,
+    pose: Pose,
+    static_result: StaticFrameResult,
+    title: str,
 ) -> go.Figure:
-    """Создаёт анимацию с кнопками запуска, паузы и ползунком кадров."""
-    if not traversal.success or not traversal.poses:
-        raise ValueError("Для анимации требуется успешно найденный путь.")
-
-    poses = downsample_poses(traversal.poses, maximum_frames)
+    """Статический кадр с точками контакта, ЦМ и реакциями левой стороны."""
     terrain: Terrain
     if traversal.obstacle_kind == "step":
         terrain = StepTerrain(traversal.obstacle_value_mm)
-        obstacle_name = f"ступень {traversal.obstacle_value_mm:.1f} мм"
     else:
         terrain = DitchTerrain(traversal.obstacle_value_mm)
-        obstacle_name = f"ров {traversal.obstacle_value_mm:.1f} мм"
 
-    direction_name = (
-        "одиночным колесом вперёд"
-        if traversal.direction == 1
-        else "bogie вперёд"
-    )
-    ranges = _figure_ranges(design, poses, traversal.direction, terrain)
-    terrain_data = _terrain_traces(terrain, ranges[0], ranges[1], ranges[2])
-    first_rover = _rover_traces(
+    ranges = _figure_ranges(
         design,
-        poses[0],
+        (pose,),
+        traversal.direction,
+        terrain,
+    )
+    center_of_mass = Point(
+        static_result.center_of_mass_mm[0],
+        static_result.center_of_mass_mm[2],
+    )
+    terrain_data = _terrain_traces(terrain, ranges[0], ranges[1], ranges[2])
+    rover_data = _rover_traces(
+        design,
+        pose,
         traversal.direction,
         terrain,
         showlegend=True,
+        center_of_mass=center_of_mass,
     )
-    figure = go.Figure(data=[*terrain_data, *first_rover])
+    figure = go.Figure(data=[*terrain_data, *rover_data])
 
-    rover_trace_indices = list(
-        range(len(terrain_data), len(terrain_data) + len(first_rover))
+    left_loads = [
+        load for load in static_result.contacts if load.side == "левая"
+    ]
+    maximum_force = max(
+        (
+            hypot(
+                load.normal_force_n * load.normal[0]
+                + load.net_tangent_force_n * load.tangent[0],
+                load.normal_force_n * load.normal[2]
+                + load.net_tangent_force_n * load.tangent[2],
+            )
+            for load in left_loads
+        ),
+        default=1.0,
     )
-    frames: list[go.Frame] = []
-    for index, pose in enumerate(poses):
-        frames.append(
-            go.Frame(
-                name=str(index),
-                data=_rover_traces(
-                    design,
-                    pose,
-                    traversal.direction,
-                    terrain,
-                    showlegend=False,
+    force_scale = min(0.35, 170.0 / max(maximum_force, 1.0))
+    for index, load in enumerate(left_loads):
+        force_x = (
+            load.normal_force_n * load.normal[0]
+            + load.net_tangent_force_n * load.tangent[0]
+        )
+        force_z = (
+            load.normal_force_n * load.normal[2]
+            + load.net_tangent_force_n * load.tangent[2]
+        )
+        start_x = load.point_mm[0]
+        start_z = load.point_mm[2]
+        end_x = start_x + force_scale * force_x
+        end_z = start_z + force_scale * force_z
+        figure.add_trace(
+            go.Scatter(
+                x=[start_x, end_x],
+                y=[start_z, end_z],
+                mode="lines+markers",
+                name="Реакция опоры" if index == 0 else "Реакция опоры",
+                legendgroup="forces",
+                showlegend=index == 0,
+                line={"color": "crimson", "width": 3},
+                marker={"size": [5, 9], "symbol": ["circle", "triangle-up"]},
+                customdata=[[load.normal_force_n, load.net_tangent_force_n]] * 2,
+                hovertemplate=(
+                    f"{WHEEL_LABELS[load.wheel]}<br>"
+                    "N=%{customdata[0]:.2f} Н<br>"
+                    "T=%{customdata[1]:.2f} Н<extra></extra>"
                 ),
-                traces=rover_trace_indices,
             )
         )
-    figure.frames = frames
 
-    slider_steps = [
-        {
-            "args": [
-                [str(index)],
-                {
-                    "frame": {"duration": 0, "redraw": True},
-                    "mode": "immediate",
-                    "transition": {"duration": 0},
-                },
-            ],
-            "label": str(index + 1),
-            "method": "animate",
-        }
-        for index in range(len(frames))
-    ]
-    figure.update_layout(
-        updatemenus=[
-            {
-                "type": "buttons",
-                "direction": "left",
-                "x": 0.0,
-                "y": -0.08,
-                "buttons": [
-                    {
-                        "label": "▶ Запуск",
-                        "method": "animate",
-                        "args": [
-                            None,
-                            {
-                                "frame": {"duration": 90, "redraw": True},
-                                "fromcurrent": True,
-                                "transition": {"duration": 0},
-                            },
-                        ],
-                    },
-                    {
-                        "label": "⏸ Пауза",
-                        "method": "animate",
-                        "args": [
-                            [None],
-                            {
-                                "frame": {"duration": 0, "redraw": False},
-                                "mode": "immediate",
-                            },
-                        ],
-                    },
-                ],
-            }
-        ],
-        sliders=[
-            {
-                "active": 0,
-                "currentvalue": {"prefix": "Кадр: "},
-                "pad": {"t": 55},
-                "steps": slider_steps,
-            }
-        ],
-    )
-    _apply_layout(
-        figure,
-        f"Прохождение: {obstacle_name}, {direction_name}",
-        ranges,
-    )
+    _apply_layout(figure, title, ranges)
+    figure.update_layout(height=620)
     return figure
+
+

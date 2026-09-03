@@ -1,29 +1,27 @@
-"""Интерфейс программы геометрической оптимизации rocker-bogie."""
+"""Streamlit-интерфейс расчёта и оптимизации rocker-bogie."""
 
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 
 import pandas as pd
-import plotly.graph_objects as go
 import streamlit as st
 
-from drawing import create_design_figure, create_traversal_animation
-from geometry import (
-    CapabilityResult,
-    ChassisDesign,
-    DesignEvaluation,
-    SolverSettings,
-    find_obstacle_limit,
-    neutral_dimensions,
-    optimize_designs,
-    pareto_front,
-    validate_design,
+from analysis import (
+    PhysicalCapabilityResult,
+    SequentialOptimizationResult,
+    find_physical_limit,
+    optimize_step_then_calculate_ditch,
 )
+from drawing import create_design_figure, create_key_frame_figure
+from geometry import ChassisDesign, SolverSettings, neutral_dimensions, validate_design
+from reports import select_key_frames
+from sources import SOURCES
+from statics import PhysicalParameters, SCENARIO_LABELS, validate_physical
 
 
 st.set_page_config(
-    page_title="Оптимизация Rocker-Bogie",
+    page_title="Расчёт Rocker-Bogie",
     page_icon="⚙️",
     layout="wide",
 )
@@ -37,214 +35,112 @@ class ParameterSpec:
     minimum: float
     maximum: float
     free_by_default: bool
+    free_allowed: bool
     group: str
+    display_factor: float = 1.0
 
 
 PARAMETERS = (
     ParameterSpec(
-        "wheel_radius_mm",
-        "Радиус колеса",
-        "мм",
-        70.0,
-        150.0,
-        False,
-        "Колёса и оси",
+        "wheel_radius_mm", "Диаметр колёс", "мм", 140.0, 300.0,
+        False, False, "Колёса и рычаги", 2.0,
     ),
     ParameterSpec(
-        "middle_wheel_x_mm",
-        "X среднего колеса",
-        "мм",
-        260.0,
-        470.0,
-        True,
-        "Колёса и оси",
+        "arm_diameter_mm", "Расчётный диаметр рычагов", "мм", 15.0, 70.0,
+        False, False, "Колёса и рычаги",
     ),
     ParameterSpec(
-        "front_wheel_x_mm",
-        "X одиночного переднего колеса",
-        "мм",
-        760.0,
-        1000.0,
-        True,
-        "Колёса и оси",
+        "middle_wheel_x_mm", "X среднего колеса", "мм", 220.0, 500.0,
+        True, True, "Независимая геометрия",
     ),
     ParameterSpec(
-        "main_pivot_x_mm",
-        "X главного шарнира",
-        "мм",
-        480.0,
-        730.0,
-        True,
-        "Главный шарнир и bogie",
+        "front_wheel_x_mm", "X одиночного колеса", "мм", 650.0, 1000.0,
+        True, True, "Независимая геометрия",
     ),
     ParameterSpec(
-        "main_pivot_y_mm",
-        "Y главного шарнира над центрами колёс",
-        "мм",
-        240.0,
-        390.0,
-        True,
-        "Главный шарнир и bogie",
+        "main_pivot_x_mm", "X главного шарнира", "мм", 430.0, 760.0,
+        True, True, "Независимая геометрия",
     ),
     ParameterSpec(
-        "bogie_pivot_x_mm",
-        "X шарнира bogie",
-        "мм",
-        130.0,
-        230.0,
-        True,
-        "Главный шарнир и bogie",
+        "main_pivot_y_mm", "Главный шарнир над линией центров", "мм", 180.0, 420.0,
+        True, True, "Независимая геометрия",
     ),
     ParameterSpec(
-        "bogie_pivot_y_mm",
-        "Высота верхней перемычки bogie",
-        "мм",
-        180.0,
-        300.0,
-        True,
-        "Главный шарнир и bogie",
+        "bogie_pivot_x_mm", "X шарнира bogie", "мм", 100.0, 300.0,
+        True, True, "Независимая геометрия",
     ),
     ParameterSpec(
-        "bogie_rear_knee_x_mm",
-        "X заднего верхнего угла bogie",
-        "мм",
-        55.0,
-        125.0,
-        True,
-        "Главный шарнир и bogie",
+        "bogie_pivot_y_mm", "Шарнир bogie над линией центров", "мм", 120.0, 330.0,
+        True, True, "Независимая геометрия",
     ),
     ParameterSpec(
-        "bogie_front_knee_x_mm",
-        "X переднего верхнего угла bogie",
-        "мм",
-        245.0,
-        335.0,
-        True,
-        "Главный шарнир и bogie",
+        "bogie_rear_knee_x_mm", "X заднего верхнего угла bogie", "мм", 30.0, 160.0,
+        True, True, "Форма bogie",
     ),
     ParameterSpec(
-        "body_length_mm",
-        "Длина корпуса",
-        "мм",
-        450.0,
-        680.0,
-        False,
-        "Корпус",
+        "bogie_front_knee_x_mm", "X переднего верхнего угла bogie", "мм", 210.0, 390.0,
+        True, True, "Форма bogie",
     ),
     ParameterSpec(
-        "body_height_mm",
-        "Высота корпуса",
-        "мм",
-        170.0,
-        310.0,
-        False,
-        "Корпус",
+        "com_x_from_main_pivot_mm", "X центра масс от главного шарнира", "мм", -250.0, 250.0,
+        False, False, "Центр масс",
     ),
     ParameterSpec(
-        "attachment_x_mm",
-        "Крепление от левого края корпуса",
-        "мм",
-        220.0,
-        400.0,
-        True,
-        "Корпус",
-    ),
-    ParameterSpec(
-        "attachment_y_mm",
-        "Крепление от нижней грани корпуса",
-        "мм",
-        45.0,
-        130.0,
-        True,
-        "Корпус",
-    ),
-    ParameterSpec(
-        "rocker_thickness_mm",
-        "Толщина rocker",
-        "мм",
-        20.0,
-        55.0,
-        False,
-        "Толщина и центр масс",
-    ),
-    ParameterSpec(
-        "bogie_thickness_mm",
-        "Толщина bogie",
-        "мм",
-        20.0,
-        55.0,
-        False,
-        "Толщина и центр масс",
-    ),
-    ParameterSpec(
-        "com_x_from_body_left_mm",
-        "X центра масс от левого края корпуса",
-        "мм",
-        170.0,
-        390.0,
-        False,
-        "Толщина и центр масс",
-    ),
-    ParameterSpec(
-        "com_y_from_body_bottom_mm",
-        "Y центра масс от днища корпуса",
-        "мм",
-        70.0,
-        210.0,
-        False,
-        "Толщина и центр масс",
+        "com_z_from_main_pivot_mm", "Z центра масс над главным шарниром", "мм", 20.0, 400.0,
+        False, False, "Центр масс",
     ),
 )
 
 GROUPS = tuple(dict.fromkeys(spec.group for spec in PARAMETERS))
+SPEC_BY_FIELD = {spec.field: spec for spec in PARAMETERS}
 
 
 def _default_parameter_table(group: str) -> pd.DataFrame:
     defaults = asdict(ChassisDesign())
     rows: list[dict[str, object]] = []
-    index: list[str] = []
     for spec in PARAMETERS:
         if spec.group != group:
             continue
-        index.append(spec.field)
         rows.append(
             {
+                "field": spec.field,
                 "Параметр": spec.label,
-                "Значение": float(defaults[spec.field]),
+                "Значение": float(defaults[spec.field]) * spec.display_factor,
                 "Свободный": spec.free_by_default,
                 "Минимум": spec.minimum,
                 "Максимум": spec.maximum,
                 "Ед.": spec.unit,
             }
         )
-    return pd.DataFrame(rows, index=index)
+    return pd.DataFrame(rows).set_index("field")
 
 
 def _render_parameter_tables() -> dict[str, pd.DataFrame]:
     tables: dict[str, pd.DataFrame] = {}
     for group_index, group in enumerate(GROUPS):
         storage_key = f"parameter_table_{group_index}"
-        widget_key = f"parameter_editor_{group_index}"
+        editor_key = f"parameter_editor_{group_index}"
         if storage_key not in st.session_state:
             st.session_state[storage_key] = _default_parameter_table(group)
         with st.expander(group, expanded=group_index < 2):
-            st.caption(
-                "Снимите флажок «Свободный», чтобы оптимизатор не менял "
-                "этот параметр."
-            )
             edited = st.data_editor(
                 st.session_state[storage_key],
-                key=widget_key,
+                key=editor_key,
                 hide_index=True,
                 width="stretch",
                 num_rows="fixed",
                 disabled=["Параметр", "Ед."],
                 column_config={
                     "Параметр": st.column_config.TextColumn(width="large"),
-                    "Значение": st.column_config.NumberColumn(format="%.1f"),
-                    "Свободный": st.column_config.CheckboxColumn(),
-                    "Минимум": st.column_config.NumberColumn(format="%.1f"),
-                    "Максимум": st.column_config.NumberColumn(format="%.1f"),
+                    "Значение": st.column_config.NumberColumn(format="%.2f"),
+                    "Свободный": st.column_config.CheckboxColumn(
+                        help=(
+                            "Оптимизатор меняет только независимые координаты. "
+                            "Диаметры и центр масс остаются заданными."
+                        )
+                    ),
+                    "Минимум": st.column_config.NumberColumn(format="%.2f"),
+                    "Максимум": st.column_config.NumberColumn(format="%.2f"),
                     "Ед.": st.column_config.TextColumn(width="small"),
                 },
             )
@@ -261,14 +157,21 @@ def _table_values(
     errors: list[str] = []
     for table in tables.values():
         for field, row in table.iterrows():
-            value = float(row["Значение"])
-            minimum = float(row["Минимум"])
-            maximum = float(row["Максимум"])
+            spec = SPEC_BY_FIELD[field]
+            factor = spec.display_factor
+            value = float(row["Значение"]) / factor
+            minimum = float(row["Минимум"]) / factor
+            maximum = float(row["Максимум"]) / factor
             values[field] = value
-            if bool(row["Свободный"]):
+            requested_free = bool(row["Свободный"])
+            if requested_free and not spec.free_allowed:
+                errors.append(
+                    f"«{spec.label}» является жёстко заданным параметром и не оптимизируется."
+                )
+            elif requested_free:
                 if minimum >= maximum:
                     errors.append(
-                        f"Для «{row['Параметр']}» минимум должен быть меньше максимума."
+                        f"Для «{spec.label}» минимум должен быть меньше максимума."
                     )
                 else:
                     free_ranges[field] = (minimum, maximum)
@@ -279,245 +182,161 @@ def _apply_design_to_tables(design: ChassisDesign) -> None:
     values = asdict(design)
     for group_index, group in enumerate(GROUPS):
         storage_key = f"parameter_table_{group_index}"
-        widget_key = f"parameter_editor_{group_index}"
-        table = st.session_state.get(
-            storage_key,
-            _default_parameter_table(group),
-        ).copy()
+        editor_key = f"parameter_editor_{group_index}"
+        table = st.session_state.get(storage_key, _default_parameter_table(group)).copy()
         for field in table.index:
-            table.loc[field, "Значение"] = float(values[field])
+            spec = SPEC_BY_FIELD[field]
+            table.loc[field, "Значение"] = float(values[field]) * spec.display_factor
         st.session_state[storage_key] = table
-        st.session_state.pop(widget_key, None)
-    st.session_state.pop("limit_results", None)
+        st.session_state.pop(editor_key, None)
 
 
-def _design_rows(design: ChassisDesign) -> list[dict[str, object]]:
-    values = asdict(design)
+def _derived_rows(design: ChassisDesign) -> list[dict[str, object]]:
+    dimensions = neutral_dimensions(design)
+    mapping = (
+        ("Rocker: главный шарнир → одиночное колесо", "rocker_front_length_mm", "rocker_front_angle_deg"),
+        ("Rocker: главный шарнир → bogie", "rocker_bogie_length_mm", "rocker_bogie_angle_deg"),
+        ("Bogie: шарнир → среднее колесо", "bogie_middle_length_mm", "bogie_middle_angle_deg"),
+        ("Bogie: шарнир → заднее колесо", "bogie_rear_length_mm", "bogie_rear_angle_deg"),
+    )
     return [
         {
-            "Параметр": spec.label,
-            "Значение": round(float(values[spec.field]), 2),
-            "Ед.": spec.unit,
+            "Звено": label,
+            "Длина, мм": round(dimensions[length_key], 2),
+            "Исходный угол, °": round(dimensions[angle_key], 2),
         }
-        for spec in PARAMETERS
+        for label, length_key, angle_key in mapping
+    ]
+
+
+def _capability_rows(results: dict[str, PhysicalCapabilityResult]) -> list[dict[str, object]]:
+    definitions = (
+        ("step_single", "Ступень", "одиночное колесо вперёд"),
+        ("step_bogie", "Ступень", "bogie вперёд"),
+        ("ditch_single", "Ров", "одиночное колесо вперёд"),
+        ("ditch_bogie", "Ров", "bogie вперёд"),
+    )
+    rows: list[dict[str, object]] = []
+    for key, obstacle, direction in definitions:
+        result = results[key]
+        rows.append(
+            {
+                "Препятствие": obstacle,
+                "Направление": direction,
+                "Предел, мм": round(result.value_mm, 2),
+                "Достигнута граница поиска": "да" if result.reached_search_cap else "нет",
+            }
+        )
+    return rows
+
+
+def _show_capability_metrics(results: dict[str, PhysicalCapabilityResult]) -> None:
+    columns = st.columns(4)
+    columns[0].metric("Ступень: одиночное вперёд", f"{results['step_single'].value_mm:.1f} мм")
+    columns[1].metric("Ступень: bogie вперёд", f"{results['step_bogie'].value_mm:.1f} мм")
+    columns[2].metric("Ров: одиночное вперёд", f"{results['ditch_single'].value_mm:.1f} мм")
+    columns[3].metric("Ров: bogie вперёд", f"{results['ditch_bogie'].value_mm:.1f} мм")
+    st.dataframe(_capability_rows(results), width="stretch", hide_index=True)
+
+
+def _contact_rows(frame) -> list[dict[str, object]]:
+    return [
+        {
+            "Сторона": load.side,
+            "Колесо": load.wheel,
+            "Контакт": load.mode,
+            "N, Н": round(load.normal_force_n, 3),
+            "T, Н": round(load.net_tangent_force_n, 3),
+            "Q поперёк, Н": round(load.lateral_force_n, 3),
+            "Сила привода, Н": round(load.motor_force_n, 3),
+            "Момент, Н·м": round(load.motor_torque_nm, 3),
+            "Момент, %": round(100.0 * load.torque_utilization, 2),
+            "Сцепление, %": round(100.0 * load.friction_utilization, 2),
+        }
+        for load in frame.contacts
     ]
 
 
 @st.cache_data(show_spinner=False)
 def _cached_limit(
     design: ChassisDesign,
+    physical: PhysicalParameters,
     kind: str,
     direction: int,
     maximum: float,
-    settings: SolverSettings,
-    iterations: int,
-) -> CapabilityResult:
-    return find_obstacle_limit(
-        design=design,
-        obstacle_kind=kind,  # type: ignore[arg-type]
-        direction=direction,
-        maximum_value_mm=maximum,
-        settings=settings,
-        iterations=iterations,
+) -> PhysicalCapabilityResult:
+    return find_physical_limit(
+        design,
+        physical,
+        kind,  # type: ignore[arg-type]
+        direction,
+        maximum,
+        SolverSettings.fine(),
+        iterations=7,
+        static_sample_stride=1,
     )
 
 
-def _show_limit_results(
-    results: dict[str, CapabilityResult],
-) -> None:
-    columns = st.columns(4)
-    columns[0].metric(
-        "Ступень: одиночное колесо вперёд",
-        f"{results['step_single'].value_mm:.0f} мм",
-    )
-    columns[1].metric(
-        "Ступень: bogie вперёд",
-        f"{results['step_bogie'].value_mm:.0f} мм",
-    )
-    columns[2].metric(
-        "Ров: одиночное колесо вперёд",
-        f"{results['ditch_single'].value_mm:.0f} мм",
-    )
-    columns[3].metric(
-        "Ров: bogie вперёд",
-        f"{results['ditch_bogie'].value_mm:.0f} мм",
-    )
-
-    rows = [
-        {
-            "Проверка": "Ступень",
-            "Направление": "одиночное колесо вперёд",
-            "Предел, мм": round(results["step_single"].value_mm, 1),
-            "Мин. фактический запас опоры, мм": "не проверяется",
-        },
-        {
-            "Проверка": "Ступень",
-            "Направление": "bogie вперёд",
-            "Предел, мм": round(results["step_bogie"].value_mm, 1),
-            "Мин. фактический запас опоры, мм": "не проверяется",
-        },
-        {
-            "Проверка": "Глубокий ров",
-            "Направление": "одиночное колесо вперёд",
-            "Предел, мм": round(results["ditch_single"].value_mm, 1),
-            "Мин. фактический запас опоры, мм": (
-                round(
-                    results["ditch_single"].traversal.minimum_support_margin_mm,
-                    1,
-                )
-                if results["ditch_single"].traversal
-                else "—"
-            ),
-        },
-        {
-            "Проверка": "Глубокий ров",
-            "Направление": "bogie вперёд",
-            "Предел, мм": round(results["ditch_bogie"].value_mm, 1),
-            "Мин. фактический запас опоры, мм": (
-                round(
-                    results["ditch_bogie"].traversal.minimum_support_margin_mm,
-                    1,
-                )
-                if results["ditch_bogie"].traversal
-                else "—"
-            ),
-        },
-    ]
-    st.dataframe(rows, width="stretch", hide_index=True)
-
-    capped = [
-        name
-        for name, result in results.items()
-        if result.reached_search_cap
-    ]
-    if capped:
-        st.info(
-            "Для части проверок достигнута заданная верхняя граница поиска. "
-            "Чтобы найти реальный предел, увеличьте её в боковой панели."
-        )
-
-
-def _optimization_rows(
-    evaluations: list[DesignEvaluation],
-) -> list[dict[str, float | int]]:
-    rows: list[dict[str, float | int]] = []
-    for index, evaluation in enumerate(evaluations[:20], start=1):
-        rows.append(
-            {
-                "Место": index,
-                "Ступень в обе стороны, мм": round(
-                    evaluation.bidirectional_step_mm,
-                    1,
-                ),
-                "Ров в обе стороны, мм": round(
-                    evaluation.bidirectional_ditch_mm,
-                    1,
-                ),
-                "Ступень одиночным, мм": round(
-                    evaluation.step_single_first_mm,
-                    1,
-                ),
-                "Ступень bogie, мм": round(
-                    evaluation.step_bogie_first_mm,
-                    1,
-                ),
-                "Ров одиночным, мм": round(
-                    evaluation.ditch_single_first_mm,
-                    1,
-                ),
-                "Ров bogie, мм": round(
-                    evaluation.ditch_bogie_first_mm,
-                    1,
-                ),
-            }
-        )
-    return rows
-
-
-st.title("Геометрическая оптимизация Rocker-Bogie")
+st.title("Расчёт и оптимизация Rocker-Bogie")
 st.caption(
-    "Косвенно-угловой bogie, одиночное колесо спереди. "
-    "Трение, мощность, деформация колёс и динамика не учитываются."
+    "Геометрия подвески, квазистатические силы и моменты, продольная и "
+    "поперечная устойчивость. Корпус и его габариты не учитываются."
 )
 
 with st.sidebar:
+    st.header("Физическая модель")
+    mass_kg = st.number_input("Общая масса, кг", min_value=0.1, value=120.0, step=5.0)
+    torque_nm = st.number_input("Момент одного мотор-колеса, Н·м", min_value=0.01, value=20.0, step=1.0)
+    track_mm = st.number_input("Колея по точкам контакта, мм", min_value=100.0, value=600.0, step=25.0)
+    com_lateral_mm = st.number_input("Поперечное смещение ЦМ, мм", value=0.0, step=10.0)
+    friction = st.number_input("Коэффициент сцепления μ", min_value=0.01, value=0.70, step=0.05)
+    rolling = st.number_input("Коэффициент сопротивления качению", min_value=0.0, value=0.03, step=0.01)
+    dynamic_factor = st.number_input("Коэффициент запаса на динамику", min_value=1.0, value=1.20, step=0.05)
+    gravity = st.number_input("Ускорение свободного падения, м/с²", min_value=0.1, value=9.81, step=0.1)
+
     st.header("Жёсткие ограничения")
-    max_total_length = st.number_input(
-        "Максимальная полная длина, мм",
-        min_value=300.0,
-        value=1200.0,
-        step=25.0,
-    )
-    support_margin = st.number_input(
-        "Запас проекции ЦМ до края опоры, мм",
-        min_value=0.0,
-        value=10.0,
-        step=2.0,
-    )
-    obstacle_clearance = st.number_input(
-        "Минимальный зазор до препятствия, мм",
-        min_value=0.0,
-        value=3.0,
-        step=1.0,
-    )
-    self_clearance = st.number_input(
-        "Зазор между деталями, мм",
-        min_value=0.0,
-        value=3.0,
-        step=1.0,
-    )
+    max_total_length = st.number_input("Максимальная длина подвески, мм", min_value=300.0, value=1200.0, step=25.0)
+    support_margin = st.number_input("Минимальный запас опорного многоугольника, мм", min_value=0.0, value=10.0, step=2.0)
+    obstacle_clearance = st.number_input("Зазор рычагов до препятствия, мм", min_value=0.0, value=3.0, step=1.0)
+    self_clearance = st.number_input("Зазор между колёсами, мм", min_value=0.0, value=3.0, step=1.0)
+    rocker_min = st.number_input("Rocker: минимальный угол, °", min_value=-170.0, max_value=0.0, value=-65.0, step=5.0)
+    rocker_max = st.number_input("Rocker: максимальный угол, °", min_value=0.0, max_value=170.0, value=65.0, step=5.0)
+    bogie_min = st.number_input("Bogie: минимальный угол, °", min_value=-170.0, max_value=0.0, value=-80.0, step=5.0)
+    bogie_max = st.number_input("Bogie: максимальный угол, °", min_value=0.0, max_value=170.0, value=80.0, step=5.0)
 
-    st.subheader("Пределы поворота")
-    bogie_min = st.number_input(
-        "Bogie: минимум, °",
-        min_value=-170.0,
-        max_value=0.0,
-        value=-80.0,
-        step=5.0,
-    )
-    bogie_max = st.number_input(
-        "Bogie: максимум, °",
-        min_value=0.0,
-        max_value=170.0,
-        value=80.0,
-        step=5.0,
-    )
-    pitch_min = st.number_input(
-        "Корпус: минимум, °",
-        min_value=-89.0,
-        max_value=0.0,
-        value=-65.0,
-        step=5.0,
-    )
-    pitch_max = st.number_input(
-        "Корпус: максимум, °",
-        min_value=0.0,
-        max_value=89.0,
-        value=65.0,
-        step=5.0,
-    )
+    st.header("Границы поиска")
+    maximum_step = st.number_input("Искать ступень до, мм", min_value=10.0, value=500.0, step=25.0)
+    maximum_ditch = st.number_input("Искать ров до, мм", min_value=10.0, value=600.0, step=25.0)
 
-    st.subheader("Область поиска препятствий")
-    maximum_step = st.number_input(
-        "Искать ступень до, мм",
-        min_value=20.0,
-        value=700.0,
-        step=25.0,
-    )
-    maximum_ditch = st.number_input(
-        "Искать ров до, мм",
-        min_value=20.0,
-        value=600.0,
-        step=25.0,
-    )
+physical = PhysicalParameters(
+    mass_kg=float(mass_kg),
+    wheel_torque_nm=float(torque_nm),
+    track_width_mm=float(track_mm),
+    com_lateral_mm=float(com_lateral_mm),
+    friction_coefficient=float(friction),
+    rolling_resistance_coefficient=float(rolling),
+    dynamic_factor=float(dynamic_factor),
+    gravity_m_s2=float(gravity),
+    minimum_support_margin_mm=float(support_margin),
+)
 
-
-geometry_tab, limits_tab, optimization_tab, animation_tab = st.tabs(
-    ["1. Геометрия", "2. Пределы", "3. Оптимизация", "4. Анимация"]
+geometry_tab, calculation_tab, optimization_tab, frames_tab, method_tab = st.tabs(
+    [
+        "1. Геометрия",
+        "2. Расчёт варианта",
+        "3. Оптимизация",
+        "4. Ключевые кадры",
+        "5. Методика и статьи",
+    ]
 )
 
 with geometry_tab:
-    st.subheader("Параметры конструкции")
+    st.subheader("Параметры подвески")
+    st.caption(
+        "Свободными могут быть только независимые координаты. Длины и углы "
+        "звеньев пересчитываются автоматически, поэтому не дублируются как "
+        "независимые переменные."
+    )
     parameter_tables = _render_parameter_tables()
 
 values, free_ranges, table_errors = _table_values(parameter_tables)
@@ -525,333 +344,251 @@ design = ChassisDesign(
     **values,
     bogie_min_angle_deg=float(bogie_min),
     bogie_max_angle_deg=float(bogie_max),
-    body_pitch_min_deg=float(pitch_min),
-    body_pitch_max_deg=float(pitch_max),
-    support_margin_mm=float(support_margin),
+    rocker_min_angle_deg=float(rocker_min),
+    rocker_max_angle_deg=float(rocker_max),
     obstacle_clearance_mm=float(obstacle_clearance),
     self_clearance_mm=float(self_clearance),
     max_total_length_mm=float(max_total_length),
 )
-design_errors = [*table_errors, *validate_design(design)]
+errors = [*table_errors, *validate_design(design), *validate_physical(physical)]
 
 with geometry_tab:
-    if design_errors:
-        for error in design_errors:
+    if errors:
+        for error in errors:
             st.error(error)
     else:
         dimensions = neutral_dimensions(design)
-        metric_columns = st.columns(4)
-        metric_columns[0].metric(
-            "Полная длина",
-            f"{dimensions['total_length_mm']:.0f} мм",
-        )
-        metric_columns[1].metric(
-            "Полная высота",
-            f"{dimensions['total_height_mm']:.0f} мм",
-        )
-        metric_columns[2].metric(
-            "Колёсная база",
-            f"{dimensions['wheelbase_mm']:.0f} мм",
-        )
-        metric_columns[3].metric(
-            "Клиренс корпуса",
-            f"{dimensions['body_ground_clearance_mm']:.0f} мм",
-        )
+        columns = st.columns(4)
+        columns[0].metric("Полная длина", f"{dimensions['total_length_mm']:.1f} мм")
+        columns[1].metric("Полная высота", f"{dimensions['total_height_mm']:.1f} мм")
+        columns[2].metric("Колёсная база", f"{dimensions['wheelbase_mm']:.1f} мм")
+        columns[3].metric("Свободных координат", str(len(free_ranges)))
         st.plotly_chart(
             create_design_figure(design),
             width="stretch",
             config={"displaylogo": False},
         )
+        st.subheader("Полученные длины и углы")
+        st.dataframe(_derived_rows(design), width="stretch", hide_index=True)
 
-        with st.expander("Углы, автоматически полученные из координат"):
-            st.dataframe(
-                [
-                    {
-                        "Звено": "Главный шарнир → одиночное колесо",
-                        "Угол, °": round(
-                            dimensions["rocker_front_angle_deg"],
-                            2,
-                        ),
-                    },
-                    {
-                        "Звено": "Главный шарнир → шарнир bogie",
-                        "Угол, °": round(
-                            dimensions["rocker_bogie_angle_deg"],
-                            2,
-                        ),
-                    },
-                    {
-                        "Звено": "Шарнир bogie → среднее колесо",
-                        "Угол, °": round(
-                            dimensions["bogie_middle_angle_deg"],
-                            2,
-                        ),
-                    },
-                    {
-                        "Звено": "Шарнир bogie → заднее колесо",
-                        "Угол, °": round(
-                            dimensions["bogie_rear_angle_deg"],
-                            2,
-                        ),
-                    },
-                ],
-                width="stretch",
-                hide_index=True,
-            )
-
-with limits_tab:
-    st.subheader("Геометрические пределы текущего варианта")
-    accuracy = st.radio(
-        "Режим расчёта",
-        ["Быстрый", "Точный"],
-        horizontal=True,
-        help=(
-            "Быстрый режим удобен для проверки параметров. "
-            "Точный использует более мелкий шаг и лучше подходит для итоговой анимации."
-        ),
+with calculation_tab:
+    st.subheader("Точный расчёт текущей геометрии")
+    st.write(
+        "Для ступени и рва проверяются оба направления движения и два сценария: "
+        "препятствие по всей ширине и препятствие только под одной стороной."
     )
-    if st.button(
-        "Рассчитать ступень и ров",
-        type="primary",
-        disabled=bool(design_errors),
-    ):
-        settings = (
-            SolverSettings.coarse()
-            if accuracy == "Быстрый"
-            else SolverSettings.fine()
-        )
-        iterations = 6 if accuracy == "Быстрый" else 7
+    if st.button("Рассчитать текущий вариант", type="primary", disabled=bool(errors)):
         jobs = (
             ("step_single", "step", 1, maximum_step),
             ("step_bogie", "step", -1, maximum_step),
             ("ditch_single", "ditch", 1, maximum_ditch),
             ("ditch_bogie", "ditch", -1, maximum_ditch),
         )
-        progress = st.progress(0.0, text="Подготовка расчёта")
-        calculated: dict[str, CapabilityResult] = {}
+        progress = st.progress(0.0, text="Подготовка")
+        results: dict[str, PhysicalCapabilityResult] = {}
         for index, (key, kind, direction, maximum) in enumerate(jobs, start=1):
-            direction_name = (
-                "одиночное колесо"
-                if direction == 1
-                else "bogie"
-            )
             progress.progress(
                 (index - 1) / len(jobs),
-                text=f"Расчёт: {kind}, впереди {direction_name}",
+                text=f"Расчёт {index} из {len(jobs)}",
             )
-            calculated[key] = _cached_limit(
-                design,
-                kind,
-                direction,
-                float(maximum),
-                settings,
-                iterations,
+            results[key] = _cached_limit(
+                design, physical, kind, direction, float(maximum)
             )
-        progress.progress(1.0, text="Расчёт завершён")
-        st.session_state["limit_results"] = {
+        progress.progress(1.0, text="Готово")
+        st.session_state["current_results"] = {
             "design": design,
-            "values": calculated,
-            "accuracy": accuracy,
+            "physical": physical,
+            "values": results,
         }
 
-    stored_limits = st.session_state.get("limit_results")
-    if stored_limits is not None:
-        if stored_limits["design"] != design:
-            st.warning(
-                "Параметры изменены. Нажмите кнопку расчёта ещё раз, "
-                "чтобы обновить результаты."
-            )
+    stored_current = st.session_state.get("current_results")
+    if stored_current is not None:
+        if stored_current["design"] != design or stored_current["physical"] != physical:
+            st.warning("Параметры изменены — расчёт нужно запустить заново.")
         else:
-            _show_limit_results(stored_limits["values"])
-            st.caption(
-                "Это геометрические пределы. Успех означает наличие "
-                "непрерывного пути без столкновения. Для рва дополнительно "
-                "проверяется проекция центра масс относительно опор."
-            )
+            _show_capability_metrics(stored_current["values"])
 
 with optimization_tab:
-    st.subheader("Поиск одного шасси для ступени и рва")
-    free_count = len(free_ranges)
-    st.write(f"Свободных параметров: **{free_count}**")
-
-    control_left, control_middle, control_right = st.columns(3)
-    candidate_count = control_left.number_input(
+    st.subheader("Последовательная оптимизация")
+    st.write(
+        "Этап 1: оптимизируется только максимальная ступень в обоих направлениях "
+        "и обоих сценариях. Этап 2: для выбранной геометрии вычисляется ров; "
+        "ров не влияет на выбор размеров подвески."
+    )
+    left, middle = st.columns(2)
+    candidate_count = left.number_input(
         "Количество вариантов",
         min_value=2,
-        max_value=100,
+        max_value=40,
         value=6,
         step=2,
-        help="Увеличение повышает шанс найти лучший вариант, но удлиняет расчёт.",
     )
-    step_priority = control_middle.slider(
-        "Приоритет ступени",
-        min_value=0.0,
-        max_value=1.0,
-        value=0.5,
-        step=0.05,
-        help="0 — приоритет рва, 1 — приоритет ступени, 0.5 — баланс.",
-    )
-    random_seed = control_right.number_input(
-        "Seed",
-        min_value=0,
-        value=42,
-        step=1,
-    )
-
+    random_seed = middle.number_input("Seed", min_value=0, value=42, step=1)
     if st.button(
-        "Запустить оптимизацию",
+        "Оптимизировать по ступени",
         type="primary",
-        disabled=bool(design_errors) or free_count == 0,
+        disabled=bool(errors) or not free_ranges,
     ):
-        progress = st.progress(0.0, text="Создание вариантов")
+        progress = st.progress(0.0, text="Подготовка вариантов")
 
-        def update_progress(done: int, total: int) -> None:
-            progress.progress(
-                done / max(total, 1),
-                text=f"Проверено вариантов: {done} из {total}",
-            )
+        def update_progress(stage: str, done: int, total: int) -> None:
+            progress.progress(done / max(total, 1), text=f"{stage}: {done} из {total}")
 
-        ranked, best = optimize_designs(
+        result = optimize_step_then_calculate_ditch(
             base=design,
+            physical=physical,
             free_ranges=free_ranges,
             count=int(candidate_count),
             seed=int(random_seed),
             maximum_step_mm=float(maximum_step),
             maximum_ditch_mm=float(maximum_ditch),
-            step_weight=float(step_priority),
             progress_callback=update_progress,
         )
-        st.session_state["optimization_results"] = {
+        st.session_state["optimization_result"] = {
             "source_design": design,
-            "ranked": ranked,
-            "best": best,
-            "free_ranges": free_ranges,
+            "physical": physical,
+            "result": result,
         }
         progress.progress(1.0, text="Оптимизация завершена")
 
-    stored_optimization = st.session_state.get("optimization_results")
+    stored_optimization = st.session_state.get("optimization_result")
     if stored_optimization is not None:
-        ranked = stored_optimization["ranked"]
-        best = stored_optimization["best"]
-        if best is None:
-            st.error("Не найдено ни одного допустимого варианта.")
+        result: SequentialOptimizationResult = stored_optimization["result"]
+        if stored_optimization["physical"] != physical:
+            st.warning("Физические параметры изменены — оптимизацию нужно повторить.")
+        elif result.best_step_design is None:
+            st.error("Не найдено допустимых вариантов.")
         else:
-            best_columns = st.columns(2)
-            best_columns[0].metric(
-                "Ступень в обоих направлениях",
-                f"{best.bidirectional_step_mm:.0f} мм",
-            )
-            best_columns[1].metric(
-                "Ров в обоих направлениях",
-                f"{best.bidirectional_ditch_mm:.0f} мм",
-            )
-
-            if st.button("Применить лучший вариант к параметрам"):
+            best = result.best_step_design
+            metrics = st.columns(2)
+            metrics[0].metric("Лучшая ступень в обе стороны", f"{best.bidirectional_step_mm:.1f} мм")
+            metrics[1].metric("Ров этой геометрии в обе стороны", f"{result.bidirectional_ditch_mm:.1f} мм")
+            if st.button("Применить найденную геометрию"):
                 _apply_design_to_tables(best.design)
                 st.rerun()
-
-            with st.expander("Параметры лучшего варианта", expanded=True):
-                st.dataframe(
-                    _design_rows(best.design),
-                    width="stretch",
-                    hide_index=True,
-                )
-
             st.dataframe(
-                _optimization_rows(ranked),
+                [
+                    {
+                        "Место": index,
+                        "Ступень в обе стороны, мм": round(item.bidirectional_step_mm, 2),
+                        "Одиночное вперёд, мм": round(item.single_first.value_mm, 2),
+                        "Bogie вперёд, мм": round(item.bogie_first.value_mm, 2),
+                        "Точная проверка": "да" if item.refined else "нет",
+                    }
+                    for index, item in enumerate(result.ranked_step_designs, start=1)
+                ],
                 width="stretch",
                 hide_index=True,
             )
+            st.subheader("Параметры лучшего варианта")
+            st.dataframe(_derived_rows(best.design), width="stretch", hide_index=True)
 
-            frontier = pareto_front(ranked)
-            figure = go.Figure()
-            figure.add_trace(
-                go.Scatter(
-                    x=[
-                        item.bidirectional_ditch_mm
-                        for item in ranked
-                    ],
-                    y=[
-                        item.bidirectional_step_mm
-                        for item in ranked
-                    ],
-                    mode="markers",
-                    name="Проверенные варианты",
-                    marker={"size": 8, "color": "lightgray"},
-                    text=[f"Вариант {index + 1}" for index in range(len(ranked))],
-                )
-            )
-            figure.add_trace(
-                go.Scatter(
-                    x=[
-                        item.bidirectional_ditch_mm
-                        for item in frontier
-                    ],
-                    y=[
-                        item.bidirectional_step_mm
-                        for item in frontier
-                    ],
-                    mode="lines+markers",
-                    name="Компромиссная граница",
-                    marker={"size": 10, "color": "royalblue"},
-                    line={"color": "royalblue"},
-                )
-            )
-            figure.update_layout(
-                title="Компромисс между ступенью и рвом",
-                xaxis_title="Ров в обоих направлениях, мм",
-                yaxis_title="Ступень в обоих направлениях, мм",
-                height=500,
-                margin={"l": 20, "r": 20, "t": 55, "b": 20},
-            )
-            st.plotly_chart(
-                figure,
-                width="stretch",
-                config={"displaylogo": False},
-            )
-
-with animation_tab:
-    st.subheader("Анимация найденного предельного препятствия")
-    stored_limits = st.session_state.get("limit_results")
-    if stored_limits is None or stored_limits["design"] != design:
-        st.info(
-            "Сначала рассчитайте текущий вариант на вкладке «Пределы»."
-        )
-    else:
-        animation_options = {
-            "Ступень — одиночное колесо вперёд": "step_single",
-            "Ступень — bogie вперёд": "step_bogie",
-            "Ров — одиночное колесо вперёд": "ditch_single",
-            "Ров — bogie вперёд": "ditch_bogie",
+with frames_tab:
+    st.subheader("Ключевые положения и полный расчёт")
+    available: dict[str, tuple[ChassisDesign, PhysicalCapabilityResult]] = {}
+    stored_current = st.session_state.get("current_results")
+    if stored_current is not None:
+        labels = {
+            "step_single": "Текущий: ступень, одиночное вперёд",
+            "step_bogie": "Текущий: ступень, bogie вперёд",
+            "ditch_single": "Текущий: ров, одиночное вперёд",
+            "ditch_bogie": "Текущий: ров, bogie вперёд",
         }
-        selected_label = st.selectbox(
-            "Что показать",
-            list(animation_options),
-        )
-        selected = stored_limits["values"][
-            animation_options[selected_label]
-        ]
-        if selected.traversal is None:
-            st.warning("Для этой проверки не найден успешный путь.")
+        for key, label in labels.items():
+            available[label] = (stored_current["design"], stored_current["values"][key])
+
+    stored_optimization = st.session_state.get("optimization_result")
+    if stored_optimization is not None:
+        optimized: SequentialOptimizationResult = stored_optimization["result"]
+        best = optimized.best_step_design
+        if best is not None:
+            available["Оптимум: ступень, одиночное вперёд"] = (best.design, best.single_first)
+            available["Оптимум: ступень, bogie вперёд"] = (best.design, best.bogie_first)
+            if optimized.ditch_single_first is not None:
+                available["Оптимум: ров, одиночное вперёд"] = (best.design, optimized.ditch_single_first)
+            if optimized.ditch_bogie_first is not None:
+                available["Оптимум: ров, bogie вперёд"] = (best.design, optimized.ditch_bogie_first)
+
+    if not available:
+        st.info("Сначала выполните расчёт текущего варианта или оптимизацию.")
+    else:
+        selected_label = st.selectbox("Набор кадров", tuple(available))
+        selected_design, selected_capability = available[selected_label]
+        checked = selected_capability.checked
+        if checked is None or not checked.success:
+            st.error("Для найденного предела нет полного допустимого пути.")
         else:
-            st.plotly_chart(
-                create_traversal_animation(
-                    design,
-                    selected.traversal,
-                ),
-                width="stretch",
-                config={"displaylogo": False},
+            scenarios = tuple(item.scenario for item in checked.statics)
+            scenario = st.selectbox(
+                "Сценарий",
+                scenarios,
+                format_func=lambda item: SCENARIO_LABELS[item],
             )
-            st.write(
-                (
-                    "Минимальный фактический запас проекции центра масс: "
-                    f"**{selected.traversal.minimum_support_margin_mm:.1f} мм**."
-                    if selected.traversal.obstacle_kind == "ditch"
-                    else (
-                        "Для ступени все три колеса борта сохраняют контакт "
-                        "с нижней площадкой, стенкой, кромкой или верхней "
-                        "площадкой. Силы, сцепление и моменты двигателей пока "
-                        "не рассчитываются."
+            key_frames = select_key_frames(checked, scenario)
+            st.caption(
+                f"Предел препятствия: {selected_capability.value_mm:.2f} мм. "
+                f"Показано ключевых кадров: {len(key_frames)}."
+            )
+            for frame in key_frames:
+                with st.expander(frame.title, expanded=True):
+                    st.plotly_chart(
+                        create_key_frame_figure(
+                            selected_design,
+                            checked.traversal,
+                            frame.pose,
+                            frame.static,
+                            frame.title,
+                        ),
+                        width="stretch",
+                        config={"displaylogo": False},
                     )
-                )
-            )
+                    metrics = st.columns(5)
+                    metrics[0].metric("Тангаж платформы", f"{frame.static.body_pitch_deg:.2f}°")
+                    metrics[1].metric("Крен платформы", f"{frame.static.body_roll_deg:.2f}°")
+                    metrics[2].metric("Продольный запас", f"{frame.static.longitudinal_margin_mm:.2f} мм")
+                    metrics[3].metric("Поперечный запас", f"{frame.static.lateral_margin_mm:.2f} мм")
+                    metrics[4].metric("Макс. момент", f"{100.0 * frame.static.maximum_torque_utilization:.1f}%")
+                    st.dataframe(_contact_rows(frame.static), width="stretch", hide_index=True)
+                    st.markdown("**Полный расчёт кадра**")
+                    for equation in frame.static.equations:
+                        st.markdown(f"- `{equation}`")
+                    st.markdown("**Статьи, использованные в этом кадре**")
+                    for source_id in frame.static.source_ids:
+                        source = SOURCES[source_id]
+                        st.markdown(
+                            f"- [{source['short']} — {source['title']}]({source['url']}) — "
+                            f"{source['used_for']}."
+                        )
+
+with method_tab:
+    st.subheader("Что именно рассчитывает программа")
+    st.markdown(
+        """
+1. Для заданной высоты ступени или ширины рва ищется непрерывная последовательность положений подвески без пересечения колёс и рычагов с препятствием.
+2. Для каждого положения собираются левая и правая стороны. На одностороннем препятствии угол корпуса равен среднему углу rocker, а разница высот главных шарниров задаёт крен.
+3. Решаются уравнения квазистатического равновесия. Нормальные реакции не могут быть отрицательными; момент каждого привода и сцепление ограничены.
+4. Проверяются продольный, поперечный и общий запас опорного многоугольника. Для рва колесо может потерять контакт, если оставшаяся система опор сохраняет равновесие.
+5. Бинарным поиском определяется предельное препятствие. В оптимизации сначала выбирается максимальная ступень, после чего для этой же геометрии отдельно рассчитывается ров.
+        """
+    )
+    st.warning(
+        "Модель считает рычаги и колёса абсолютно жёсткими, не моделирует "
+        "деформацию грунта, удар о кромку, прочность рычагов и нагрев двигателей. "
+        "Коэффициент динамики увеличивает расчётный вес, но не заменяет динамическую модель."
+    )
+    st.subheader("Основные формулы")
+    st.code(
+        """Wр = m·g·Kд
+φплатформы = (θлевого rocker + θправого rocker) / 2
+ΣF = 0; ΣM = 0
+Nᵢ ≥ 0
+Dᵢ = Tᵢ + crr·Nᵢ
+|Dᵢ| + |Qᵢ| ≤ μ·Nᵢ
+|Dᵢ|·R ≤ τmax"""
+    )
+    st.subheader("Использованные публикации")
+    for source in SOURCES.values():
+        st.markdown(
+            f"- [{source['short']} — {source['title']}]({source['url']}) — "
+            f"{source['used_for']}."
+        )
