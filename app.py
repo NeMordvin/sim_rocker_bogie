@@ -10,14 +10,27 @@ import streamlit as st
 from analysis import (
     PhysicalCapabilityResult,
     SequentialOptimizationResult,
-    find_physical_limit,
+    find_limits,
     optimize_step_then_calculate_ditch,
 )
 from drawing import create_design_figure, create_key_frame_figure
-from geometry import ChassisDesign, SolverSettings, neutral_dimensions, validate_design
+from geometry import (
+    ChassisDesign,
+    DitchTerrain,
+    Pose,
+    SolverSettings,
+    StepTerrain,
+    neutral_dimensions,
+    validate_design,
+)
 from reports import select_key_frames
 from sources import SOURCES
-from statics import PhysicalParameters, SCENARIO_LABELS, validate_physical
+from statics import (
+    PhysicalParameters,
+    SCENARIO_LABELS,
+    required_friction_coefficient,
+    validate_physical,
+)
 
 
 st.set_page_config(
@@ -209,22 +222,25 @@ def _derived_rows(design: ChassisDesign) -> list[dict[str, object]]:
     ]
 
 
+CAPABILITY_DEFINITIONS = (
+    ("step_single", "Ступень", "одиночное колесо вперёд"),
+    ("step_bogie", "Ступень", "bogie вперёд"),
+    ("ditch_single", "Ров", "одиночное колесо вперёд"),
+    ("ditch_bogie", "Ров", "bogie вперёд"),
+)
+
+
 def _capability_rows(results: dict[str, PhysicalCapabilityResult]) -> list[dict[str, object]]:
-    definitions = (
-        ("step_single", "Ступень", "одиночное колесо вперёд"),
-        ("step_bogie", "Ступень", "bogie вперёд"),
-        ("ditch_single", "Ров", "одиночное колесо вперёд"),
-        ("ditch_bogie", "Ров", "bogie вперёд"),
-    )
     rows: list[dict[str, object]] = []
-    for key, obstacle, direction in definitions:
+    for key, obstacle, direction in CAPABILITY_DEFINITIONS:
         result = results[key]
         rows.append(
             {
                 "Препятствие": obstacle,
                 "Направление": direction,
-                "Предел, мм": round(result.value_mm, 2),
-                "Достигнута граница поиска": "да" if result.reached_search_cap else "нет",
+                "Геометрический предел, мм": round(result.geometric_mm, 2),
+                "Физический предел, мм": round(result.value_mm, 2),
+                "Что ограничивает": result.failure_reason or "граница поиска",
             }
         )
     return rows
@@ -232,10 +248,14 @@ def _capability_rows(results: dict[str, PhysicalCapabilityResult]) -> list[dict[
 
 def _show_capability_metrics(results: dict[str, PhysicalCapabilityResult]) -> None:
     columns = st.columns(4)
-    columns[0].metric("Ступень: одиночное вперёд", f"{results['step_single'].value_mm:.1f} мм")
-    columns[1].metric("Ступень: bogie вперёд", f"{results['step_bogie'].value_mm:.1f} мм")
-    columns[2].metric("Ров: одиночное вперёд", f"{results['ditch_single'].value_mm:.1f} мм")
-    columns[3].metric("Ров: bogie вперёд", f"{results['ditch_bogie'].value_mm:.1f} мм")
+    for column, (key, obstacle, direction) in zip(columns, CAPABILITY_DEFINITIONS):
+        result = results[key]
+        column.metric(
+            f"{obstacle}: {direction}",
+            f"{result.value_mm:.1f} мм",
+            f"геометрия {result.geometric_mm:.1f} мм",
+            delta_color="off",
+        )
     st.dataframe(_capability_rows(results), width="stretch", hide_index=True)
 
 
@@ -258,22 +278,42 @@ def _contact_rows(frame) -> list[dict[str, object]]:
 
 
 @st.cache_data(show_spinner=False)
-def _cached_limit(
+def _cached_limits(
     design: ChassisDesign,
     physical: PhysicalParameters,
-    kind: str,
-    direction: int,
-    maximum: float,
-) -> PhysicalCapabilityResult:
-    return find_physical_limit(
+    maximum_step_mm: float,
+    maximum_ditch_mm: float,
+) -> dict[str, PhysicalCapabilityResult]:
+    return find_limits(
         design,
         physical,
-        kind,  # type: ignore[arg-type]
-        direction,
-        maximum,
+        {
+            "step_single": ("step", 1, maximum_step_mm),
+            "step_bogie": ("step", -1, maximum_step_mm),
+            "ditch_single": ("ditch", 1, maximum_ditch_mm),
+            "ditch_bogie": ("ditch", -1, maximum_ditch_mm),
+        },
         SolverSettings.fine(),
-        iterations=7,
-        static_sample_stride=1,
+    )
+
+
+@st.cache_data(show_spinner=False)
+def _cached_required_friction(
+    design: ChassisDesign,
+    physical: PhysicalParameters,
+    pose: Pose,
+    obstacle_kind: str,
+    obstacle_value_mm: float,
+    direction: int,
+    scenario: str,
+) -> float:
+    terrain = (
+        StepTerrain(obstacle_value_mm)
+        if obstacle_kind == "step"
+        else DitchTerrain(obstacle_value_mm)
+    )
+    return required_friction_coefficient(
+        design, physical, pose, terrain, direction, scenario  # type: ignore[arg-type]
     )
 
 
@@ -286,7 +326,17 @@ st.caption(
 with st.sidebar:
     st.header("Физическая модель")
     mass_kg = st.number_input("Общая масса, кг", min_value=0.1, value=120.0, step=5.0)
-    torque_nm = st.number_input("Момент одного мотор-колеса, Н·м", min_value=0.01, value=20.0, step=1.0)
+    st.caption(
+        "Мотор-колесо Xiaomi M365 Pro: шина 8,5″ (Ø≈216 мм), 300 Вт номинально, "
+        "600 Вт пик. Пиковый момент производитель не публикует — 16 Н·м является "
+        "оценкой, уточните её замером."
+    )
+    torque_nm = st.number_input(
+        "Пиковый момент одного мотор-колеса, Н·м",
+        min_value=0.01,
+        value=PhysicalParameters().wheel_torque_nm,
+        step=1.0,
+    )
     track_mm = st.number_input("Колея по точкам контакта, мм", min_value=100.0, value=600.0, step=25.0)
     com_lateral_mm = st.number_input("Поперечное смещение ЦМ, мм", value=0.0, step=10.0)
     friction = st.number_input("Коэффициент сцепления μ", min_value=0.01, value=0.70, step=0.05)
@@ -375,26 +425,16 @@ with calculation_tab:
     st.subheader("Точный расчёт текущей геометрии")
     st.write(
         "Для ступени и рва проверяются оба направления движения и два сценария: "
-        "препятствие по всей ширине и препятствие только под одной стороной."
+        "препятствие по всей ширине и препятствие только под одной стороной. "
+        "**Геометрический предел** — подвеска проходит препятствие без "
+        "пересечений и выхода шарниров за диапазон. **Физический предел** — "
+        "вдобавок хватает сцепления и момента колёс, а ровер не опрокидывается."
     )
     if st.button("Рассчитать текущий вариант", type="primary", disabled=bool(errors)):
-        jobs = (
-            ("step_single", "step", 1, maximum_step),
-            ("step_bogie", "step", -1, maximum_step),
-            ("ditch_single", "ditch", 1, maximum_ditch),
-            ("ditch_bogie", "ditch", -1, maximum_ditch),
-        )
-        progress = st.progress(0.0, text="Подготовка")
-        results: dict[str, PhysicalCapabilityResult] = {}
-        for index, (key, kind, direction, maximum) in enumerate(jobs, start=1):
-            progress.progress(
-                (index - 1) / len(jobs),
-                text=f"Расчёт {index} из {len(jobs)}",
+        with st.spinner("Расчёт четырёх пределов параллельно…"):
+            results = _cached_limits(
+                design, physical, float(maximum_step), float(maximum_ditch)
             )
-            results[key] = _cached_limit(
-                design, physical, kind, direction, float(maximum)
-            )
-        progress.progress(1.0, text="Готово")
         st.session_state["current_results"] = {
             "design": design,
             "physical": physical,
@@ -411,9 +451,11 @@ with calculation_tab:
 with optimization_tab:
     st.subheader("Последовательная оптимизация")
     st.write(
-        "Этап 1: оптимизируется только максимальная ступень в обоих направлениях "
-        "и обоих сценариях. Этап 2: для выбранной геометрии вычисляется ров; "
-        "ров не влияет на выбор размеров подвески."
+        "Этап 1: максимизируется **физический** предел ступени в обоих "
+        "направлениях и обоих сценариях; при равенстве выше ставится вариант с "
+        "большим геометрическим пределом, затем более короткий. Этап 2: для "
+        "выбранной геометрии вычисляется ров; ров не влияет на выбор размеров. "
+        "Варианты считаются параллельно на всех ядрах процессора."
     )
     left, middle = st.columns(2)
     candidate_count = left.number_input(
@@ -460,9 +502,16 @@ with optimization_tab:
             st.error("Не найдено допустимых вариантов.")
         else:
             best = result.best_step_design
-            metrics = st.columns(2)
-            metrics[0].metric("Лучшая ступень в обе стороны", f"{best.bidirectional_step_mm:.1f} мм")
-            metrics[1].metric("Ров этой геометрии в обе стороны", f"{result.bidirectional_ditch_mm:.1f} мм")
+            metrics = st.columns(3)
+            metrics[0].metric("Ступень в обе стороны: физически", f"{best.bidirectional_step_mm:.1f} мм")
+            metrics[1].metric("Ступень в обе стороны: геометрически", f"{best.bidirectional_geometric_step_mm:.1f} мм")
+            metrics[2].metric("Ров этой геометрии в обе стороны", f"{result.bidirectional_ditch_mm:.1f} мм")
+            for label, item in (
+                ("одиночное вперёд", best.single_first),
+                ("bogie вперёд", best.bogie_first),
+            ):
+                if item.failure_reason:
+                    st.caption(f"Ступень, {label} — ограничение: {item.failure_reason}")
             if st.button("Применить найденную геометрию"):
                 _apply_design_to_tables(best.design)
                 st.rerun()
@@ -470,7 +519,8 @@ with optimization_tab:
                 [
                     {
                         "Место": index,
-                        "Ступень в обе стороны, мм": round(item.bidirectional_step_mm, 2),
+                        "Физически в обе стороны, мм": round(item.bidirectional_step_mm, 2),
+                        "Геометрически в обе стороны, мм": round(item.bidirectional_geometric_step_mm, 2),
                         "Одиночное вперёд, мм": round(item.single_first.value_mm, 2),
                         "Bogie вперёд, мм": round(item.bogie_first.value_mm, 2),
                         "Точная проверка": "да" if item.refined else "нет",
@@ -542,12 +592,27 @@ with frames_tab:
                         width="stretch",
                         config={"displaylogo": False},
                     )
-                    metrics = st.columns(5)
+                    required_mu = _cached_required_friction(
+                        selected_design,
+                        physical,
+                        frame.pose,
+                        checked.traversal.obstacle_kind,
+                        checked.traversal.obstacle_value_mm,
+                        checked.traversal.direction,
+                        scenario,
+                    )
+                    metrics = st.columns(6)
                     metrics[0].metric("Тангаж платформы", f"{frame.static.body_pitch_deg:.2f}°")
                     metrics[1].metric("Крен платформы", f"{frame.static.body_roll_deg:.2f}°")
                     metrics[2].metric("Продольный запас", f"{frame.static.longitudinal_margin_mm:.2f} мм")
                     metrics[3].metric("Поперечный запас", f"{frame.static.lateral_margin_mm:.2f} мм")
                     metrics[4].metric("Макс. момент", f"{100.0 * frame.static.maximum_torque_utilization:.1f}%")
+                    metrics[5].metric(
+                        "Требуемое μ",
+                        f"{required_mu:.2f}" if required_mu != float("inf") else "> 3",
+                        help="Минимальный коэффициент сцепления, при котором кадр "
+                        "уравновешен при неограниченном моменте колёс.",
+                    )
                     st.dataframe(_contact_rows(frame.static), width="stretch", hide_index=True)
                     st.markdown("**Полный расчёт кадра**")
                     for equation in frame.static.equations:
@@ -564,11 +629,14 @@ with method_tab:
     st.subheader("Что именно рассчитывает программа")
     st.markdown(
         """
-1. Для заданной высоты ступени или ширины рва ищется непрерывная последовательность положений подвески без пересечения колёс и рычагов с препятствием.
+1. Для заданной высоты ступени или ширины рва ищется непрерывная последовательность положений подвески без пересечения колёс и рычагов с препятствием. Наибольшее такое препятствие — **геометрический предел**.
 2. Для каждого положения собираются левая и правая стороны. На одностороннем препятствии угол корпуса равен среднему углу rocker, а разница высот главных шарниров задаёт крен.
-3. Решаются уравнения квазистатического равновесия. Нормальные реакции не могут быть отрицательными; момент каждого привода и сцепление ограничены.
-4. Проверяются продольный, поперечный и общий запас опорного многоугольника. Для рва колесо может потерять контакт, если оставшаяся система опор сохраняет равновесие.
-5. Бинарным поиском определяется предельное препятствие. В оптимизации сначала выбирается максимальная ступень, после чего для этой же геометрии отдельно рассчитывается ров.
+3. Решаются уравнения квазистатического равновесия всего ровера, свободного шарнира каждого bogie и дифференциала. Нормальные реакции не могут быть отрицательными. Сила, передаваемая грунтом, ограничена сцеплением; момент каждого привода — пиковым моментом мотор-колеса с учётом сопротивления качению.
+4. Распределение тяги между колёсами выбирается так, чтобы минимизировать максимальную загрузку приводов (идеальное управление тягой). Именно так задние колёса прижимают переднее к стенке: их тяга создаёт нормальную реакцию стенки, а сила трения на ней поднимает колесо.
+5. Проверяются продольный, поперечный и общий запас опорного многоугольника. Для рва колесо может потерять контакт, если оставшаяся система опор сохраняет равновесие.
+6. Бинарным поиском внутри геометрического предела определяется **физический предел**. В оптимизации сначала выбирается максимальная физическая ступень, после чего для этой же геометрии отдельно рассчитывается ров.
+
+**Ориентир для вертикальной стенки.** Пусть колесо на стенке несёт долю веса F из полного W, а остальные колёса упираются с тем же μ. Подъём возможен при μ²·(W − F) ≥ F. При F = W/3 нужно μ ≥ 0,71, при F = 0,6·W — уже μ ≥ 1,22. Поэтому положение главного шарнира относительно центра масс сильнее всего влияет на физический предел.
         """
     )
     st.warning(
@@ -582,8 +650,8 @@ with method_tab:
 φплатформы = (θлевого rocker + θправого rocker) / 2
 ΣF = 0; ΣM = 0
 Nᵢ ≥ 0
-Dᵢ = Tᵢ + crr·Nᵢ
-|Dᵢ| + |Qᵢ| ≤ μ·Nᵢ
+|Tᵢ| + |Qᵢ| ≤ μ·Nᵢ        — сцепление ограничивает силу от грунта
+Dᵢ = Tᵢ + crr·Nᵢ          — сила привода с учётом потерь качения
 |Dᵢ|·R ≤ τmax"""
     )
     st.subheader("Использованные публикации")

@@ -12,8 +12,9 @@ from dataclasses import dataclass, replace
 from math import acos, atan2, cos, degrees, hypot, radians, sin
 from typing import Literal
 
+import highspy
 import numpy as np
-from scipy.optimize import linprog
+from scipy.sparse import csc_matrix
 
 from geometry import (
     ChassisDesign,
@@ -43,7 +44,10 @@ class PhysicalParameters:
     """Изменяемые исходные данные силового расчёта."""
 
     mass_kg: float = 120.0
-    wheel_torque_nm: float = 20.0
+    # Пиковый момент мотор-колеса Xiaomi M365 Pro (300 Вт ном., 600 Вт пик).
+    # Производитель момент не публикует; 16 Н·м — оценка по мощности и
+    # току контроллера, её следует уточнить замером.
+    wheel_torque_nm: float = 16.0
     track_width_mm: float = 600.0
     com_lateral_mm: float = 0.0
     friction_coefficient: float = 0.70
@@ -476,75 +480,51 @@ def _equilibrium_system(
     friction = physical.friction_coefficient if friction_coefficient is None else friction_coefficient
     force_limit = 1e12 if motor_force_limit_n is None else motor_force_limit_n
 
-    normal_columns: list[np.ndarray] = []
-    tangent_columns: list[np.ndarray] = []
-    lateral_columns: list[np.ndarray] = []
-    for contact in contacts:
-        normal_columns.append(contact.normal)
-        tangent_columns.append(contact.tangent)
-        lateral_columns.append(np.asarray([0.0, 1.0, 0.0]))
+    # Направления трёх составляющих реакции, shape (3·count, 3): блоки N, T, Q.
+    points = np.asarray([contact.point_m for contact in contacts])
+    directions = np.vstack(
+        (
+            np.asarray([contact.normal for contact in contacts]),
+            np.asarray([contact.tangent for contact in contacts]),
+            np.tile([0.0, 1.0, 0.0], (count, 1)),
+        )
+    )
+    points3 = np.tile(points, (3, 1))
 
-    rows: list[np.ndarray] = []
-    targets: list[float] = []
+    def moment_columns(origins: np.ndarray) -> np.ndarray:
+        """Моменты единичных составляющих реакций относительно origins."""
+        return np.cross(points3 - origins, directions)
 
-    def add_force_equation(component: int, target: float) -> None:
-        row = np.zeros(variable_count)
-        for index in range(count):
-            row[index] = normal_columns[index][component]
-            row[count + index] = tangent_columns[index][component]
-            row[2 * count + index] = lateral_columns[index][component]
-        rows.append(row)
-        targets.append(target)
+    def padded(values: np.ndarray) -> np.ndarray:
+        return np.append(values, 0.0)
 
-    add_force_equation(0, 0.0)
-    add_force_equation(1, 0.0)
-    add_force_equation(2, weight)
+    rows: list[np.ndarray] = [padded(directions[:, axis]) for axis in range(3)]
+    targets: list[float] = [0.0, 0.0, weight]
 
-    for component in (0, 1, 2):
-        row = np.zeros(variable_count)
-        for index, contact in enumerate(contacts):
-            arm = contact.point_m - center_of_mass
-            row[index] = np.cross(arm, normal_columns[index])[component]
-            row[count + index] = np.cross(arm, tangent_columns[index])[component]
-            row[2 * count + index] = np.cross(
-                arm,
-                lateral_columns[index],
-            )[component]
-        rows.append(row)
-        targets.append(0.0)
+    global_moments = moment_columns(center_of_mass)
+    rows.extend(padded(global_moments[:, axis]) for axis in range(3))
+    targets.extend((0.0, 0.0, 0.0))
+
+    sides = np.tile([contact.side for contact in contacts], 3)
+    wheels = np.tile([contact.wheel for contact in contacts], 3)
 
     # Свободный шарнир bogie: сумма моментов двух его колёс равна нулю.
+    on_bogie = np.isin(wheels, ("middle", "rear"))
     for side in ("левая", "правая"):
-        row = np.zeros(variable_count)
-        pivot = pivots[f"bogie_{side}"]
-        for index, contact in enumerate(contacts):
-            if contact.side != side or contact.wheel not in ("middle", "rear"):
-                continue
-            arm = contact.point_m - pivot
-            row[index] = np.cross(arm, normal_columns[index])[1]
-            row[count + index] = np.cross(arm, tangent_columns[index])[1]
-            row[2 * count + index] = np.cross(
-                arm,
-                lateral_columns[index],
-            )[1]
-        rows.append(row)
+        bogie_moments = moment_columns(pivots[f"bogie_{side}"])[:, 1]
+        rows.append(padded(np.where(on_bogie & (sides == side), bogie_moments, 0.0)))
         targets.append(0.0)
 
     # Идеальный симметричный дифференциал создаёт одинаковые моменты на двух
     # выходных валах; реакция корпуса равна их сумме. Поэтому требуются равные
     # моменты от грунта относительно левого и правого главных шарниров.
-    differential_row = np.zeros(variable_count)
-    for index, contact in enumerate(contacts):
-        pivot = pivots[f"main_{contact.side}"]
-        arm = contact.point_m - pivot
-        sign = 1.0 if contact.side == "левая" else -1.0
-        differential_row[index] = sign * np.cross(arm, normal_columns[index])[1]
-        differential_row[count + index] = sign * np.cross(arm, tangent_columns[index])[1]
-        differential_row[2 * count + index] = sign * np.cross(
-            arm,
-            lateral_columns[index],
-        )[1]
-    rows.append(differential_row)
+    main_origins = np.where(
+        (sides == "левая")[:, None],
+        pivots["main_левая"],
+        pivots["main_правая"],
+    )
+    signs = np.where(sides == "левая", 1.0, -1.0)
+    rows.append(padded(signs * moment_columns(main_origins)[:, 1]))
     targets.append(0.0)
 
     # На одинаковом профиле решение должно сохранять левую/правую симметрию.
@@ -597,13 +577,14 @@ def _equilibrium_system(
     limits: list[float] = []
     rolling = physical.rolling_resistance_coefficient
     for index in range(count):
-        # D_i = T_i + c_rr*N_i — продольная сила привода. Четыре
-        # неравенства |D_i|+|Q_i|≤μN_i образуют консервативную линейную
-        # аппроксимацию круга сцепления и учитывают совместную работу сил.
+        # Сцепление ограничивает силу, которую фактически передаёт грунт:
+        # |T_i|+|Q_i|≤μN_i — консервативная линейная аппроксимация круга
+        # сцепления. Сопротивление качению — потеря в шине, оно добавляется
+        # только к требуемой силе привода D_i = T_i + c_rr*N_i.
         for drive_sign in (-1.0, 1.0):
             for lateral_sign in (-1.0, 1.0):
                 friction_row = np.zeros(variable_count)
-                friction_row[index] = drive_sign * rolling - friction
+                friction_row[index] = -friction
                 friction_row[count + index] = drive_sign
                 friction_row[2 * count + index] = lateral_sign
                 inequalities.append(friction_row)
@@ -663,16 +644,50 @@ def _solve_loads(
     a_eq, b_eq, a_ub, b_ub, bounds, _ = system
     objective = np.zeros(a_eq.shape[1])
     objective[-1] = 1.0
-    result = linprog(
-        objective,
-        A_ub=a_ub,
-        b_ub=b_ub,
-        A_eq=a_eq,
-        b_eq=b_eq,
-        bounds=bounds,
-        method="highs",
-    )
-    return result, system
+    return _linprog_highs(objective, a_eq, b_eq, a_ub, b_ub, bounds), system
+
+
+@dataclass(frozen=True)
+class _LpResult:
+    success: bool
+    x: np.ndarray
+
+
+def _linprog_highs(
+    objective: np.ndarray,
+    a_eq: np.ndarray,
+    b_eq: np.ndarray,
+    a_ub: np.ndarray,
+    b_ub: np.ndarray,
+    bounds: list[tuple[float | None, float | None]],
+) -> _LpResult:
+    """min c·x при A_eq·x = b_eq, A_ub·x ≤ b_ub; прямой вызов HiGHS.
+
+    scipy.optimize.linprog решает ту же задачу тем же HiGHS, но тратит
+    больше времени на проверку опций, чем на само решение маленькой задачи.
+    """
+    infinity = highspy.kHighsInf
+    matrix = csc_matrix(np.vstack((a_eq, a_ub)))
+    lp = highspy.HighsLp()
+    lp.num_col_ = len(objective)
+    lp.num_row_ = matrix.shape[0]
+    lp.col_cost_ = objective
+    lp.col_lower_ = np.asarray([-infinity if low is None else low for low, _ in bounds])
+    lp.col_upper_ = np.asarray([infinity if high is None else high for _, high in bounds])
+    lp.row_lower_ = np.concatenate((b_eq, np.full(len(b_ub), -infinity)))
+    lp.row_upper_ = np.concatenate((b_eq, b_ub))
+    lp.a_matrix_.format_ = highspy.MatrixFormat.kColwise
+    lp.a_matrix_.start_ = matrix.indptr
+    lp.a_matrix_.index_ = matrix.indices
+    lp.a_matrix_.value_ = matrix.data
+
+    solver = highspy.Highs()
+    solver.setOptionValue("output_flag", False)
+    solver.passModel(lp)
+    solver.run()
+    success = solver.getModelStatus() == highspy.HighsModelStatus.kOptimal
+    x = np.asarray(solver.getSolution().col_value, dtype=float) if success else np.empty(0)
+    return _LpResult(success, x)
 
 
 def analyze_frame(
@@ -731,7 +746,7 @@ def analyze_frame(
         f"κ = atan((zR − zL)/B) = {roll:.3f}° — поперечный крен",
         "ΣFx = 0; ΣFz = Wр; ΣMx = ΣMy = ΣMz = 0",
         "Для каждого bogie: ΣMy,B = 0; для дифференциала: My,L − My,R = 0",
-        "Dᵢ = Tᵢ + crr·Nᵢ; |Dᵢ| + |Qᵢ| ≤ μNᵢ; |Dᵢ|·R ≤ τmax; Nᵢ ≥ 0",
+        "|Tᵢ| + |Qᵢ| ≤ μNᵢ; Dᵢ = Tᵢ + crr·Nᵢ; |Dᵢ|·R ≤ τmax; Nᵢ ≥ 0",
     )
 
     if len(contacts) < 3 or len(hull) < 3:
@@ -821,9 +836,9 @@ def analyze_frame(
                 motor_force_n=motor_force,
                 motor_torque_nm=torque,
                 friction_utilization=(
-                    hypot(motor_force, lateral_force) / friction_capacity
+                    (abs(tangent_force) + abs(lateral_force)) / friction_capacity
                     if friction_capacity > 1e-9
-                    else (0.0 if abs(motor_force) <= 1e-9 else float("inf"))
+                    else (0.0 if abs(tangent_force) + abs(lateral_force) <= 1e-9 else float("inf"))
                 ),
                 torque_utilization=abs(torque) / physical.wheel_torque_nm,
             )
@@ -887,6 +902,47 @@ def analyze_frame(
         max_friction, force_residual, moment_residual, tuple(loads), equations,
         ("HACOT_1998", "LAMON_2004", "PAPADOPOULOS_2000"),
     )
+
+
+def required_friction_coefficient(
+    design: ChassisDesign,
+    physical: PhysicalParameters,
+    pose: Pose,
+    terrain: Terrain,
+    direction: int,
+    scenario: Scenario,
+    maximum: float = 3.0,
+    tolerance: float = 0.005,
+) -> float:
+    """Минимальный μ, при котором кадр уравновешивается без учёта предела момента.
+
+    Сцепление входит в ограничения произведением μ·N, поэтому μ ищется
+    бисекцией по допустимости линейной задачи. Возвращает inf, если не
+    хватает даже μ = maximum.
+    """
+    contacts, _, pivots, _, _, center_of_mass = _contact_geometry(
+        design, physical, pose, terrain, direction, scenario
+    )
+    if len(contacts) < 3:
+        return float("inf")
+
+    def feasible(mu: float) -> bool:
+        result, _ = _solve_loads(
+            design, contacts, pivots, center_of_mass, physical,
+            friction=mu, force_limit_multiplier=1e6,
+        )
+        return result.success
+
+    if not feasible(maximum):
+        return float("inf")
+    lower, upper = 0.0, maximum
+    while upper - lower > tolerance:
+        middle = (lower + upper) / 2.0
+        if feasible(middle):
+            upper = middle
+        else:
+            lower = middle
+    return upper
 
 
 def analyze_traversal(

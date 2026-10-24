@@ -10,9 +10,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from functools import lru_cache
-from itertools import product
 from math import asin, atan2, cos, degrees, hypot, pi, radians, sin, sqrt
-from typing import Literal, Protocol
+from typing import Callable, Literal, Protocol
 
 import numpy as np
 from scipy.optimize import least_squares
@@ -42,7 +41,8 @@ class ChassisDesign:
     в исходном положении имеют одинаковую координату Y.
     """
 
-    wheel_radius_mm: float = 100.0
+    # Мотор-колесо Xiaomi M365 Pro: шина 8,5″, наружный диаметр ≈216 мм.
+    wheel_radius_mm: float = 108.0
     middle_wheel_x_mm: float = 360.0
     front_wheel_x_mm: float = 900.0
 
@@ -929,28 +929,22 @@ def _angle_candidates(
         settings.angle_step_deg,
     )
 
+    offset_grid = np.stack(
+        np.meshgrid(pitch_offsets, bogie_offsets, indexing="ij"), axis=-1
+    ).reshape(-1, 2)
+    current = np.asarray(
+        [[state.pose.body_pitch_deg, state.pose.bogie_angle_deg] for state in states]
+    ).reshape(-1, 2)
+    grid = (current[:, None, :] + offset_grid[None, :, :]).reshape(-1, 2)
+    inside = (
+        (grid[:, 0] >= design.rocker_min_angle_deg)
+        & (grid[:, 0] <= design.rocker_max_angle_deg)
+        & (grid[:, 1] >= design.bogie_min_angle_deg)
+        & (grid[:, 1] <= design.bogie_max_angle_deg)
+    )
+
     candidates: list[tuple[float, float]] = []
     for state in states:
-        for pitch_offset, bogie_offset in product(
-            pitch_offsets,
-            bogie_offsets,
-        ):
-            pitch = state.pose.body_pitch_deg + float(pitch_offset)
-            bogie = state.pose.bogie_angle_deg + float(bogie_offset)
-            if not (
-                design.rocker_min_angle_deg
-                <= pitch
-                <= design.rocker_max_angle_deg
-            ):
-                continue
-            if not (
-                design.bogie_min_angle_deg
-                <= bogie
-                <= design.bogie_max_angle_deg
-            ):
-                continue
-            candidates.append((pitch, bogie))
-
         # Точные нулевые значения не всегда попадают в равномерную сетку,
         # поэтому отдельно добавляется один шаг возврата к исходной позе.
         neutral_pitch = (
@@ -974,15 +968,13 @@ def _angle_candidates(
             )
         )
 
-    if not candidates:
+    combined = np.vstack((grid[inside], np.asarray(candidates).reshape(-1, 2)))
+    if combined.size == 0:
         return np.empty((0, 2), dtype=float)
 
-    # Округление устраняет одинаковые пары, пришедшие из разных ветвей.
-    unique = {
-        (round(pitch, 6), round(bogie, 6))
-        for pitch, bogie in candidates
-    }
-    return np.asarray(sorted(unique), dtype=float)
+    # Округление устраняет одинаковые пары, пришедшие из разных ветвей;
+    # np.unique по строкам возвращает их отсортированными, как и раньше.
+    return np.unique(np.round(combined, 6), axis=0)
 
 
 def _angle_in_bounds(
@@ -1438,6 +1430,58 @@ def _step_pose_from_modes(
     )
 
 
+@dataclass(frozen=True)
+class _NewtonResult:
+    x: np.ndarray
+    fun: np.ndarray
+
+
+def _newton_bounded(
+    residual: Callable[[np.ndarray], np.ndarray],
+    initial: np.ndarray,
+    lower: np.ndarray,
+    upper: np.ndarray,
+    tolerance: float = 1e-7,
+    iterations: int = 12,
+) -> _NewtonResult | None:
+    """Метод Ньютона с численным якобианом и проекцией на границы.
+
+    Для квадратной системы контактных уравнений с тёплым стартом из
+    соседнего кадра сходится за 2–3 итерации, что в десятки раз дешевле
+    scipy.optimize.least_squares. При отсутствии сходимости возвращает
+    None, и вызывающий код использует least_squares.
+    """
+    x = np.asarray(initial, dtype=float).copy()
+    values = residual(x)
+    for _ in range(iterations):
+        if np.max(np.abs(values)) <= tolerance:
+            return _NewtonResult(x, values)
+        jacobian = np.empty((len(values), len(x)))
+        for column in range(len(x)):
+            step = 1e-6 * max(1.0, abs(x[column]))
+            shifted = x.copy()
+            shifted[column] += step
+            jacobian[:, column] = (residual(shifted) - values) / step
+        try:
+            delta = np.linalg.solve(jacobian, -values)
+        except np.linalg.LinAlgError:
+            return None
+        # Демпфирование: шаг уменьшается, пока невязка не начнёт убывать.
+        norm = np.linalg.norm(values)
+        for _ in range(6):
+            candidate = np.clip(x + delta, lower, upper)
+            candidate_values = residual(candidate)
+            if np.linalg.norm(candidate_values) < norm:
+                break
+            delta *= 0.5
+        else:
+            return None
+        x, values = candidate, candidate_values
+    if np.max(np.abs(values)) <= tolerance:
+        return _NewtonResult(x, values)
+    return None
+
+
 def _solve_step_contact_target(
     design: ChassisDesign,
     terrain: StepTerrain,
@@ -1522,16 +1566,23 @@ def _solve_step_contact_target(
     best: tuple[float, np.ndarray, Pose] | None = None
 
     for seed_index, seed in enumerate(seeds):
-        result = least_squares(
+        result = _newton_bounded(
             residual,
             np.clip(seed, lower_bounds, upper_bounds),
-            bounds=(lower_bounds, upper_bounds),
-            x_scale=np.asarray([100.0, 100.0, 10.0, 10.0]),
-            max_nfev=100 if seed_index == 0 else 180,
-            xtol=1e-10,
-            ftol=1e-10,
-            gtol=1e-10,
+            lower_bounds,
+            upper_bounds,
         )
+        if result is None:
+            result = least_squares(
+                residual,
+                np.clip(seed, lower_bounds, upper_bounds),
+                bounds=(lower_bounds, upper_bounds),
+                x_scale=np.asarray([100.0, 100.0, 10.0, 10.0]),
+                max_nfev=100 if seed_index == 0 else 180,
+                xtol=1e-10,
+                ftol=1e-10,
+                gtol=1e-10,
+            )
         if np.max(np.abs(result.fun)) > contact_tolerance:
             if seed_index == 0:
                 seeds.extend(

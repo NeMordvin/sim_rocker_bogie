@@ -7,10 +7,16 @@ from geometry import (
     DitchTerrain,
     SolverSettings,
     StepTerrain,
+    calculate_frame,
     neutral_pose,
     simulate_traversal,
 )
-from statics import PhysicalParameters, analyze_frame, validate_physical
+from statics import (
+    PhysicalParameters,
+    analyze_frame,
+    required_friction_coefficient,
+    validate_physical,
+)
 
 
 class StaticModelTests(unittest.TestCase):
@@ -61,6 +67,19 @@ class StaticModelTests(unittest.TestCase):
         self.assertLess(result.force_residual_n, 1e-7)
         self.assertLess(result.moment_residual_nm, 1e-7)
 
+    def _front_on_edge_pose(self, height_mm: float):
+        traversal = simulate_traversal(
+            self.design, StepTerrain(height_mm), 1, SolverSettings.fine()
+        )
+        self.assertTrue(traversal.success, traversal.failure_reason)
+        # Первый кадр, где одиночное колесо оторвалось от нижней площадки.
+        return next(
+            pose
+            for pose in traversal.poses
+            if calculate_frame(self.design, pose, 1).front_wheel.y
+            > self.design.wheel_radius_mm + 5.0
+        )
+
     def test_torque_and_friction_limits_are_enforced(self) -> None:
         pose = neutral_pose(self.design)
         low_torque = analyze_frame(
@@ -74,7 +93,9 @@ class StaticModelTests(unittest.TestCase):
         self.assertFalse(low_torque.feasible)
         self.assertIn("момент", low_torque.reason)
 
-        low_friction = analyze_frame(
+        # На ровной площадке суммарная сила от грунта равна нулю, и сцепление
+        # не требуется. Подъём на кромку без сцепления невозможен.
+        flat = analyze_frame(
             self.design,
             replace(self.physical, friction_coefficient=0.01),
             pose,
@@ -82,8 +103,48 @@ class StaticModelTests(unittest.TestCase):
             1,
             "full_width",
         )
+        self.assertTrue(flat.feasible, flat.reason)
+
+        low_friction = analyze_frame(
+            self.design,
+            replace(self.physical, friction_coefficient=0.05, wheel_torque_nm=1e4),
+            self._front_on_edge_pose(60.0),
+            StepTerrain(60.0),
+            1,
+            "full_width",
+        )
         self.assertFalse(low_friction.feasible)
         self.assertIn("сцеплен", low_friction.reason)
+
+    def test_required_friction_drops_when_front_wheel_is_unloaded(self) -> None:
+        # Центр масс ближе к bogie разгружает колесо на кромке: задние колёса
+        # прижимают его с меньшей силой, и требуемое сцепление снижается.
+        pose = self._front_on_edge_pose(80.0)
+        requirements = [
+            required_friction_coefficient(
+                replace(self.design, com_x_from_main_pivot_mm=offset),
+                self.physical,
+                pose,
+                StepTerrain(80.0),
+                1,
+                "full_width",
+            )
+            for offset in (100.0, 0.0, -150.0)
+        ]
+        self.assertTrue(all(math.isfinite(value) for value in requirements))
+        self.assertGreater(requirements[0], requirements[1])
+        self.assertGreater(requirements[1], requirements[2])
+
+    def test_flat_ground_needs_no_friction(self) -> None:
+        mu = required_friction_coefficient(
+            self.design,
+            self.physical,
+            neutral_pose(self.design),
+            StepTerrain(0.0),
+            1,
+            "full_width",
+        )
+        self.assertLess(mu, 0.01)
 
     def test_lateral_stability_uses_track_and_com_offset(self) -> None:
         shifted = replace(self.physical, com_lateral_mm=295.0)
