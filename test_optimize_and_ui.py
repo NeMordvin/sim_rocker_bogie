@@ -3,7 +3,8 @@ import unittest
 from streamlit.testing.v1 import AppTest
 
 from model import Design, Platform
-from optimize import Criterion, Goal, evaluate, jobs_for, optimize
+from optimize import FAILED_TORQUE_FACTOR, INVALID_COST, Criterion, Goal, evaluate, jobs_for, optimize, summarize
+from simulate import Obstacle, TorqueResult
 
 QUICK_GOAL = Goal(criteria=(Criterion("step_up", 1.0, 80.0),), tolerance_mm=20.0)
 
@@ -17,22 +18,37 @@ class OptimizeTests(unittest.TestCase):
     def test_score_uses_worst_direction(self):
         evaluation = evaluate(Design(), Platform(), QUICK_GOAL)
         self.assertTrue(evaluation.valid)
-        worst = min(limit.value_mm for limit in evaluation.limits)
+        worst = min(limit.value_mm for limit in evaluation.results)
         self.assertAlmostEqual(evaluation.values["step_up"], worst)
         self.assertAlmostEqual(evaluation.score, worst)
+        self.assertAlmostEqual(evaluation.cost, -worst)
 
     def test_invalid_design_is_not_simulated(self):
-        evaluation = evaluate(Design(front_wheel_x_mm=1500.0), Platform(), QUICK_GOAL)
+        evaluation = evaluate(Design(rocker_front_arm_mm=1500.0), Platform(), QUICK_GOAL)
         self.assertFalse(evaluation.valid)
-        self.assertEqual(evaluation.limits, [])
+        self.assertEqual(evaluation.results, [])
+        self.assertGreater(evaluation.cost, INVALID_COST)
+
+    def test_torque_cost_penalizes_impassable(self):
+        goal = Goal(criteria=(Criterion("step_up", 1.0, 300.0, 80.0),), mode="torque", max_torque_nm=40.0)
+        obstacle = Obstacle("step_up", 80.0, 1)
+        passable = summarize(Design(), goal, [TorqueResult(obstacle, 20.0, "", 40.0, 1),
+                                              TorqueResult(obstacle, 10.0, "", 40.0, 1)])
+        self.assertAlmostEqual(passable.score, 20.0)
+        self.assertAlmostEqual(passable.cost, 20.0 + 0.1 * 15.0)
+        failed = summarize(Design(), goal, [TorqueResult(obstacle, float("inf"), "задевает", 40.0, 1),
+                                            TorqueResult(obstacle, 10.0, "", 40.0, 1)])
+        self.assertEqual(failed.score, float("inf"))
+        self.assertGreater(failed.cost, FAILED_TORQUE_FACTOR * 40.0)
 
     def test_optimization_keeps_start_and_never_gets_worse(self):
         base = Design()
-        result = optimize(base, Platform(), QUICK_GOAL, {"bogie_pivot_z_mm": (220.0, 400.0)},
-                          population=5, generations=1, seed=3)
+        result = optimize(base, Platform(), QUICK_GOAL, {"bogie_angle_deg": (180.0, 240.0)},
+                          population=5, generations=1, seed=3, refine=0)
         start = next(item for item in result.evaluations if item.design == base)
         self.assertIsNotNone(result.best)
         self.assertGreaterEqual(result.best.score, start.score)
+        self.assertEqual(len(result.history), 1)
 
 
 class AppTests(unittest.TestCase):

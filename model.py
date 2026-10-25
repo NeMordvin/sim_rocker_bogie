@@ -8,12 +8,18 @@
 Стойка идёт от оси колеса вверх на высоту h с наклоном α от вертикали;
 верх стойки — точка крепления к рычагу. У крайних колёс наклон зеркальный:
 при α > 0 верхи стоек наклонены к центру шасси.
+
+Рычаги задаются длинами плеч и углом между плечами, измеренным под
+шарниром: < 180° — шарнир выше концов плеч (Λ), 180° — прямая труба,
+> 180° — шарнир ниже концов (V). Положение рычагов и колёс следует из
+условия «все колёса стоят на ровной площадке»; координаты шарниров
+вычисляются (``neutral_points``) и показываются для наглядности.
 """
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, fields
-from math import atan2, cos, degrees, hypot, radians, sin
+from dataclasses import asdict, dataclass, fields, replace
+from math import acos, asin, atan2, cos, degrees, hypot, radians, sin, sqrt
 
 # Мотор-колесо Xiaomi M365 Pro: шина 8,5″, наружный диаметр ≈216 мм,
 # ширина шины ≈55 мм.
@@ -28,22 +34,27 @@ SIDE_LABELS = {"L": "левый", "R": "правый"}
 
 @dataclass(frozen=True)
 class Design:
-    """Геометрия одного борта (второй борт — зеркальный)."""
+    """Геометрия одного борта (второй борт — зеркальный).
 
-    middle_wheel_x_mm: float = 380.0
-    front_wheel_x_mm: float = 940.0
+    По умолчанию — лучший вариант прежней оптимизации при моменте 16 Н·м.
+    """
 
-    main_pivot_x_mm: float = 600.0
-    main_pivot_z_mm: float = 470.0
-    bogie_pivot_x_mm: float = 190.0
-    bogie_pivot_z_mm: float = 390.0
+    # Bogie: плечи от шарнира bogie к верху стоек заднего и среднего колёс.
+    bogie_rear_arm_mm: float = 212.0
+    bogie_front_arm_mm: float = 202.0
+    bogie_angle_deg: float = 211.0
+    # Rocker: плечи от главного шарнира к шарниру bogie и к верху стойки
+    # переднего колеса.
+    rocker_rear_arm_mm: float = 304.0
+    rocker_front_arm_mm: float = 420.0
+    rocker_angle_deg: float = 191.5
 
     # Стойки крайних (поворотных) колёс: вилка + рулевая колонка.
     outer_strut_height_mm: float = 250.0
-    outer_strut_angle_deg: float = 0.0
+    outer_strut_angle_deg: float = 6.4
     # Стойка среднего (неповоротного) колеса.
     middle_strut_height_mm: float = 150.0
-    middle_strut_angle_deg: float = 0.0
+    middle_strut_angle_deg: float = -12.8
 
     # Центр масс корпуса с грузом относительно середины оси главных шарниров.
     com_x_mm: float = 0.0
@@ -97,45 +108,143 @@ class Points:
     com: tuple[float, float]
 
 
-def design_from_dict(values: dict) -> Design:
+class GeometryError(ValueError):
+    """Рычаг с заданными плечами и углом не ставит колёса на площадку."""
+
+    def __init__(self, message: str, shortfall_mm: float):
+        super().__init__(message)
+        self.shortfall_mm = shortfall_mm
+
+
+# Прежний формат вариантов: координаты колёс и шарниров.
+COORDINATE_FIELDS = (
+    "middle_wheel_x_mm", "front_wheel_x_mm",
+    "main_pivot_x_mm", "main_pivot_z_mm", "bogie_pivot_x_mm", "bogie_pivot_z_mm",
+)
+
+
+def design_from_dict(values: dict, platform: Platform | None = None) -> Design:
+    """Вариант из словаря; понимает и прежний формат с координатами."""
     names = {item.name for item in fields(Design)}
-    return Design(**{key: float(value) for key, value in values.items() if key in names})
+    known = {key: float(value) for key, value in values.items() if key in names}
+    if all(key in values for key in COORDINATE_FIELDS) and "rocker_rear_arm_mm" not in values:
+        coordinates = {key: float(values[key]) for key in COORDINATE_FIELDS}
+        return design_from_coordinates(Design(**known), platform or Platform(), **coordinates)
+    return Design(**known)
 
 
 def design_to_dict(design: Design) -> dict[str, float]:
     return asdict(design)
 
 
-def neutral_points(design: Design, platform: Platform) -> Points:
+def _strut_tops_z(design: Design, platform: Platform) -> tuple[float, float]:
     radius = platform.wheel_radius_mm
-    wheels = {
-        "front": (design.front_wheel_x_mm, radius),
-        "middle": (design.middle_wheel_x_mm, radius),
-        "rear": (0.0, radius),
-    }
+    outer = radius + design.outer_strut_height_mm * cos(radians(design.outer_strut_angle_deg))
+    middle = radius + design.middle_strut_height_mm * cos(radians(design.middle_strut_angle_deg))
+    return outer, middle
+
+
+def _place_lever(
+    name: str,
+    rear_end: tuple[float, float],
+    rear_arm: float,
+    front_arm: float,
+    angle_deg: float,
+    front_z: float,
+) -> tuple[tuple[float, float], tuple[float, float]]:
+    """Ставит рычаг: задний конец известен, у переднего известна только высота.
+
+    Возвращает (шарнир, передний конец). Угол между плечами отсчитывается
+    под шарниром, поэтому при угле > 180° шарнир оказывается ниже хорды.
+    """
+    if rear_arm <= 0.0 or front_arm <= 0.0 or not 0.0 < angle_deg < 360.0:
+        raise GeometryError(f"{name}: длины плеч должны быть положительными, угол — от 0 до 360°.", 100.0)
+    chord = sqrt(rear_arm**2 + front_arm**2 - 2.0 * rear_arm * front_arm * cos(radians(angle_deg)))
+    rise = front_z - rear_end[1]
+    if chord <= abs(rise) + 1e-6:
+        raise GeometryError(
+            f"{name}: концы плеч расходятся на {chord:.0f} мм, а по высоте стойки требуют "
+            f"{abs(rise):.0f} мм — колёса не встают на площадку.",
+            abs(rise) - chord + 1.0,
+        )
+    chord_angle = asin(rise / chord)
+    front_end = (rear_end[0] + chord * cos(chord_angle), front_z)
+    cos_beta = (rear_arm**2 + chord**2 - front_arm**2) / (2.0 * rear_arm * chord)
+    beta = acos(max(-1.0, min(1.0, cos_beta)))
+    direction = chord_angle + (beta if angle_deg < 180.0 else -beta)
+    pivot = (rear_end[0] + rear_arm * cos(direction), rear_end[1] + rear_arm * sin(direction))
+    return pivot, front_end
+
+
+def neutral_points(design: Design, platform: Platform) -> Points:
+    """Исходное положение на ровной площадке; GeometryError, если рычаг не собирается."""
+    radius = platform.wheel_radius_mm
     outer_h = design.outer_strut_height_mm
     outer_a = radians(design.outer_strut_angle_deg)
     middle_h = design.middle_strut_height_mm
     middle_a = radians(design.middle_strut_angle_deg)
-    strut_tops = {
-        # Зеркальный наклон: верх переднего — назад, верх заднего — вперёд.
-        "front": (
-            design.front_wheel_x_mm - outer_h * sin(outer_a),
-            radius + outer_h * cos(outer_a),
-        ),
-        "middle": (
-            design.middle_wheel_x_mm + middle_h * sin(middle_a),
-            radius + middle_h * cos(middle_a),
-        ),
-        "rear": (outer_h * sin(outer_a), radius + outer_h * cos(outer_a)),
+    outer_z, middle_z = _strut_tops_z(design, platform)
+    # Зеркальный наклон: верх переднего — назад, верх заднего — вперёд.
+    rear_top = (outer_h * sin(outer_a), outer_z)
+    bogie, middle_top = _place_lever("Bogie", rear_top, design.bogie_rear_arm_mm, design.bogie_front_arm_mm,
+                                     design.bogie_angle_deg, middle_z)
+    main, front_top = _place_lever("Rocker", bogie, design.rocker_rear_arm_mm, design.rocker_front_arm_mm,
+                                   design.rocker_angle_deg, outer_z)
+    wheels = {
+        "front": (front_top[0] + outer_h * sin(outer_a), radius),
+        "middle": (middle_top[0] - middle_h * sin(middle_a), radius),
+        "rear": (0.0, radius),
     }
-    main = (design.main_pivot_x_mm, design.main_pivot_z_mm)
     return Points(
         wheels=wheels,
-        strut_tops=strut_tops,
+        strut_tops={"front": front_top, "middle": middle_top, "rear": rear_top},
         main_pivot=main,
-        bogie_pivot=(design.bogie_pivot_x_mm, design.bogie_pivot_z_mm),
+        bogie_pivot=bogie,
         com=(main[0] + design.com_x_mm, main[1] + design.com_z_mm),
+    )
+
+
+def _lever_params(pivot, rear_end, front_end) -> tuple[float, float, float]:
+    rear = atan2(rear_end[1] - pivot[1], rear_end[0] - pivot[0])
+    front = atan2(front_end[1] - pivot[1], front_end[0] - pivot[0])
+    return (
+        hypot(rear_end[0] - pivot[0], rear_end[1] - pivot[1]),
+        hypot(front_end[0] - pivot[0], front_end[1] - pivot[1]),
+        degrees(front - rear) % 360.0,
+    )
+
+
+def design_from_coordinates(
+    base: Design,
+    platform: Platform,
+    middle_wheel_x_mm: float,
+    front_wheel_x_mm: float,
+    main_pivot_x_mm: float,
+    main_pivot_z_mm: float,
+    bogie_pivot_x_mm: float,
+    bogie_pivot_z_mm: float,
+) -> Design:
+    """Переводит координаты колёс и шарниров в длины плеч и углы (стойки — из base)."""
+    outer_h = base.outer_strut_height_mm
+    outer_a = radians(base.outer_strut_angle_deg)
+    middle_h = base.middle_strut_height_mm
+    middle_a = radians(base.middle_strut_angle_deg)
+    outer_z, middle_z = _strut_tops_z(base, platform)
+    rear_top = (outer_h * sin(outer_a), outer_z)
+    middle_top = (middle_wheel_x_mm + middle_h * sin(middle_a), middle_z)
+    front_top = (front_wheel_x_mm - outer_h * sin(outer_a), outer_z)
+    main = (main_pivot_x_mm, main_pivot_z_mm)
+    bogie = (bogie_pivot_x_mm, bogie_pivot_z_mm)
+    bogie_rear, bogie_front, bogie_angle = _lever_params(bogie, rear_top, middle_top)
+    rocker_rear, rocker_front, rocker_angle = _lever_params(main, bogie, front_top)
+    return replace(
+        base,
+        bogie_rear_arm_mm=round(bogie_rear, 1),
+        bogie_front_arm_mm=round(bogie_front, 1),
+        bogie_angle_deg=round(bogie_angle, 1),
+        rocker_rear_arm_mm=round(rocker_rear, 1),
+        rocker_front_arm_mm=round(rocker_front, 1),
+        rocker_angle_deg=round(rocker_angle, 1),
     )
 
 
@@ -175,37 +284,73 @@ def link_dimensions(design: Design, platform: Platform) -> list[dict[str, object
     return rows
 
 
-def validate(design: Design, platform: Platform) -> list[str]:
-    errors: list[str] = []
-    radius = platform.wheel_radius_mm
-    gap = 2.0 * radius + 5.0
-    if design.middle_wheel_x_mm < gap:
-        errors.append("Среднее и заднее колёса пересекаются.")
-    if design.front_wheel_x_mm - design.middle_wheel_x_mm < gap:
-        errors.append("Переднее и среднее колёса пересекаются.")
-    if not 0.0 < design.bogie_pivot_x_mm < design.middle_wheel_x_mm:
-        errors.append("Шарнир bogie должен находиться между задним и средним колёсами.")
-    if not design.middle_wheel_x_mm < design.main_pivot_x_mm < design.front_wheel_x_mm:
-        errors.append("Главный шарнир должен находиться между средним и передним колёсами.")
-    if design.outer_strut_height_mm < radius or design.middle_strut_height_mm < radius:
-        errors.append("Стойка должна выходить за обод колеса (высота ≥ радиуса).")
+def coordinates(design: Design, platform: Platform) -> list[dict[str, object]]:
+    """Координаты колёс и шарниров в исходном положении — для справки."""
     points = neutral_points(design, platform)
+    rows = [
+        ("X среднего колеса (от заднего)", points.wheels["middle"][0]),
+        ("X переднего колеса (от заднего)", points.wheels["front"][0]),
+        ("Главный шарнир: X", points.main_pivot[0]),
+        ("Главный шарнир: высота над землёй", points.main_pivot[1]),
+        ("Шарнир bogie: X", points.bogie_pivot[0]),
+        ("Шарнир bogie: высота над землёй", points.bogie_pivot[1]),
+        ("Габаритная длина", overall_length_mm(design, platform)),
+    ]
+    return [{"Величина": label, "мм": round(value, 1)} for label, value in rows]
+
+
+def _violations(design: Design, platform: Platform) -> list[tuple[str, float]]:
+    """Нарушения ограничений: (сообщение, величина нарушения в мм или градусах)."""
+    found: list[tuple[str, float]] = []
+    radius = platform.wheel_radius_mm
+    if design.outer_strut_height_mm < radius or design.middle_strut_height_mm < radius:
+        found.append(("Стойка должна выходить за обод колеса (высота ≥ радиуса).",
+                      radius - min(design.outer_strut_height_mm, design.middle_strut_height_mm)))
+    if design.rocker_limit_deg <= 0.0 or design.bogie_limit_deg <= 0.0:
+        found.append(("Пределы углов шарниров должны быть положительными.", 1.0))
+    if platform.track_mm <= 100.0:
+        found.append(("Слишком малая ширина: колея меньше 100 мм.", 100.0 - platform.track_mm))
+    try:
+        points = neutral_points(design, platform)
+    except GeometryError as error:
+        # Без собранной геометрии остальное не проверить; штраф больше любого другого.
+        found.append((str(error), 1000.0 + error.shortfall_mm))
+        return found
+    middle_x = points.wheels["middle"][0]
+    front_x = points.wheels["front"][0]
+    gap = 2.0 * radius + 5.0
+    if middle_x < gap:
+        found.append(("Среднее и заднее колёса пересекаются.", gap - middle_x))
+    if front_x - middle_x < gap:
+        found.append(("Переднее и среднее колёса пересекаются.", gap - (front_x - middle_x)))
+    bogie_x, bogie_z = points.bogie_pivot
+    main_x, main_z = points.main_pivot
+    if not 0.0 < bogie_x < middle_x:
+        found.append(("Шарнир bogie должен находиться между задним и средним колёсами.",
+                      max(-bogie_x, bogie_x - middle_x) + 1.0))
+    if not middle_x < main_x < front_x:
+        found.append(("Главный шарнир должен находиться между средним и передним колёсами.",
+                      max(middle_x - main_x, main_x - front_x) + 1.0))
     for name, (_, z) in points.strut_tops.items():
         if z < radius:
-            errors.append(f"Верх стойки ({name}) ниже оси колеса.")
-    lowest_pivot = min(design.main_pivot_z_mm, design.bogie_pivot_z_mm)
+            found.append((f"Верх стойки ({name}) ниже оси колеса.", radius - z))
+    lowest_pivot = min(main_z, bogie_z)
     if lowest_pivot < 2.0 * radius:
-        errors.append("Шарниры должны быть выше колёс (z ≥ диаметра колеса).")
-    if design.rocker_limit_deg <= 0.0 or design.bogie_limit_deg <= 0.0:
-        errors.append("Пределы углов шарниров должны быть положительными.")
+        found.append(("Шарниры должны быть выше колёс (высота ≥ диаметра колеса).", 2.0 * radius - lowest_pivot))
     length = overall_length_mm(design, platform)
     if length > platform.max_length_mm + 1e-6:
-        errors.append(
-            f"Длина {length:.0f} мм превышает габарит {platform.max_length_mm:.0f} мм."
-        )
-    if platform.track_mm <= 100.0:
-        errors.append("Слишком малая ширина: колея меньше 100 мм.")
-    return errors
+        found.append((f"Длина {length:.0f} мм превышает габарит {platform.max_length_mm:.0f} мм.",
+                      length - platform.max_length_mm))
+    return found
+
+
+def validate(design: Design, platform: Platform) -> list[str]:
+    return [message for message, _ in _violations(design, platform)]
+
+
+def violation_amount(design: Design, platform: Platform) -> float:
+    """Суммарная величина нарушений (0 — геометрия допустима); штраф для оптимизатора."""
+    return sum(amount for _, amount in _violations(design, platform))
 
 
 # --------------------------------------------------------------------------
@@ -362,7 +507,7 @@ def build_mjcf(
         for wheel in WHEELS
     )
     body_half = (
-        max(design.front_wheel_x_mm - 2.0 * platform.wheel_radius_mm, 200.0) / 2000.0,
+        max(points.wheels["front"][0] - 2.0 * platform.wheel_radius_mm, 200.0) / 2000.0,
         platform.track_mm / 2000.0 * 0.7,
         0.05,
     )

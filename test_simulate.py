@@ -5,10 +5,10 @@ from math import sqrt
 import mujoco
 import numpy as np
 
-from model import Design, Platform
-from simulate import Obstacle, build_terrain, find_limit, run
+from model import Design, Platform, neutral_points
+from simulate import Obstacle, _boundary, build_terrain, find_limit, required_torque, run
 
-DESIGN = Design(bogie_pivot_z_mm=250.0, main_pivot_z_mm=400.0)
+DESIGN = Design()
 PLATFORM = Platform()
 
 
@@ -104,7 +104,7 @@ class Traversal(unittest.TestCase):
     def test_terrain_mirrors_with_direction(self):
         forward, _, _, _ = build_terrain(DESIGN, PLATFORM, Obstacle("step_up", 100.0, 1))
         backward, _, _, _ = build_terrain(DESIGN, PLATFORM, Obstacle("step_up", 100.0, -1))
-        self.assertGreater(forward[0].x0, DESIGN.front_wheel_x_mm)
+        self.assertGreater(forward[0].x0, neutral_points(DESIGN, PLATFORM).wheels["front"][0])
         self.assertLess(backward[0].x1, 0.0)
 
     def test_one_side_obstacle_only_under_left(self):
@@ -123,6 +123,34 @@ class Traversal(unittest.TestCase):
         vertical = sum(force[2] for _, _, force in frame.forces)
         weight = PLATFORM.total_mass_kg * 9.81
         self.assertTrue(np.isclose(vertical, weight, rtol=0.05), (vertical, weight))
+
+
+class _Fake:
+    def __init__(self, success: bool):
+        self.success = success
+        self.reason = "" if success else "не пройдено"
+
+
+class BoundarySearch(unittest.TestCase):
+    def test_guess_finds_same_boundary_with_fewer_runs(self):
+        calls = []
+
+        def attempt(value):
+            calls.append(value)
+            return _Fake(value <= 137.0)
+
+        plain = _boundary(attempt, 0.0, 300.0, 5.0)
+        plain_runs = len(calls)
+        calls.clear()
+        guided = _boundary(attempt, 0.0, 300.0, 5.0, guess=135.0)
+        self.assertLessEqual(abs(plain[0] - 137.0), 5.0)
+        self.assertLessEqual(abs(guided[0] - 137.0), 5.0)
+        self.assertLess(len(calls), plain_runs)
+
+    def test_required_torque_on_flat_ground_is_small(self):
+        result = required_torque(DESIGN, PLATFORM, Obstacle("step_up", 0.0, 1), upper_nm=20.0, tolerance_nm=2.0)
+        self.assertTrue(result.passable)
+        self.assertLess(result.torque_nm, 5.0)
 
 
 if __name__ == "__main__":

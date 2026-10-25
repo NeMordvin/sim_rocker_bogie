@@ -115,6 +115,19 @@ def design_figure(design: Design, platform: Platform) -> go.Figure:
     fig.add_trace(go.Scatter(x=[points.com[0]], y=[points.com[1]], mode="markers",
                              marker=dict(size=12, color=COM_COLOR, symbol="x"), name="центр масс корпуса",
                              hovertemplate="x=%{x:.0f} мм<br>z=%{y:.0f} мм<extra>центр масс</extra>"))
+    # Подписи параметров рычагов: длины плеч у середин труб, углы под шарнирами.
+    levers = (
+        (points.bogie_pivot, points.strut_tops["rear"], points.strut_tops["middle"],
+         design.bogie_rear_arm_mm, design.bogie_front_arm_mm, design.bogie_angle_deg),
+        (points.main_pivot, points.bogie_pivot, points.strut_tops["front"],
+         design.rocker_rear_arm_mm, design.rocker_front_arm_mm, design.rocker_angle_deg),
+    )
+    for pivot, rear, front, rear_arm, front_arm, angle in levers:
+        for end, length in ((rear, rear_arm), (front, front_arm)):
+            fig.add_annotation(x=(pivot[0] + end[0]) / 2, y=(pivot[1] + end[1]) / 2 + 22, showarrow=False,
+                               text=f"{length:.0f}", font=dict(size=11))
+        fig.add_annotation(x=pivot[0], y=pivot[1] - 32, showarrow=False, text=f"{angle:.0f}°",
+                           font=dict(size=11, color=COM_COLOR))
     top = max(points.main_pivot[1], points.bogie_pivot[1], points.com[1]) + 80
     _layout(fig, (left - 100, left + platform.max_length_mm + 100), (-80, top), 420)
     return fig

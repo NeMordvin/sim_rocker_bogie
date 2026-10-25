@@ -9,7 +9,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from math import asin, atan2, degrees
 from typing import Literal
 
@@ -450,6 +450,58 @@ def _stuck_reason(model, data, ids: _Ids, omega: float, torque_limit: float) -> 
     return "застревание"
 
 
+def _boundary(attempt, good: float, bad: float, tolerance: float, guess: float | None = None):
+    """Сужает отрезок между проходимым (good) и непроходимым (bad) значением.
+
+    Концы отрезка заранее не проверяются. С подсказкой guess поиск сначала
+    проверяет её и шагает от неё с удвоением шага, пока не найдёт границу, —
+    при точной подсказке это 3–4 прогона вместо 6–8 при делении пополам.
+    Возвращает (good, bad, причина последней неудачи, прогоны, проверен ли good).
+    """
+    toward_bad = 1.0 if bad > good else -1.0
+    runs = 0
+    reason = ""
+    good_tested = False
+
+    def inside(value: float) -> bool:
+        return min(good, bad) < value < max(good, bad)
+
+    if guess is not None and inside(guess):
+        step = 4.0 * tolerance
+        value = guess
+        runs += 1
+        trial = attempt(value)
+        moving_to_bad = trial.success
+        if trial.success:
+            good, good_tested = value, True
+        else:
+            bad, reason = value, trial.reason
+        while abs(bad - good) > tolerance:
+            value = value + (toward_bad if moving_to_bad else -toward_bad) * step
+            if not inside(value):
+                break
+            runs += 1
+            trial = attempt(value)
+            if trial.success:
+                good, good_tested = value, True
+                if not moving_to_bad:
+                    break
+            else:
+                bad, reason = value, trial.reason
+                if moving_to_bad:
+                    break
+            step *= 2.0
+    while abs(bad - good) > tolerance:
+        middle = (good + bad) / 2.0
+        runs += 1
+        trial = attempt(middle)
+        if trial.success:
+            good, good_tested = middle, True
+        else:
+            bad, reason = middle, trial.reason
+    return good, bad, reason, runs, good_tested
+
+
 def find_limit(
     design: Design,
     platform: Platform,
@@ -460,25 +512,73 @@ def find_limit(
     tolerance_mm: float = 10.0,
     ditch_depth_mm: float = 500.0,
     timestep: float = 0.001,
+    guess_mm: float | None = None,
 ) -> LimitResult:
-    """Бинарный поиск наибольшего препятствия, которое шасси проходит."""
+    """Наибольшее препятствие, которое шасси проходит (поиск границы по размеру)."""
 
     def attempt(size: float) -> SimResult:
         obstacle = Obstacle(kind, size, direction, one_side, ditch_depth_mm)
         return run(design, platform, obstacle, record=False, timestep=timestep)
 
-    runs = 1
-    top = attempt(upper_mm)
-    if top.success:
-        return LimitResult(Obstacle(kind, upper_mm, direction, one_side, ditch_depth_mm),
-                           upper_mm, "граница поиска", upper_mm, runs)
-    low, high, reason = 0.0, upper_mm, top.reason
-    while high - low > tolerance_mm:
-        middle = (low + high) / 2.0
+    def limit(value: float, reason: str, runs: int) -> LimitResult:
+        return LimitResult(Obstacle(kind, value, direction, one_side, ditch_depth_mm), value, reason, upper_mm, runs)
+
+    top = None
+    if guess_mm is None:
+        top = attempt(upper_mm)
+        if top.success:
+            return limit(upper_mm, "граница поиска", 1)
+    low, high, reason, runs, _ = _boundary(attempt, 0.0, upper_mm, tolerance_mm, guess_mm)
+    if top is not None:
+        return limit(low, reason or top.reason, runs + 1)
+    if high >= upper_mm:
+        # С подсказкой верхняя граница ещё не проверялась.
+        top = attempt(upper_mm)
+        if top.success:
+            return limit(upper_mm, "граница поиска", runs + 1)
         runs += 1
-        trial = attempt(middle)
-        if trial.success:
-            low = middle
-        else:
-            high, reason = middle, trial.reason
-    return LimitResult(Obstacle(kind, low, direction, one_side, ditch_depth_mm), low, reason, upper_mm, runs)
+        reason = reason or top.reason
+    return limit(low, reason, runs)
+
+
+@dataclass(frozen=True)
+class TorqueResult:
+    """Наименьший пиковый момент колеса, при котором препятствие проходится."""
+
+    obstacle: Obstacle
+    torque_nm: float
+    reason: str
+    upper_nm: float
+    runs: int
+
+    @property
+    def passable(self) -> bool:
+        return self.torque_nm <= self.upper_nm
+
+
+def required_torque(
+    design: Design,
+    platform: Platform,
+    obstacle: Obstacle,
+    upper_nm: float = 60.0,
+    tolerance_nm: float = 0.5,
+    timestep: float = 0.001,
+    guess_nm: float | None = None,
+) -> TorqueResult:
+    """Поиск границы по моменту: ниже неё не хватает момента, выше — проходит.
+
+    Если препятствие не проходится и при upper_nm (задевает рычагом,
+    опрокидывается), момент равен бесконечности, а reason объясняет почему.
+    ``reason`` у проходимого препятствия — что мешает при чуть меньшем моменте.
+    """
+
+    def attempt(torque: float) -> SimResult:
+        return run(design, replace(platform, wheel_torque_nm=torque), obstacle, record=False, timestep=timestep)
+
+    good, _, reason, runs, tested = _boundary(attempt, upper_nm, 0.0, tolerance_nm, guess_nm)
+    if not tested:
+        runs += 1
+        top = attempt(upper_nm)
+        if not top.success:
+            return TorqueResult(obstacle, float("inf"), top.reason, upper_nm, runs)
+    return TorqueResult(obstacle, good, reason, upper_nm, runs)

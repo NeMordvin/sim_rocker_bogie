@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from dataclasses import asdict, dataclass, replace
+from dataclasses import asdict, dataclass, fields, replace
 
 import pandas as pd
 import streamlit as st
@@ -14,13 +14,24 @@ from model import (
     M365_WHEEL_WIDTH_MM,
     Design,
     Platform,
+    coordinates,
     design_from_dict,
     link_dimensions,
     overall_length_mm,
     validate,
 )
-from optimize import Criterion, Evaluation, Goal, OptimizationResult, evaluate_parallel, optimize
-from simulate import DIRECTION_LABELS, KIND_LABELS, Obstacle, SimResult, run
+from optimize import (
+    MODE_LABELS,
+    Criterion,
+    Evaluation,
+    Goal,
+    Mode,
+    OptimizationResult,
+    default_population,
+    evaluate_parallel,
+    optimize,
+)
+from simulate import DIRECTION_LABELS, KIND_LABELS, LimitResult, Obstacle, SimResult, run
 
 
 
@@ -37,12 +48,18 @@ class Spec:
 
 
 SPECS = (
-    Spec("middle_wheel_x_mm", "X среднего колеса (от заднего)", "мм", 230, 500, True, True, "Колёса"),
-    Spec("front_wheel_x_mm", "X переднего колеса (от заднего)", "мм", 700, 984, True, True, "Колёса"),
-    Spec("main_pivot_x_mm", "X главного шарнира", "мм", 450, 850, True, True, "Шарниры"),
-    Spec("main_pivot_z_mm", "Высота главного шарнира над землёй", "мм", 230, 550, True, True, "Шарниры"),
-    Spec("bogie_pivot_x_mm", "X шарнира bogie", "мм", 60, 330, True, True, "Шарниры"),
-    Spec("bogie_pivot_z_mm", "Высота шарнира bogie над землёй", "мм", 220, 500, True, True, "Шарниры"),
+    Spec("bogie_rear_arm_mm", "Плечо к заднему колесу (шарнир → верх стойки)", "мм", 100, 450, True, True,
+         "Bogie (заднее и среднее колёса)"),
+    Spec("bogie_front_arm_mm", "Плечо к среднему колесу (шарнир → верх стойки)", "мм", 100, 450, True, True,
+         "Bogie (заднее и среднее колёса)"),
+    Spec("bogie_angle_deg", "Угол между плечами (под шарниром; <180 — Λ, >180 — V)", "°", 100, 280, True, True,
+         "Bogie (заднее и среднее колёса)"),
+    Spec("rocker_rear_arm_mm", "Плечо к шарниру bogie", "мм", 150, 600, True, True,
+         "Rocker (главный рычаг)"),
+    Spec("rocker_front_arm_mm", "Плечо к переднему колесу (шарнир → верх стойки)", "мм", 200, 750, True, True,
+         "Rocker (главный рычаг)"),
+    Spec("rocker_angle_deg", "Угол между плечами (под шарниром; <180 — Λ, >180 — V)", "°", 100, 280, True, True,
+         "Rocker (главный рычаг)"),
     Spec("outer_strut_height_mm", "Крайние колёса: высота стойки (ось → крепление)", "мм", 120, 400, False, True, "Стойки"),
     Spec("outer_strut_angle_deg", "Крайние колёса: наклон стойки (+ верх к центру)", "°", -25, 25, True, True, "Стойки"),
     Spec("middle_strut_height_mm", "Среднее колесо: высота стойки", "мм", 120, 400, False, True, "Стойки"),
@@ -55,6 +72,12 @@ SPECS = (
 )
 SPEC_BY_FIELD = {spec.field: spec for spec in SPECS}
 GROUPS = tuple(dict.fromkeys(spec.group for spec in SPECS))
+
+
+def _short_label(name: str) -> str:
+    """Подпись параметра без пояснений в скобках, с группой — для заголовков таблиц."""
+    spec = SPEC_BY_FIELD[name]
+    return f"{spec.group.split(' (')[0]}: {spec.label.split(' (')[0]}"
 
 PLATFORM_WIDGETS = {
     "max_length_mm": "platform_length",
@@ -200,17 +223,72 @@ def _show_simulation(design: Design, platform: Platform, obstacle: Obstacle, key
                         config={"displaylogo": False}, key=f"{key}_series")
 
 
-def _limits_rows(evaluation: Evaluation) -> list[dict[str, object]]:
-    return [
-        {
-            "Препятствие": KIND_LABELS[limit.obstacle.kind],
-            "Направление": DIRECTION_LABELS[limit.obstacle.direction],
-            "Сценарий": "под левым бортом" if limit.obstacle.one_side else "по всей ширине",
-            "Предел, мм": round(limit.value_mm),
-            "Что ограничило": limit.reason,
+def _torque_text(value: float, upper: float | None = None) -> str:
+    if value == float("inf"):
+        return f"не проходится и при {upper:.0f} Н·м" if upper else "не проходится"
+    return f"{value:.1f} Н·м"
+
+
+def _score_text(evaluation: Evaluation) -> str:
+    if evaluation.mode == "limits":
+        return f"{evaluation.score:.0f}"
+    return _torque_text(evaluation.score)
+
+
+def _value_text(evaluation: Evaluation, value: float) -> str:
+    return f"{value:.0f} мм" if evaluation.mode == "limits" else _torque_text(value)
+
+
+def _result_rows(evaluation: Evaluation) -> list[dict[str, object]]:
+    rows = []
+    for result in evaluation.results:
+        row: dict[str, object] = {
+            "Препятствие": KIND_LABELS[result.obstacle.kind],
+            "Направление": DIRECTION_LABELS[result.obstacle.direction],
+            "Сценарий": "под левым бортом" if result.obstacle.one_side else "по всей ширине",
         }
-        for limit in evaluation.limits
-    ]
+        if isinstance(result, LimitResult):
+            row["Предел, мм"] = round(result.value_mm)
+        else:
+            row["Размер, мм"] = round(result.obstacle.size_mm)
+            row["Нужный момент"] = _torque_text(result.torque_nm, result.upper_nm)
+        row["Что ограничило"] = result.reason
+        row["Прогонов"] = result.runs
+        rows.append(row)
+    return rows
+
+
+def _result_case(result, platform: Platform) -> tuple[str, Platform]:
+    """Подпись для выбора прохождения и платформа, с которой его показывать."""
+    text = (f"{KIND_LABELS[result.obstacle.kind]}, {DIRECTION_LABELS[result.obstacle.direction]}"
+            f"{', под левым бортом' if result.obstacle.one_side else ''}")
+    if isinstance(result, LimitResult):
+        return f"{text}: {result.value_mm:.0f} мм", platform
+    torque = min(result.torque_nm, result.upper_nm)
+    return (f"{text}, {result.obstacle.size_mm:.0f} мм: {_torque_text(result.torque_nm, result.upper_nm)}",
+            replace(platform, wheel_torque_nm=torque))
+
+
+def _criteria_inputs(mode: Mode, prefix: str, weights: bool) -> tuple[Criterion, ...]:
+    """Поля целей по видам препятствий для выбранного режима."""
+    defaults = {item.kind: item for item in Goal().criteria}
+    criteria = []
+    for column, kind in zip(st.columns(3), KIND_LABELS):
+        default = defaults[kind]
+        with column:
+            st.markdown(f"**{KIND_LABELS[kind].capitalize()}**")
+            if mode == "limits":
+                weight = (st.number_input("Вес", min_value=0.0, value=default.weight, step=0.05,
+                                          key=f"{prefix}_weight_{kind}") if weights else 1.0)
+                upper = st.number_input("Искать до, мм", min_value=20.0, value=default.upper_mm, step=25.0,
+                                        key=f"{prefix}_upper_{kind}")
+                criteria.append(Criterion(kind, float(weight), float(upper), default.target_mm))
+            else:
+                active = st.checkbox("Учитывать", value=True, key=f"{prefix}_use_{kind}")
+                target = st.number_input("Ширина рва, мм" if kind == "ditch" else "Высота, мм", min_value=10.0,
+                                         value=default.target_mm, step=10.0, key=f"{prefix}_target_{kind}")
+                criteria.append(Criterion(kind, 1.0 if active else 0.0, default.upper_mm, float(target)))
+    return tuple(criteria)
 
 
 # ---------------------------------------------------------------------------
@@ -264,7 +342,10 @@ def _platform_sidebar() -> Platform:
 
 def _load_variant(raw: bytes) -> None:
     data = json.loads(raw.decode("utf-8"))
-    _apply_design(design_from_dict(data.get("design", {})))
+    known = {item.name for item in fields(Platform)}
+    platform = Platform(**{k: v for k, v in data.get("platform", {}).items() if k in known})
+    # Старые файлы с координатами шарниров переводятся в длины плеч и углы.
+    _apply_design(design_from_dict(data.get("design", {}), platform))
     for field, value in data.get("platform", {}).items():
         if field in PLATFORM_WIDGETS:
             st.session_state[PLATFORM_WIDGETS[field]] = value
@@ -305,7 +386,10 @@ def main() -> None:
                 columns[1].metric("Колея", f"{platform.track_mm:.0f} мм")
                 columns[2].metric("Свободных параметров", len(free_ranges))
                 st.plotly_chart(design_figure(design, platform), width="stretch", config={"displaylogo": False})
-                st.dataframe(link_dimensions(design, platform), width="stretch", hide_index=True)
+                st.caption("Числа у труб — длины плеч, мм; под шарнирами — углы между плечами.")
+                with st.expander("Координаты и звенья (для справки)", expanded=True):
+                    st.dataframe(coordinates(design, platform), width="stretch", hide_index=True)
+                    st.dataframe(link_dimensions(design, platform), width="stretch", hide_index=True)
             st.download_button(
                 "Сохранить вариант (JSON)",
                 json.dumps({"design": asdict(design), "platform": asdict(platform)}, ensure_ascii=False, indent=2),
@@ -339,72 +423,96 @@ def main() -> None:
 
     with limits_tab:
         st.subheader("Пределы текущей геометрии")
-        st.write("Бинарный поиск наибольшей ступени, высоты съезда и ширины рва в обоих направлениях. "
-                 "Каждый предел считается в отдельном процессе.")
-        columns = st.columns(4)
-        up_max = columns[0].number_input("Ступень: искать до, мм", min_value=20.0, value=300.0, step=25.0)
-        down_max = columns[1].number_input("Съезд: искать до, мм", min_value=20.0, value=500.0, step=25.0)
-        ditch_max = columns[2].number_input("Ров: искать до, мм", min_value=20.0, value=500.0, step=25.0)
-        limits_one_side = columns[3].checkbox("Добавить «под одним бортом»", value=True)
-        limits_goal = Goal(
-            criteria=(Criterion("step_up", 1.0, up_max), Criterion("step_down", 1.0, down_max),
-                      Criterion("ditch", 1.0, ditch_max)),
-            one_side=limits_one_side,
-        )
-        if st.button("Найти пределы", type="primary", disabled=bool(errors)):
-            bar = st.progress(0.0, text="Поиск пределов")
+        limits_mode = st.radio("Что искать", tuple(MODE_LABELS), horizontal=True, key="limits_mode",
+                               format_func=lambda m: {"limits": "наибольшие препятствия при моменте платформы",
+                                                      "torque": "момент, нужный для заданных препятствий"}[m])
+        if limits_mode == "limits":
+            st.write("Поиск наибольшей ступени, высоты съезда и ширины рва в обоих направлениях "
+                     "с шагом 2,5 мм. Каждый предел считается в отдельном процессе.")
+        else:
+            st.write("Для каждого препятствия ищется наименьший пиковый момент колеса, при котором оно "
+                     "проходится (шаг 0,25 Н·м). Сравните с моментом мотор-колеса на боковой панели.")
+        limits_criteria = _criteria_inputs(limits_mode, "limits", weights=False)
+        columns = st.columns(2)
+        limits_one_side = columns[0].checkbox("Добавить «под одним бортом»", value=True)
+        limits_max_torque = columns[1].number_input("Искать момент до, Н·м", min_value=5.0, value=60.0, step=5.0,
+                                                    disabled=limits_mode != "torque", key="limits_max_torque")
+        limits_goal = Goal(criteria=limits_criteria, mode=limits_mode, one_side=limits_one_side,
+                           max_torque_nm=float(limits_max_torque)).refined(0.5)
+        if st.button("Рассчитать", type="primary", disabled=bool(errors) or not limits_goal.active):
+            bar = st.progress(0.0, text="Поиск границ")
             evaluation = evaluate_parallel(
                 design, platform, limits_goal,
-                progress=lambda done, total: bar.progress(done / total, text=f"Пределы: {done} из {total}"),
+                progress=lambda done, total: bar.progress(done / total, text=f"Готово {done} из {total}"),
             )
             st.session_state["limits"] = (design, platform, limits_goal, evaluation)
         stored = st.session_state.get("limits")
         if stored is not None:
             limits_design, limits_platform, stored_goal, evaluation = stored
             if (limits_design, limits_platform) != (design, platform):
-                st.info("Геометрия или платформа изменились — пределы относятся к прошлому варианту.")
-            st.dataframe(_limits_rows(evaluation), width="stretch", hide_index=True)
-            options = {
-                f"{KIND_LABELS[l.obstacle.kind]}, {DIRECTION_LABELS[l.obstacle.direction]}"
-                f"{', под левым бортом' if l.obstacle.one_side else ''}: {l.value_mm:.0f} мм": l
-                for l in evaluation.limits
-            }
-            chosen = st.selectbox("Показать прохождение на пределе", tuple(options))
-            limit = options[chosen]
-            _show_simulation(limits_design, limits_platform, limit.obstacle, key="limit")
+                st.info("Геометрия или платформа изменились — результаты относятся к прошлому варианту.")
+            if stored_goal.mode == "torque":
+                needed = evaluation.score
+                if needed <= limits_platform.wheel_torque_nm:
+                    st.success(f"Всем препятствиям хватает {needed:.1f} Н·м — "
+                               f"у платформы {limits_platform.wheel_torque_nm:.0f} Н·м.")
+                else:
+                    st.warning(f"Нужно {_torque_text(needed)} — у платформы "
+                               f"{limits_platform.wheel_torque_nm:.0f} Н·м.")
+            st.dataframe(_result_rows(evaluation), width="stretch", hide_index=True)
+            cases = {label: (result, case_platform) for result in evaluation.results
+                     for label, case_platform in [_result_case(result, limits_platform)]}
+            chosen = st.selectbox("Показать прохождение на границе", tuple(cases))
+            case, case_platform = cases[chosen]
+            _show_simulation(limits_design, case_platform, case.obstacle, key="limit")
 
     with optimization_tab:
         st.subheader("Подбор геометрии")
         st.write(
-            "Меняются параметры, отмеченные «Свободный» на вкладке «Геометрия». Оценка варианта — "
-            "**Σ вес × предел (мм)**; для каждого препятствия берётся худшее из двух направлений "
-            "(и из сценариев, если включён «под одним бортом»). Метод — дифференциальная эволюция; "
-            "варианты считаются параллельно на всех ядрах."
+            "Меняются параметры, отмеченные «Свободный» на вкладке «Геометрия». Метод — CMA-ES "
+            "(эволюционная стратегия с адаптацией ковариации): поиск начинается с текущей геометрии "
+            "и сам подстраивает размер и направление шагов. Все прогоны поколения считаются параллельно."
         )
-        weights = st.columns(3)
-        criteria = []
-        for column, (crit_kind, weight, upper) in zip(
-            weights, (("step_up", 1.0, 300.0), ("step_down", 0.25, 500.0), ("ditch", 0.5, 500.0))
-        ):
-            with column:
-                st.markdown(f"**{KIND_LABELS[crit_kind].capitalize()}**")
-                w = st.number_input("Вес", min_value=0.0, value=weight, step=0.05, key=f"weight_{crit_kind}")
-                u = st.number_input("Искать до, мм", min_value=20.0, value=upper, step=25.0, key=f"upper_{crit_kind}")
-                criteria.append(Criterion(crit_kind, float(w), float(u)))
-        columns = st.columns(4)
+        mode = st.radio("Цель", tuple(MODE_LABELS), format_func=MODE_LABELS.get, horizontal=True,
+                        key="optimization_mode")
+        if mode == "limits":
+            st.caption("Оценка — **Σ вес × предел (мм)**, больше — лучше. Для каждого препятствия берётся худшее "
+                       "из направлений (и сценариев, если включён «под одним бортом»). Пределы меняются "
+                       "ступеньками по шагу поиска, поэтому у оценки есть плато.")
+        else:
+            st.caption("Оценка — **наибольший из требуемых моментов колеса (Н·м)**, меньше — лучше; при равных "
+                       "худших выигрывает вариант с меньшим средним. Момент меняется с геометрией плавно — "
+                       "это лучший сигнал для поиска, чем предел в миллиметрах. Препятствие, не проходимое "
+                       "и при наибольшем моменте (задевает, опрокидывается), считается как 2 × наибольший момент.")
+        criteria = _criteria_inputs(mode, "opt", weights=True)
+        columns = st.columns(5)
         opt_one_side = columns[0].checkbox("Учитывать «под одним бортом»", help="Вдвое дольше.")
-        population = columns[1].number_input("Вариантов в поколении", min_value=6, max_value=128, value=32, step=4)
-        generations = columns[2].number_input("Поколений", min_value=1, max_value=60, value=8, step=1)
-        seed = columns[3].number_input("Seed", min_value=0, value=1, step=1)
-        goal = Goal(criteria=tuple(criteria), one_side=bool(opt_one_side))
-        st.caption(f"Будет оценено {int(population) * (int(generations) + 1)} вариантов.")
+        population = columns[1].number_input(
+            "Вариантов в поколении", min_value=4, max_value=64, value=12, step=2,
+            help=f"Для {len(free_ranges)} свободных параметров стандарт CMA-ES — "
+                 f"{default_population(len(free_ranges))}; больше — надёжнее, но дольше.")
+        generations = columns[2].number_input("Поколений", min_value=1, max_value=200, value=25, step=1)
+        refine = columns[3].number_input("Уточнить лучших", min_value=0, max_value=10, value=3, step=1,
+                                         help="Лучшие варианты пересчитываются с шагом поиска в 2,5 раза мельче.")
+        seed = columns[4].number_input("Seed", min_value=0, value=1, step=1)
+        max_torque = 60.0
+        if mode == "torque":
+            max_torque = st.number_input("Искать момент до, Н·м", min_value=5.0, value=60.0, step=5.0,
+                                         key="opt_max_torque")
+        goal = Goal(criteria=criteria, mode=mode, one_side=bool(opt_one_side), max_torque_nm=float(max_torque))
+        st.caption(f"Будет оценено {int(population) * int(generations) + int(refine)} вариантов.")
         can_run = not errors and bool(free_ranges) and bool(goal.active)
         if st.button("Оптимизировать", type="primary", disabled=not can_run):
             bar = st.progress(0.0, text="Оптимизация")
-            result = optimize(
-                design, platform, goal, free_ranges, int(population), int(generations), int(seed),
-                progress=lambda done, total: bar.progress(done / total, text=f"Оценено {done} из {total}"),
-            )
+
+            def report(done: int, total: int, best: Evaluation | None) -> None:
+                text = f"Поисков границ {done} из {total}"
+                if best is not None:
+                    text += f"; лучшая оценка {_score_text(best)}"
+                bar.progress(done / total, text=text)
+
+            result = optimize(design, platform, goal, free_ranges, int(population), int(generations), int(seed),
+                              int(refine), progress=report)
             st.session_state["optimization"] = (design, platform, result)
         stored = st.session_state.get("optimization")
         if stored is not None:
@@ -415,22 +523,48 @@ def main() -> None:
             if result.best is None:
                 st.error("Не найдено ни одного допустимого варианта.")
             else:
-                start = next((e for e in result.evaluations if e.design == source), None)
+                start = next((e for e in result.evaluations if e.design == source and not e.refined), None)
                 best = result.best
                 metrics = st.columns(4)
-                metrics[0].metric("Оценка лучшего", f"{best.score:.0f}",
-                                  f"{best.score - start.score:+.0f} к исходному" if start and start.valid else None)
+                delta = None
+                if start is not None and start.valid and abs(start.score) != float("inf"):
+                    unit = "" if best.mode == "limits" else " Н·м"
+                    delta = f"{best.score - start.score:+.1f}{unit} к исходному"
+                metrics[0].metric("Оценка лучшего", _score_text(best), delta,
+                                  delta_color="normal" if best.mode == "limits" else "inverse")
                 for column, (crit_kind, value) in zip(metrics[1:], best.values.items()):
-                    column.metric(KIND_LABELS[crit_kind], f"{value:.0f} мм")
+                    column.metric(KIND_LABELS[crit_kind], _value_text(best, value))
+                if best.mode == "torque":
+                    if best.score <= opt_platform.wheel_torque_nm:
+                        st.success(f"Лучшему варианту хватает {best.score:.1f} Н·м — у платформы "
+                                   f"{opt_platform.wheel_torque_nm:.0f} Н·м.")
+                    else:
+                        st.warning(f"Лучшему варианту нужно {_torque_text(best.score)} — у платформы "
+                                   f"{opt_platform.wheel_torque_nm:.0f} Н·м.")
                 if st.button("Применить лучший вариант"):
                     _apply_design(best.design)
                     st.rerun()
+                history = pd.DataFrame(
+                    {"лучшая": [g.best_score for g in result.history],
+                     "медиана поколения": [g.median_score for g in result.history]},
+                    index=pd.Index([g.index for g in result.history], name="поколение"),
+                ).replace(float("inf"), float("nan"))
+                left, right = st.columns([3, 2])
+                left.markdown("**Сходимость** (оценка по поколениям)")
+                left.line_chart(history, x_label="поколение",
+                                y_label="Σ вес × мм" if best.mode == "limits" else "Н·м")
+                right.markdown("**Ход поиска**")
+                right.dataframe(
+                    [{"Поколение": g.index, "Допустимых": f"{100 * g.valid_share:.0f} %", "Шаг σ": round(g.sigma, 3)}
+                     for g in result.history],
+                    width="stretch", hide_index=True, height=300,
+                )
                 ranked = result.ranked(10)
                 st.dataframe(
                     [
-                        {"Место": index, "Оценка": round(item.score),
-                         **{KIND_LABELS[k]: round(v) for k, v in item.values.items()},
-                         **{SPEC_BY_FIELD[name].label: getattr(item.design, name) for name in free_ranges}}
+                        {"Место": index, "Оценка": _score_text(item), "Уточнён": item.refined,
+                         **{KIND_LABELS[k]: _value_text(item, v) for k, v in item.values.items()},
+                         **{_short_label(name): getattr(item.design, name) for name in free_ranges}}
                         for index, item in enumerate(ranked, start=1)
                     ],
                     width="stretch",
@@ -440,8 +574,8 @@ def main() -> None:
                 left.markdown("**Лучший вариант**")
                 left.plotly_chart(design_figure(best.design, opt_platform), width="stretch",
                                   config={"displaylogo": False}, key="best_design")
-                right.markdown("**Пределы лучшего варианта**")
-                right.dataframe(_limits_rows(best), width="stretch", hide_index=True)
+                right.markdown("**Результаты лучшего варианта**")
+                right.dataframe(_result_rows(best), width="stretch", hide_index=True)
 
     with method_tab:
         st.subheader("Как устроен расчёт")
@@ -453,6 +587,14 @@ def main() -> None:
     *α*; трубы идут от шарниров к верху стоек. Колёса — цилиндры M365 Pro, у каждого свой мотор с
     ограничением пикового момента. Препятствия — блоки с острой кромкой 90°.
 
+    **Параметры рычагов.** Каждый рычаг (bogie и rocker) задаётся двумя плечами — от шарнира до верха
+    стоек (у rocker заднее плечо идёт к шарниру bogie) — и углом между плечами. Угол отсчитывается
+    *под шарниром*: меньше 180° — рычаг «домиком» Λ (шарнир выше концов), 180° — прямая труба, больше
+    180° — «галочкой» V (шарнир ниже концов). Сборка идёт от заднего колеса: верх его стойки → bogie →
+    верх стойки среднего колеса; от шарнира bogie → rocker → переднее плечо дотягивается до высоты верха
+    передней стойки (все колёса стоят на ровном грунте). Если плечо не дотягивается, геометрия
+    недопустима. Координаты колёс и шарниров получаются из этих параметров и показаны для справки.
+
     **Прохождение.** Ровер плавно разгоняется до заданной скорости и едет через препятствие. Успех — все
     шесть колёс оказались за препятствием и опираются на грунт. Неудача и её причина:
     - *не хватает момента колёс* — колесо упёрлось и стоит на пиковом моменте;
@@ -461,7 +603,16 @@ def main() -> None:
     - *опрокидывание* — тангаж > 70° или крен > 40°;
     - *колёса висят в воздухе* — подвеска не достаёт до опоры (например, bogie перекинулся).
 
-    **Предел** — наибольший размер препятствия, найденный бинарным поиском с шагом 10 мм.
+    **Предел** — наибольший размер препятствия при заданном моменте колёс. **Требуемый момент** —
+    наименьший пиковый момент колеса, при котором препятствие заданного размера проходится. Обе границы
+    ищутся одинаково: если известна подсказка (например, значение у соседнего варианта), поиск идёт от неё
+    шагами, удваивающимися до смены результата, затем — делением пополам до заданной точности.
+
+    **Оптимизация** — CMA-ES в нормированных координатах свободных параметров, первая точка — текущая
+    геометрия. Каждое поколение: выборка вариантов из многомерного нормального распределения → оценка
+    (параллельно) → среднее смещается к лучшим, а ковариация вытягивается вдоль удачных направлений.
+    Недопустимая геометрия получает штраф, растущий с величиной нарушения, — поиск видит, куда
+    возвращаться. Несколько лучших вариантов в конце пересчитываются с более мелким шагом.
 
     **Управление колёсами.** «Свой регулятор скорости» — каждое колесо держит заданную скорость
     (как у большинства роверов); при повороте bogie колёса могут «спорить» друг с другом.
