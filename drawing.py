@@ -138,10 +138,9 @@ def _terrain_polygons(boxes: list[Box], floor_z: float, y_mm: float, x_range) ->
     for box in boxes:
         if not box.y0 <= y_mm <= box.y1:
             continue
-        x0 = max(box.x0, x_range[0] - 50)
-        x1 = min(box.x1, x_range[1] + 50)
         bottom = min(floor_z, box.z_top) - 400
-        traces.append(go.Scatter(x=[x0, x1, x1, x0, x0], y=[bottom, bottom, box.z_top, box.z_top, bottom],
+        outline = box.outline(bottom, x_range[0] - 50, x_range[1] + 50)
+        traces.append(go.Scatter(x=[p[0] for p in outline], y=[p[1] for p in outline],
                                  mode="lines", fill="toself", fillcolor=GROUND_FILL,
                                  line=dict(color=GROUND_LINE, width=1.5), showlegend=False, hoverinfo="skip"))
     left, right = x_range[0] - 50, x_range[1] + 50
@@ -298,8 +297,8 @@ def animation_gif(result: SimResult, platform: Platform, side: str = "L", limit:
     for box in result.terrain:
         if box.y0 <= y_mm <= box.y1:
             bottom = min(result.floor_z_mm, box.z_top) - 400
-            ax.fill([box.x0, box.x1, box.x1, box.x0], [bottom, bottom, box.z_top, box.z_top],
-                    color="#8aa57a", alpha=0.6, lw=0)
+            outline = box.outline(bottom, x_range[0] - 50, x_range[1] + 50)
+            ax.fill([p[0] for p in outline], [p[1] for p in outline], color="#8aa57a", alpha=0.6, lw=0)
     ax.fill([x_range[0], x_range[1], x_range[1], x_range[0]],
             [result.floor_z_mm, result.floor_z_mm, result.floor_z_mm - 400, result.floor_z_mm - 400],
             color="#8aa57a", alpha=0.6, lw=0)

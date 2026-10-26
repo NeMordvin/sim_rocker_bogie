@@ -83,6 +83,21 @@ class Platform:
     wheel_torque_nm: float = 16.0
     friction: float = 0.8
     speed_m_s: float = 0.15
+    # Шина: радиальная жёсткость (0 — жёсткое колесо), демпфирование в долях
+    # критического для доли массы ровера на колесо и наибольший прогиб до
+    # удара обода.
+    tire_stiffness_n_mm: float = 100.0
+    tire_damping_ratio: float = 0.3
+    tire_max_deflection_mm: float = 25.0
+    # Обминание шины о кромку: кромки препятствий скругляются этим радиусом
+    # (0 — острая кромка 90°).
+    tire_edge_wrap_mm: float = 10.0
+    # Мотор: до скорости обода ``motor_knee_speed_m_s`` доступен полный пиковый
+    # момент (ограничение тока контроллера), дальше разгоняющий момент линейно
+    # падает до нуля на скорости холостого хода (противо-ЭДС). Тормозной
+    # момент оборотами не ограничивается.
+    motor_no_load_speed_m_s: float = 8.3
+    motor_knee_speed_m_s: float = 4.0
     # "torque" — все колёса получают одинаковый момент от регулятора скорости
     # корпуса; "speed" — у каждого колеса свой регулятор скорости.
     control: str = "speed"
@@ -367,24 +382,60 @@ class Box:
     y1: float
     z_top: float
     z_bottom: float = -1000.0
+    # Радиусы скругления верхних кромок у x0 и x1.
+    round_x0: float = 0.0
+    round_x1: float = 0.0
+
+    def outline(self, bottom: float, x_min: float, x_max: float, count: int = 8) -> list[tuple[float, float]]:
+        """Контур сечения блока (x, z) от нижней границы ``bottom``, обрезанный по X."""
+        x0, x1 = max(self.x0, x_min), min(self.x1, x_max)
+        quarter = [radians(90.0 * i / count) for i in range(count + 1)]
+        top: list[tuple[float, float]] = []
+        if self.round_x0 > 0.0 and x0 == self.x0:
+            r = self.round_x0
+            top += [(x0 + r - r * cos(a), self.z_top - r + r * sin(a)) for a in quarter]
+        else:
+            top.append((x0, self.z_top))
+        if self.round_x1 > 0.0 and x1 == self.x1:
+            r = self.round_x1
+            top += [(x1 - r + r * sin(a), self.z_top - r + r * cos(a)) for a in quarter]
+        else:
+            top.append((x1, self.z_top))
+        return [(x0, bottom), *top, (x1, bottom), (x0, bottom)]
 
 
 FAR = 6000.0
 
 
 def _mjcf_boxes(boxes: list[Box]) -> str:
+    """Блоки грунта; скруглённая кромка — цилиндр вдоль Y и укороченный блок под ним."""
     lines = []
-    for index, box in enumerate(boxes):
-        cx = (box.x0 + box.x1) / 2000.0
-        cy = (box.y0 + box.y1) / 2000.0
-        cz = (box.z_top + box.z_bottom) / 2000.0
-        sx = (box.x1 - box.x0) / 2000.0
-        sy = (box.y1 - box.y0) / 2000.0
-        sz = (box.z_top - box.z_bottom) / 2000.0
+
+    def block(name: str, x0: float, x1: float, box: Box, z_top: float) -> None:
+        if x1 - x0 <= 1e-6 or z_top - box.z_bottom <= 1e-6:
+            return
         lines.append(
-            f'<geom name="ground{index}" class="ground" type="box" '
-            f'pos="{cx:.5f} {cy:.5f} {cz:.5f}" size="{sx:.5f} {sy:.5f} {sz:.5f}"/>'
+            f'<geom name="{name}" class="ground" type="box" '
+            f'pos="{_m((x0 + x1) / 2.0)} {_m((box.y0 + box.y1) / 2.0)} {_m((z_top + box.z_bottom) / 2.0)}" '
+            f'size="{_m((x1 - x0) / 2.0)} {_m((box.y1 - box.y0) / 2.0)} {_m((z_top - box.z_bottom) / 2.0)}"/>'
         )
+
+    def edge(name: str, x: float, r: float, box: Box) -> None:
+        z = box.z_top - r
+        lines.append(
+            f'<geom name="{name}" class="ground" type="cylinder" size="{_m(r)}" '
+            f'fromto="{_m(x)} {_m(box.y0)} {_m(z)} {_m(x)} {_m(box.y1)} {_m(z)}"/>'
+        )
+
+    for index, box in enumerate(boxes):
+        r0, r1 = box.round_x0, box.round_x1
+        block(f"ground{index}", box.x0 + r0, box.x1 - r1, box, box.z_top)
+        if r0 > 0.0:
+            block(f"ground{index}_x0", box.x0, box.x0 + r0, box, box.z_top - r0)
+            edge(f"ground{index}_edge_x0", box.x0 + r0, r0, box)
+        if r1 > 0.0:
+            block(f"ground{index}_x1", box.x1 - r1, box.x1, box, box.z_top - r1)
+            edge(f"ground{index}_edge_x1", box.x1 - r1, r1, box)
     return "\n    ".join(lines)
 
 
@@ -407,6 +458,26 @@ def _tube_mass(start, end, platform: Platform) -> float:
     return max(0.05, hypot(end[0] - start[0], end[1] - start[1]) / 1000.0 * platform.tube_mass_kg_per_m)
 
 
+def _tire_joints(platform: Platform) -> str:
+    """Упругость шины: обод смещается относительно оси вдоль X и Z рычага.
+
+    Две одинаковые пружины дают изотропную радиальную жёсткость в плоскости
+    колеса — прогиб под кромкой ступени такой же, как под грунтом. Ограничение
+    хода — удар обода. Шаблон с полем ``{name}``.
+    """
+    stiffness = platform.tire_stiffness_n_mm * 1000.0
+    if stiffness <= 0.0:
+        return ""
+    mass = platform.total_mass_kg / 6.0
+    damping = 2.0 * platform.tire_damping_ratio * sqrt(stiffness * mass)
+    travel = _m(platform.tire_max_deflection_mm)
+    return "\n            ".join(
+        f'<joint name="tire_{axis}_{{name}}" type="slide" axis="{vector}" stiffness="{stiffness:.1f}" '
+        f'damping="{damping:.2f}" range="-{travel} {travel}" solreflimit="0.004 1"/>'
+        for axis, vector in (("x", "1 0 0"), ("z", "0 0 1"))
+    )
+
+
 def _side_xml(side: str, design: Design, platform: Platform) -> str:
     points = neutral_points(design, platform)
     y = platform.track_mm / 2.0 * (1.0 if side == "L" else -1.0)
@@ -420,10 +491,13 @@ def _side_xml(side: str, design: Design, platform: Platform) -> str:
     def site(name: str, point: tuple[float, float], origin: tuple[float, float]) -> str:
         return f'<site name="{name}_{side}" pos="{_m(point[0] - origin[0])} 0 {_m(point[1] - origin[1])}"/>'
 
+    tire = _tire_joints(platform)
+
     def wheel_body(name: str, origin: tuple[float, float]) -> str:
         wx, wz = points.wheels[name]
         return f"""
           <body name="wheel_{name}_{side}" pos="{_m(wx - origin[0])} 0 {_m(wz - origin[1])}">
+            {tire.format(name=f"{name}_{side}")}
             <joint name="spin_{name}_{side}" type="hinge" axis="0 1 0" damping="0.05" armature="0.02"/>
             <geom name="tire_{name}_{side}" class="wheel" type="cylinder"
                   size="{_m(radius)} {_m(platform.wheel_width_mm / 2.0)}" zaxis="0 1 0"
@@ -514,7 +588,11 @@ def build_mjcf(
     return f"""<mujoco model="rocker_bogie">
   <compiler angle="degree" autolimits="true"/>
   <option timestep="{timestep}" integrator="implicitfast" cone="elliptic" impratio="10">
-    <flag multiccd="enable"/>
+    <!-- Встроенный в MuJoCo 3.x nativeccd на кромке ступени иногда выдаёт для цилиндра нормаль
+         грани (горизонтальную) вместо нормали к кромке: колесо, ползущее на кромку, внезапно теряет
+         опору и срывается. С упругой шиной это происходило почти на каждой ступени; libccd считает
+         кромку стабильно, но почти вдвое медленнее. -->
+    <flag multiccd="enable" nativeccd="disable"/>
   </option>
   <default>
     <geom solref="0.004 1" solimp="0.95 0.99 0.001"/>

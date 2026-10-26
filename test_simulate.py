@@ -6,7 +6,8 @@ import mujoco
 import numpy as np
 
 from model import Design, Platform, neutral_points
-from simulate import Obstacle, _boundary, build_terrain, find_limit, required_torque, run
+from simulate import (SETTLE_S, STUCK_WINDOW_S, Obstacle, _boundary, _Ids, _Motor, _verify, build_terrain,
+                      find_limit, make_model, required_torque, run)
 
 DESIGN = Design()
 PLATFORM = Platform()
@@ -117,6 +118,80 @@ class Traversal(unittest.TestCase):
         weight = PLATFORM.total_mass_kg * 9.81
         self.assertTrue(np.isclose(sum(frame.normal_n.values()), weight, rtol=0.05))
 
+    def test_wheel_climbing_wall_is_not_stuck(self):
+        # Колесо долго ползёт вверх по стенке, а корпус в это время стоит или откатывается —
+        # это продвижение, а не застревание.
+        platform = replace(PLATFORM, body_mass_kg=36.0, friction=1.8)
+        result = run(DESIGN, platform, Obstacle("step_up", 365.0, -1), record=False)
+        self.assertTrue(result.success, result.reason)
+
+    def test_tire_deflection_matches_stiffness(self):
+        model, *_ = make_model(DESIGN, PLATFORM, Obstacle("step_up", 0.0, 1))
+        data = mujoco.MjData(model)
+        while data.time < 1.0:
+            mujoco.mj_step(model, data)
+        mujoco.mj_forward(model, data)
+        stiffness = PLATFORM.tire_stiffness_n_mm
+        for wheel in ("front", "middle", "rear"):
+            with self.subTest(wheel=wheel):
+                joint = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, f"tire_z_{wheel}_L")
+                deflection_mm = data.qpos[model.jnt_qposadr[joint]] * 1000.0
+                load = 0.0
+                wheel_body = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, f"wheel_{wheel}_L")
+                force = np.zeros(6)
+                for index in range(data.ncon):
+                    contact = data.contact[index]
+                    if wheel_body in (model.geom_bodyid[contact.geom1], model.geom_bodyid[contact.geom2]):
+                        mujoco.mj_contactForce(model, data, index, force)
+                        load += force[0]
+                # Обод поднимается относительно оси на прогиб = нагрузка / жёсткость
+                # (без веса самого колеса, который пружина не несёт).
+                own = PLATFORM.wheel_module_mass_kg * 9.81
+                self.assertAlmostEqual(deflection_mm, (load - own) / stiffness, delta=0.15)
+
+    def test_zero_stiffness_is_rigid_wheel(self):
+        model, *_ = make_model(DESIGN, replace(PLATFORM, tire_stiffness_n_mm=0.0), Obstacle("step_up", 0.0, 1))
+        self.assertEqual(mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, "tire_z_front_L"), -1)
+
+    def test_obvious_stall_ends_early(self):
+        result = run(DESIGN, PLATFORM, Obstacle("step_up", 300.0, 1), record=False)
+        self.assertFalse(result.success)
+        self.assertIn("не хватает момента", result.reason)
+        self.assertLess(result.duration_s, SETTLE_S + STUCK_WINDOW_S)
+
+    def test_climbing_edges_are_rounded(self):
+        for obstacle, rounded in ((Obstacle("step_up", 100.0, 1), ("x0",)), (Obstacle("step_up", 100.0, -1), ("x1",)),
+                                  (Obstacle("ditch", 300.0, 1), ("x1", "x0"))):
+            with self.subTest(obstacle=obstacle.label):
+                boxes, *_ = build_terrain(DESIGN, PLATFORM, obstacle)
+                for box, edge in zip(boxes, rounded):
+                    self.assertEqual(getattr(box, f"round_{edge}"), PLATFORM.tire_edge_wrap_mm)
+        low, *_ = build_terrain(DESIGN, PLATFORM, Obstacle("step_up", 4.0, 1))
+        self.assertEqual(low[0].round_x0, 4.0)  # не больше высоты стенки
+        model, *_ = make_model(DESIGN, PLATFORM, Obstacle("step_up", 100.0, 1))
+        self.assertGreaterEqual(mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, "ground0_edge_x0"), 0)
+
+    def test_rounded_outline_follows_arc(self):
+        boxes, *_ = build_terrain(DESIGN, PLATFORM, Obstacle("step_up", 100.0, 1))
+        box = boxes[0]
+        r = box.round_x0
+        for x, z in box.outline(-500.0, box.x0 - 100.0, box.x0 + 300.0)[1:-3]:
+            if x < box.x0 + r - 1e-6:
+                self.assertAlmostEqual(np.hypot(x - box.x0 - r, z - box.z_top + r), r, places=6)
+
+    def test_motor_drive_torque_falls_with_speed(self):
+        model, *_ = make_model(DESIGN, PLATFORM, Obstacle("step_up", 0.0, 1))
+        data = mujoco.MjData(model)
+        ids = _Ids(model)
+        motor = _Motor(ids, PLATFORM)
+        half = (PLATFORM.motor_knee_speed_m_s + PLATFORM.motor_no_load_speed_m_s) / 2.0
+        data.qvel[motor.dofs[0]] = half / (PLATFORM.wheel_radius_mm / 1000.0)
+        lower, upper = motor.limits(data)
+        peak = PLATFORM.wheel_torque_nm
+        self.assertAlmostEqual(upper[0], 0.5 * peak, places=6)  # разгон — по характеристике
+        self.assertAlmostEqual(lower[0], -peak, places=6)       # торможение — полный момент
+        self.assertAlmostEqual(upper[1], peak, places=6)        # колесо стоит
+
     def test_frames_contain_forces_balancing_weight(self):
         result = run(DESIGN, PLATFORM, Obstacle("step_up", 0.0, 1), record=True)
         frame = result.frames[len(result.frames) // 2]
@@ -146,6 +221,28 @@ class BoundarySearch(unittest.TestCase):
         self.assertLessEqual(abs(plain[0] - 137.0), 5.0)
         self.assertLessEqual(abs(guided[0] - 137.0), 5.0)
         self.assertLess(len(calls), plain_runs)
+
+    def test_verify_rejects_lucky_boundary(self):
+        # Проходит до 50 и случайно в 98–104: деление пополам могло найти 100.
+        def attempt(value):
+            return _Fake(value <= 50.0 or 98.0 <= value <= 104.0)
+
+        good, _, _, _, unstable = _verify(attempt, 100.0, 105.0, 0.0, 5.0)
+        self.assertTrue(unstable)
+        self.assertLessEqual(abs(good - 50.0), 5.0)
+
+        def torque(value):
+            return _Fake(10.0 <= value <= 10.5 or value >= 30.0)
+
+        good, _, _, _, unstable = _verify(torque, 10.0, 9.5, 40.0, 0.5)
+        self.assertTrue(unstable)
+        self.assertLessEqual(abs(good - 30.0), 0.5)
+
+    def test_verify_keeps_clean_boundary(self):
+        good, _, _, runs, unstable = _verify(lambda value: _Fake(value <= 137.0), 135.0, 140.0, 0.0, 5.0)
+        self.assertFalse(unstable)
+        self.assertEqual(good, 135.0)
+        self.assertEqual(runs, 2)
 
     def test_required_torque_on_flat_ground_is_small(self):
         result = required_torque(DESIGN, PLATFORM, Obstacle("step_up", 0.0, 1), upper_nm=20.0, tolerance_nm=2.0)

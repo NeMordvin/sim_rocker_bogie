@@ -32,8 +32,11 @@ FINISH_MARGIN_MM = 60.0
 HANG_MARGIN_MM = 800.0
 SETTLE_S = 0.6
 RAMP_S = 0.8
-STUCK_WINDOW_S = 3.0
-STUCK_PROGRESS_MM = 15.0
+STUCK_WINDOW_S = 6.0
+STUCK_PROGRESS_MM = 5.0
+# Явный упор: все нагруженные колёса стоят на предельном моменте и не
+# крутятся, ровер не продвигается — дальше ждать бессмысленно.
+EARLY_STALL_S = 3.0
 TIP_PITCH_DEG = 70.0
 TIP_ROLL_DEG = 40.0
 FRAME_DT = 0.05
@@ -101,6 +104,9 @@ class LimitResult:
     reason: str
     upper_bound_mm: float
     runs: int
+    # Проверка ниже найденной границы нашла непроходимое препятствие —
+    # граница пересчитана ниже него, но результат на этой геометрии рваный.
+    unstable: bool = False
 
 
 def _wheel_s(design: Design, platform: Platform, direction: int) -> list[float]:
@@ -119,27 +125,38 @@ def build_terrain(design: Design, platform: Platform, obstacle: Obstacle) -> tup
     left = (0.0, FAR)
     right = (-FAR, 0.0)
 
-    def box(s0: float, s1: float, ys: tuple[float, float], z_top: float) -> Box:
+    # Кромки, через которые переезжают колёса, скругляются (обминание шины);
+    # радиус не больше высоты стенки.
+    wall = obstacle.ditch_depth_mm if obstacle.kind == "ditch" else size
+    wrap = max(0.0, min(platform.tire_edge_wrap_mm, wall))
+
+    def box(s0: float, s1: float, ys: tuple[float, float], z_top: float,
+            round_s0: bool = False, round_s1: bool = False) -> Box:
         x0, x1 = sorted((direction * s0, direction * s1))
-        return Box(x0, x1, ys[0], ys[1], z_top)
+        r0, r1 = (wrap if round_s0 else 0.0), (wrap if round_s1 else 0.0)
+        if direction < 0:
+            r0, r1 = r1, r0
+        return Box(x0, x1, ys[0], ys[1], z_top, round_x0=r0, round_x1=r1)
 
     boxes: list[Box] = []
     floor = 0.0
     start_z = 0.0
     finish = start + radius + FINISH_MARGIN_MM
+    # Под одним бортом перепад только слева, справа грунт сплошной, без кромок.
+    edge_side = left if obstacle.one_side else full
     if obstacle.kind == "step_up":
-        boxes.append(box(start, FAR, left if obstacle.one_side else full, size))
+        boxes.append(box(start, FAR, edge_side, size, round_s0=True))
     elif obstacle.kind == "step_down":
         start_z = size
-        boxes.append(box(-FAR, start, full, size))
+        boxes.append(box(-FAR, start, edge_side, size, round_s1=True))
         if obstacle.one_side:
-            boxes.append(box(start, FAR, right, size))
+            boxes.append(box(-FAR, FAR, right, size))
     else:
         floor = -obstacle.ditch_depth_mm
-        boxes.append(box(-FAR, start, full, 0.0))
-        boxes.append(box(start + size, FAR, full, 0.0))
+        boxes.append(box(-FAR, start, edge_side, 0.0, round_s1=True))
+        boxes.append(box(start + size, FAR, edge_side, 0.0, round_s0=True))
         if obstacle.one_side:
-            boxes.append(box(start, start + size, right, 0.0))
+            boxes.append(box(-FAR, FAR, right, 0.0))
         finish = start + size + radius + FINISH_MARGIN_MM
     return boxes, floor, start_z, finish
 
@@ -224,7 +241,42 @@ def _mm(vector: np.ndarray) -> tuple[float, float, float]:
     return (float(vector[0] * 1000.0), float(vector[1] * 1000.0), float(vector[2] * 1000.0))
 
 
-def _record(model, data, ids: _Ids, wheel_contacts) -> Frame:
+class _FrameAverage:
+    """Реакции опоры и моменты, усреднённые по всем шагам расчёта между кадрами.
+
+    Мгновенное значение раз в 50 мс выхватывает случайную фазу быстрых
+    колебаний контактов, и графики получаются рваными.
+    """
+
+    def __init__(self):
+        self.reset()
+
+    def reset(self) -> None:
+        self.steps = 0
+        self.normal: dict[str, float] = {}
+        self.force: dict[str, np.ndarray] = {}
+        self.moment: dict[str, np.ndarray] = {}
+        self.weight: dict[str, float] = {}
+        self.torque: np.ndarray | None = None
+
+    def add(self, model, data, ids: _Ids) -> None:
+        self.steps += 1
+        for side, wheel, position, force, normal_force in _wheel_contacts(model, data, ids):
+            key = f"{wheel}_{side}"
+            magnitude = float(np.linalg.norm(force))
+            self.normal[key] = self.normal.get(key, 0.0) + normal_force
+            self.force[key] = self.force.get(key, 0.0) + force
+            # Точка приложения — средняя по контактам колеса, взвешенная по силе.
+            self.moment[key] = self.moment.get(key, 0.0) + position * magnitude
+            self.weight[key] = self.weight.get(key, 0.0) + magnitude
+        torque = data.actuator_force.copy()
+        self.torque = torque if self.torque is None else self.torque + torque
+
+
+def _record(model, data, ids: _Ids, average: _FrameAverage) -> Frame:
+    if average.steps == 0:
+        average.add(model, data, ids)
+    steps = average.steps
     points: dict[str, dict[str, tuple[float, float, float]]] = {}
     for side in SIDES:
         side_points = {}
@@ -235,12 +287,13 @@ def _record(model, data, ids: _Ids, wheel_contacts) -> Frame:
                 side_points[name] = _mm(data.xpos[ids.body[(side, name)]])
         points[side] = side_points
     pitch, roll = _pitch_roll(data.xquat[ids.chassis])
-    normal = {f"{w}_{s}": 0.0 for s in SIDES for w in WHEELS}
-    forces = []
-    for side, wheel, position, force, normal_force in wheel_contacts:
-        normal[f"{wheel}_{side}"] += normal_force
-        forces.append((f"{wheel}_{side}", _mm(position), tuple(float(v) for v in force)))
-    return Frame(
+    normal = {f"{w}_{s}": average.normal.get(f"{w}_{s}", 0.0) / steps for s in SIDES for w in WHEELS}
+    forces = [
+        (key, _mm(average.moment[key] / average.weight[key]), tuple(float(v) / steps for v in force))
+        for key, force in average.force.items()
+        if average.weight[key] > 1e-9
+    ]
+    frame = Frame(
         t=float(data.time),
         points=points,
         com=_mm(data.xipos[ids.chassis]),
@@ -250,10 +303,12 @@ def _record(model, data, ids: _Ids, wheel_contacts) -> Frame:
         bogie_deg={s: degrees(float(data.qpos[ids.bogie[s]])) for s in SIDES},
         normal_n=normal,
         torque_nm={
-            f"{w}_{s}": float(data.actuator_force[ids.actuator[(s, w)]]) for s in SIDES for w in WHEELS
+            f"{w}_{s}": float(average.torque[ids.actuator[(s, w)]]) / steps for s in SIDES for w in WHEELS
         },
         forces=forces,
     )
+    average.reset()
+    return frame
 
 
 def _wheel_contacts(model, data, ids: _Ids):
@@ -309,25 +364,41 @@ def run(
     frames: list[Frame] = []
     notes: list[str] = []
     max_torque = max_pitch = max_roll = max_rocker = max_bogie = 0.0
-    progress_history: list[tuple[float, float]] = []
     wheel_body = [ids.body[(s, f"wheel_{w}")] for s in SIDES for w in WHEELS]
     distance = finish_s - min(_wheel_s(design, platform, direction))
-    time_limit = SETTLE_S + 2.5 * distance / 1000.0 / platform.speed_m_s + 6.0
+    if obstacle.kind == "step_up":
+        distance += obstacle.size_mm
+    time_limit = SETTLE_S + 2.5 * distance / 1000.0 / platform.speed_m_s + STUCK_WINDOW_S + 3.0
+    # Рекорды продвижения: корпус и колёса вперёд, колёса вверх. Подъём колеса
+    # по стенке, пока корпус стоит или откатывается, — тоже продвижение;
+    # качание туда-обратно рекордов не обновляет.
+    records: np.ndarray | None = None
+    last_progress = SETTLE_S
+    stalled_since: float | None = None
     next_frame = 0.0
     limit_hit = set()
-    controller = None if platform.control == "speed" else _TorqueController(model, ids, platform, direction)
+    motor = _Motor(ids, platform)
+    controller = None if platform.control == "speed" else _TorqueController(model, ids, platform, direction, motor)
+    average = _FrameAverage()
 
     mujoco.mj_forward(model, data)
     while data.time < time_limit:
         driving = data.time >= SETTLE_S
         ramp = min(1.0, max(0.0, (data.time - SETTLE_S) / RAMP_S))
         if controller is None:
+            # Пределы момента по оборотам обновляются раз в CHECK_STEPS шагов —
+            # одинаково с записью кадров и без, чтобы результат не зависел от неё.
             data.ctrl[:] = direction * omega * ramp
+            motor.apply_forcerange(model, data)
+        if controller is None and not record:
             mujoco.mj_step(model, data, nstep=CHECK_STEPS)
         else:
             for _ in range(CHECK_STEPS):
-                controller.update(data, ramp)
+                if controller is not None:
+                    controller.update(data, ramp)
                 mujoco.mj_step(model, data)
+                if record:
+                    average.add(model, data, ids)
 
         if not np.all(np.isfinite(data.qpos)):
             return result(False, "численная неустойчивость расчёта")
@@ -362,7 +433,7 @@ def run(
                     limit_hit.add("bogie")
 
         if record and data.time >= next_frame:
-            frames.append(_record(model, data, ids, _wheel_contacts(model, data, ids)))
+            frames.append(_record(model, data, ids, average))
             next_frame += FRAME_DT
 
         if abs(pitch) > TIP_PITCH_DEG or abs(roll) > TIP_ROLL_DEG:
@@ -373,22 +444,75 @@ def run(
             for name in sorted(limit_hit):
                 notes.append(f"шарнир {name} доходил до упора")
             if record:
-                frames.append(_record(model, data, ids, _wheel_contacts(model, data, ids)))
+                frames.append(_record(model, data, ids, average))
             return result(True, "")
         if min(wheel_s) >= finish_s + HANG_MARGIN_MM:
             return result(False, "колёса висят в воздухе: подвеска не достаёт до опоры")
 
         if driving:
             chassis_s = direction * data.xpos[ids.chassis][0] * 1000.0
-            progress_history.append((float(data.time), chassis_s))
-            cutoff = data.time - STUCK_WINDOW_S
-            while len(progress_history) > 1 and progress_history[1][0] <= cutoff:
-                progress_history.pop(0)
-            if progress_history[0][0] <= cutoff + 1e-9 and data.time > SETTLE_S + STUCK_WINDOW_S:
-                if chassis_s - progress_history[0][1] < STUCK_PROGRESS_MM:
-                    return result(False, _stuck_reason(model, data, ids, omega, torque_limit))
+            wheel_z = [data.xpos[body][2] * 1000.0 for body in wheel_body]
+            progress = np.array([chassis_s, *wheel_s, *wheel_z])
+            if records is None:
+                records = progress
+            improved = progress > records + STUCK_PROGRESS_MM
+            if improved.any():
+                records = np.where(improved, progress, records)
+                last_progress = float(data.time)
+                stalled_since = None
+            elif data.time - last_progress > STUCK_WINDOW_S:
+                return result(False, _stuck_reason(model, data, ids, omega, motor))
+            elif data.time - last_progress > 0.3:
+                if _all_stalled(model, data, ids, omega, motor):
+                    stalled_since = float(data.time) if stalled_since is None else stalled_since
+                    if data.time - stalled_since >= EARLY_STALL_S and data.time - last_progress >= EARLY_STALL_S:
+                        return result(False, _stuck_reason(model, data, ids, omega, motor))
+                else:
+                    stalled_since = None
 
-    return result(False, "не успел пройти за отведённое время")
+    reason = _stuck_reason(model, data, ids, omega, motor)
+    detail = "" if reason == "застревание" else f" ({reason})"
+    return result(False, "не успел пройти за отведённое время" + detail)
+
+
+class _Motor:
+    """Пределы момента мотор-колёс по оборотам (параметры — в Platform).
+
+    Разгоняющий момент (по направлению вращения) полный до скорости обода
+    ``motor_knee_speed_m_s`` и линейно падает до нуля на скорости холостого
+    хода; тормозной всегда ограничен только пиковым.
+    """
+
+    def __init__(self, ids: _Ids, platform: Platform):
+        keys = list(ids.actuator)
+        self.actuators = np.asarray([ids.actuator[key] for key in keys])
+        self.dofs = np.asarray([ids.spin_dof[key] for key in keys])
+        self.index = {key: i for i, key in enumerate(keys)}
+        self.peak = platform.wheel_torque_nm
+        self.radius = platform.wheel_radius_mm / 1000.0
+        self.no_load = max(platform.motor_no_load_speed_m_s, 1e-6)
+        self.knee = min(max(platform.motor_knee_speed_m_s, 0.0), 0.99 * self.no_load)
+
+    def limits(self, data) -> tuple[np.ndarray, np.ndarray]:
+        """Нижний и верхний пределы момента каждого колеса (порядок ids.actuator)."""
+        speed = data.qvel[self.dofs] * self.radius
+        drive = self.peak * np.clip((self.no_load - np.abs(speed)) / (self.no_load - self.knee), 0.0, 1.0)
+        upper = np.where(speed >= 0.0, drive, self.peak)
+        lower = np.where(speed <= 0.0, -drive, -self.peak)
+        return lower, upper
+
+    def apply_forcerange(self, model, data) -> None:
+        lower, upper = self.limits(data)
+        model.actuator_forcerange[self.actuators, 0] = lower
+        model.actuator_forcerange[self.actuators, 1] = upper
+
+    def ratio(self, data, key: tuple[str, str]) -> float:
+        """Доля использованного предела момента в направлении действия момента."""
+        lower, upper = self.limits(data)
+        i = self.index[key]
+        torque = float(data.actuator_force[self.actuators[i]])
+        limit = upper[i] if torque >= 0.0 else -lower[i]
+        return abs(torque) / max(limit, 1e-9)
 
 
 class _TorqueController:
@@ -399,9 +523,10 @@ class _TorqueController:
     раскручивалось без нагрузки.
     """
 
-    def __init__(self, model, ids: _Ids, platform: Platform, direction: int):
+    def __init__(self, model, ids: _Ids, platform: Platform, direction: int, motor: _Motor):
         radius = platform.wheel_radius_mm / 1000.0
         self.direction = direction
+        self.motor = motor
         self.torque = platform.wheel_torque_nm
         self.speed = platform.speed_m_s
         self.omega = self.speed / radius
@@ -409,9 +534,8 @@ class _TorqueController:
         self.kp = platform.total_mass_kg * radius / (6.0 * 0.1)
         self.ki = self.kp / 0.3
         self.integral = 0.0
-        keys = list(ids.actuator)
-        self.actuators = np.asarray([ids.actuator[key] for key in keys])
-        self.dofs = np.asarray([ids.spin_dof[key] for key in keys])
+        self.actuators = motor.actuators
+        self.dofs = motor.dofs
 
     def update(self, data, ramp: float) -> None:
         torque = self.torque
@@ -423,25 +547,45 @@ class _TorqueController:
         # Ограничение оборотов снимает только разгоняющий момент, тормозной
         # момент колесо получает всегда.
         driving = np.sign(spin) == np.sign(common)
-        data.ctrl[self.actuators] = self.direction * common * np.where(driving, fade, 1.0)
+        lower, upper = self.motor.limits(data)
+        data.ctrl[self.actuators] = np.clip(self.direction * common * np.where(driving, fade, 1.0), lower, upper)
 
 
-def _stuck_reason(model, data, ids: _Ids, omega: float, torque_limit: float) -> str:
-    """Классифицирует застревание по нагруженным колёсам."""
+def _loaded_wheels(model, data, ids: _Ids) -> list[tuple[str, str]]:
+    """Колёса, несущие хотя бы 3 % суммарной реакции опоры."""
     loads: dict[tuple[str, str], float] = {}
     for side, wheel, _, _, normal_force in _wheel_contacts(model, data, ids):
         loads[(side, wheel)] = loads.get((side, wheel), 0.0) + normal_force
     total = sum(loads.values()) or 1.0
+    return [key for key, load in loads.items() if load >= 0.03 * total]
+
+
+def _all_stalled(model, data, ids: _Ids, omega: float, motor: _Motor) -> bool:
+    """Нагруженные колёса упёрлись: почти не крутятся на предельном моменте.
+
+    Колесо, которое крутится на малом моменте, едва касаясь грунта (средние
+    при задранном bogie), ровер не толкает и упору не мешает. Буксующее на
+    полном моменте колесо — не упор: сцепление ещё может восстановиться.
+    """
+    stalled = 0
+    for key in _loaded_wheels(model, data, ids):
+        ratio = motor.ratio(data, key)
+        if abs(data.qvel[ids.spin_dof[key]]) < 0.1 * omega and ratio > 0.95:
+            stalled += 1
+        elif ratio > 0.5:
+            return False
+    return stalled > 0
+
+
+def _stuck_reason(model, data, ids: _Ids, omega: float, motor: _Motor) -> str:
+    """Классифицирует застревание по нагруженным колёсам."""
     stalled, slipping = [], []
-    for key, load in loads.items():
-        if load < 0.03 * total:
-            continue
+    for key in _loaded_wheels(model, data, ids):
         spin = abs(data.qvel[ids.spin_dof[key]]) / omega
-        torque = abs(data.actuator_force[ids.actuator[key]]) / torque_limit
         label = f"{WHEEL_LABELS[key[1]]} ({SIDE_LABELS[key[0]]})"
         if spin > 0.3:
             slipping.append(label)
-        elif torque > 0.95:
+        elif motor.ratio(data, key) > 0.95:
             stalled.append(label)
     if stalled and len(slipping) <= len(stalled):
         return "не хватает момента колёс: " + ", ".join(stalled)
@@ -502,6 +646,35 @@ def _boundary(attempt, good: float, bad: float, tolerance: float, guess: float |
     return good, bad, reason, runs, good_tested
 
 
+def _verify(attempt, good: float, bad: float, safe: float, tolerance: float):
+    """Проверяет, что и с безопасной стороны от найденной границы проходится.
+
+    Деление пополам предполагает, что всё между ``safe`` и ``good``
+    проходится. На рваной геометрии это не так, и граница оказывается
+    случайным везением. Проверяются две точки: в двух шагах от границы и на
+    40 % пути к ``safe``. Если одна не проходит, граница ищется заново между
+    ``safe`` и ней (один раз). Возвращает (good, bad, причина, прогоны, неустойчиво).
+    """
+    toward_safe = 1.0 if safe > good else -1.0
+    span = abs(safe - good)
+    runs = 0
+    for distance in (2.0 * tolerance, 0.4 * span):
+        if distance <= tolerance or distance >= span:
+            continue
+        value = good + toward_safe * distance
+        runs += 1
+        trial = attempt(value)
+        if not trial.success:
+            low, high, reason, more, _ = _boundary(attempt, safe, value, tolerance)
+            return low, high, reason or trial.reason, runs + more, True
+    return good, bad, "", runs, False
+
+
+def _unstable_note(text: str, unstable: bool) -> str:
+    note = "результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+    return (f"{text}; {note}" if text else note) if unstable else text
+
+
 def find_limit(
     design: Design,
     platform: Platform,
@@ -513,15 +686,20 @@ def find_limit(
     ditch_depth_mm: float = 500.0,
     timestep: float = 0.001,
     guess_mm: float | None = None,
+    verify: bool = True,
 ) -> LimitResult:
-    """Наибольшее препятствие, которое шасси проходит (поиск границы по размеру)."""
+    """Наибольшее препятствие, которое шасси проходит (поиск границы по размеру).
+
+    С ``verify`` найденная граница проверяется двумя прогонами ниже неё (см. _verify).
+    """
 
     def attempt(size: float) -> SimResult:
         obstacle = Obstacle(kind, size, direction, one_side, ditch_depth_mm)
         return run(design, platform, obstacle, record=False, timestep=timestep)
 
-    def limit(value: float, reason: str, runs: int) -> LimitResult:
-        return LimitResult(Obstacle(kind, value, direction, one_side, ditch_depth_mm), value, reason, upper_mm, runs)
+    def limit(value: float, reason: str, runs: int, unstable: bool = False) -> LimitResult:
+        return LimitResult(Obstacle(kind, value, direction, one_side, ditch_depth_mm), value,
+                           _unstable_note(reason, unstable), upper_mm, runs, unstable)
 
     top = None
     if guess_mm is None:
@@ -530,15 +708,21 @@ def find_limit(
             return limit(upper_mm, "граница поиска", 1)
     low, high, reason, runs, _ = _boundary(attempt, 0.0, upper_mm, tolerance_mm, guess_mm)
     if top is not None:
-        return limit(low, reason or top.reason, runs + 1)
-    if high >= upper_mm:
+        runs += 1
+        reason = reason or top.reason
+    elif high >= upper_mm:
         # С подсказкой верхняя граница ещё не проверялась.
         top = attempt(upper_mm)
         if top.success:
             return limit(upper_mm, "граница поиска", runs + 1)
         runs += 1
         reason = reason or top.reason
-    return limit(low, reason, runs)
+    unstable = False
+    if verify:
+        low, high, extra_reason, more, unstable = _verify(attempt, low, high, 0.0, tolerance_mm)
+        runs += more
+        reason = extra_reason or reason
+    return limit(low, reason, runs, unstable)
 
 
 @dataclass(frozen=True)
@@ -550,6 +734,7 @@ class TorqueResult:
     reason: str
     upper_nm: float
     runs: int
+    unstable: bool = False
 
     @property
     def passable(self) -> bool:
@@ -564,6 +749,7 @@ def required_torque(
     tolerance_nm: float = 0.5,
     timestep: float = 0.001,
     guess_nm: float | None = None,
+    verify: bool = True,
 ) -> TorqueResult:
     """Поиск границы по моменту: ниже неё не хватает момента, выше — проходит.
 
@@ -575,10 +761,16 @@ def required_torque(
     def attempt(torque: float) -> SimResult:
         return run(design, replace(platform, wheel_torque_nm=torque), obstacle, record=False, timestep=timestep)
 
-    good, _, reason, runs, tested = _boundary(attempt, upper_nm, 0.0, tolerance_nm, guess_nm)
+    good, bad, reason, runs, tested = _boundary(attempt, upper_nm, 0.0, tolerance_nm, guess_nm)
     if not tested:
         runs += 1
         top = attempt(upper_nm)
         if not top.success:
             return TorqueResult(obstacle, float("inf"), top.reason, upper_nm, runs)
-    return TorqueResult(obstacle, good, reason, upper_nm, runs)
+    unstable = False
+    if verify and good < upper_nm:
+        # Больший момент тоже должен проходить.
+        good, bad, extra_reason, more, unstable = _verify(attempt, good, bad, upper_nm, tolerance_nm)
+        runs += more
+        reason = extra_reason or reason
+    return TorqueResult(obstacle, good, _unstable_note(reason, unstable), upper_nm, runs, unstable)
