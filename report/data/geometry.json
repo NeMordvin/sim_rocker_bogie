@@ -1,0 +1,1331 @@
+{
+ "meta": {
+  "base": {
+   "bogie_rear_arm_mm": 238.0,
+   "bogie_front_arm_mm": 270.8,
+   "bogie_angle_deg": 202.8,
+   "rocker_rear_arm_mm": 248.0,
+   "rocker_front_arm_mm": 356.3,
+   "rocker_angle_deg": 192.4,
+   "outer_strut_height_mm": 250.0,
+   "outer_strut_angle_deg": 18.0,
+   "middle_strut_height_mm": 150.0,
+   "middle_strut_angle_deg": 18.5,
+   "com_x_mm": 0.0,
+   "com_z_mm": 130.0,
+   "com_y_mm": 0.0,
+   "rocker_limit_deg": 60.0,
+   "bogie_limit_deg": 75.0
+  },
+  "torque_nm": 16.0,
+  "invalid": [
+   {
+    "bogie_angle_deg": 150.0,
+    "rocker_angle_deg": 160.0,
+    "errors": [
+     "Длина 1203 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 150.0,
+    "rocker_angle_deg": 170.0,
+    "errors": [
+     "Длина 1209 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 150.0,
+    "rocker_angle_deg": 180.0,
+    "errors": [
+     "Длина 1212 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 150.0,
+    "rocker_angle_deg": 190.0,
+    "errors": [
+     "Длина 1209 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 150.0,
+    "rocker_angle_deg": 200.0,
+    "errors": [
+     "Длина 1203 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 150.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами.",
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 160.0,
+    "rocker_angle_deg": 160.0,
+    "errors": [
+     "Длина 1204 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 160.0,
+    "rocker_angle_deg": 170.0,
+    "errors": [
+     "Длина 1211 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 160.0,
+    "rocker_angle_deg": 180.0,
+    "errors": [
+     "Длина 1213 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 160.0,
+    "rocker_angle_deg": 190.0,
+    "errors": [
+     "Длина 1211 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 160.0,
+    "rocker_angle_deg": 200.0,
+    "errors": [
+     "Длина 1204 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 160.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами.",
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 170.0,
+    "rocker_angle_deg": 160.0,
+    "errors": [
+     "Длина 1202 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 170.0,
+    "rocker_angle_deg": 170.0,
+    "errors": [
+     "Длина 1209 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 170.0,
+    "rocker_angle_deg": 180.0,
+    "errors": [
+     "Длина 1211 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 170.0,
+    "rocker_angle_deg": 190.0,
+    "errors": [
+     "Длина 1209 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 170.0,
+    "rocker_angle_deg": 200.0,
+    "errors": [
+     "Длина 1202 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 170.0,
+    "rocker_angle_deg": 230.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 170.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами.",
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 180.0,
+    "rocker_angle_deg": 170.0,
+    "errors": [
+     "Длина 1205 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 180.0,
+    "rocker_angle_deg": 180.0,
+    "errors": [
+     "Длина 1207 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 180.0,
+    "rocker_angle_deg": 190.0,
+    "errors": [
+     "Длина 1205 мм превышает габарит 1200 мм."
+    ]
+   },
+   {
+    "bogie_angle_deg": 180.0,
+    "rocker_angle_deg": 230.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 180.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами.",
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 190.0,
+    "rocker_angle_deg": 220.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 190.0,
+    "rocker_angle_deg": 230.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 190.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами.",
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 200.0,
+    "rocker_angle_deg": 150.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами."
+    ]
+   },
+   {
+    "bogie_angle_deg": 200.0,
+    "rocker_angle_deg": 220.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 200.0,
+    "rocker_angle_deg": 230.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 200.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами.",
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 210.0,
+    "rocker_angle_deg": 150.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами."
+    ]
+   },
+   {
+    "bogie_angle_deg": 210.0,
+    "rocker_angle_deg": 210.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 210.0,
+    "rocker_angle_deg": 220.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 210.0,
+    "rocker_angle_deg": 230.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 210.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 220.0,
+    "rocker_angle_deg": 150.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами."
+    ]
+   },
+   {
+    "bogie_angle_deg": 220.0,
+    "rocker_angle_deg": 210.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 220.0,
+    "rocker_angle_deg": 220.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 220.0,
+    "rocker_angle_deg": 230.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 220.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 230.0,
+    "rocker_angle_deg": 150.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами.",
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 230.0,
+    "rocker_angle_deg": 160.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 230.0,
+    "rocker_angle_deg": 170.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 230.0,
+    "rocker_angle_deg": 180.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 230.0,
+    "rocker_angle_deg": 190.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 230.0,
+    "rocker_angle_deg": 200.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 230.0,
+    "rocker_angle_deg": 210.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 230.0,
+    "rocker_angle_deg": 220.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 230.0,
+    "rocker_angle_deg": 230.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 230.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 240.0,
+    "rocker_angle_deg": 150.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами.",
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 240.0,
+    "rocker_angle_deg": 160.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 240.0,
+    "rocker_angle_deg": 170.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 240.0,
+    "rocker_angle_deg": 180.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 240.0,
+    "rocker_angle_deg": 190.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 240.0,
+    "rocker_angle_deg": 200.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 240.0,
+    "rocker_angle_deg": 210.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 240.0,
+    "rocker_angle_deg": 220.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 240.0,
+    "rocker_angle_deg": 230.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 240.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 250.0,
+    "rocker_angle_deg": 150.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами.",
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 250.0,
+    "rocker_angle_deg": 160.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 250.0,
+    "rocker_angle_deg": 170.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 250.0,
+    "rocker_angle_deg": 180.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 250.0,
+    "rocker_angle_deg": 190.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 250.0,
+    "rocker_angle_deg": 200.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 250.0,
+    "rocker_angle_deg": 210.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 250.0,
+    "rocker_angle_deg": 220.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 250.0,
+    "rocker_angle_deg": 230.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 250.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 260.0,
+    "rocker_angle_deg": 150.0,
+    "errors": [
+     "Главный шарнир должен находиться между средним и передним колёсами.",
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 260.0,
+    "rocker_angle_deg": 160.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 260.0,
+    "rocker_angle_deg": 170.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 260.0,
+    "rocker_angle_deg": 180.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 260.0,
+    "rocker_angle_deg": 190.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 260.0,
+    "rocker_angle_deg": 200.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 260.0,
+    "rocker_angle_deg": 210.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 260.0,
+    "rocker_angle_deg": 220.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 260.0,
+    "rocker_angle_deg": 230.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   },
+   {
+    "bogie_angle_deg": 260.0,
+    "rocker_angle_deg": 240.0,
+    "errors": [
+     "Шарниры должны быть выше колёс (высота ≥ диаметра колеса)."
+    ]
+   }
+  ],
+  "bogie_angles": [
+   150.0,
+   160.0,
+   170.0,
+   180.0,
+   190.0,
+   200.0,
+   210.0,
+   220.0,
+   230.0,
+   240.0,
+   250.0,
+   260.0
+  ],
+  "rocker_angles": [
+   150.0,
+   160.0,
+   170.0,
+   180.0,
+   190.0,
+   200.0,
+   210.0,
+   220.0,
+   230.0,
+   240.0
+  ]
+ },
+ "rows": [
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 150.0,
+   "direction": 1,
+   "step_mm": 105.46875,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 15.9
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 150.0,
+   "direction": -1,
+   "step_mm": 414.84375,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 24.9
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 210.0,
+   "direction": 1,
+   "step_mm": 112.5,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 19.9
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 210.0,
+   "direction": -1,
+   "step_mm": 428.90625,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), переднее (правый), среднее (правый)",
+   "unstable": false,
+   "seconds": 31.7
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 220.0,
+   "direction": 1,
+   "step_mm": 112.5,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 19.2
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 220.0,
+   "direction": -1,
+   "step_mm": 414.84375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (левый), переднее (правый), среднее (правый)",
+   "unstable": false,
+   "seconds": 29.1
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 230.0,
+   "direction": 1,
+   "step_mm": 105.46875,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 16.8
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 230.0,
+   "direction": -1,
+   "step_mm": 400.78125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), переднее (правый), среднее (правый)",
+   "unstable": false,
+   "seconds": 27.4
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 150.0,
+   "direction": 1,
+   "step_mm": 112.5,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 16.5
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 150.0,
+   "direction": -1,
+   "step_mm": 421.875,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 34.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 210.0,
+   "direction": 1,
+   "step_mm": 119.53125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 17.4
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 210.0,
+   "direction": -1,
+   "step_mm": 435.9375,
+   "reason": "пробуксовка, не хватает сцепления: среднее (правый)",
+   "unstable": false,
+   "seconds": 41.4
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 220.0,
+   "direction": 1,
+   "step_mm": 119.53125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 17.3
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 220.0,
+   "direction": -1,
+   "step_mm": 428.90625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), переднее (правый), среднее (правый)",
+   "unstable": false,
+   "seconds": 40.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 230.0,
+   "direction": 1,
+   "step_mm": 154.6875,
+   "reason": "застревание",
+   "unstable": false,
+   "seconds": 21.8
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 230.0,
+   "direction": -1,
+   "step_mm": 407.8125,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), среднее (правый)",
+   "unstable": false,
+   "seconds": 38.3
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 150.0,
+   "direction": 1,
+   "step_mm": 119.53125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый)",
+   "unstable": false,
+   "seconds": 16.6
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 150.0,
+   "direction": -1,
+   "step_mm": 435.9375,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 37.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 210.0,
+   "direction": 1,
+   "step_mm": 119.53125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 17.2
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 210.0,
+   "direction": -1,
+   "step_mm": 450.0,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 41.2
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 220.0,
+   "direction": 1,
+   "step_mm": 119.53125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый)",
+   "unstable": false,
+   "seconds": 15.6
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 220.0,
+   "direction": -1,
+   "step_mm": 435.9375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 40.7
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 150.0,
+   "direction": 1,
+   "step_mm": 126.5625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый)",
+   "unstable": false,
+   "seconds": 15.7
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 150.0,
+   "direction": -1,
+   "step_mm": 442.96875,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 38.5
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 160.0,
+   "direction": 1,
+   "step_mm": 113.96484375,
+   "reason": "пробуксовка, не хватает сцепления: заднее (правый); результат неустойчив: ниже найденной границы встретился непроходимый вариант",
+   "unstable": true,
+   "seconds": 29.1
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 160.0,
+   "direction": -1,
+   "step_mm": 457.03125,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 37.6
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 200.0,
+   "direction": 1,
+   "step_mm": 182.8125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 22.8
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 200.0,
+   "direction": -1,
+   "step_mm": 471.09375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 43.2
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 210.0,
+   "direction": 1,
+   "step_mm": 119.53125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый), заднее (правый)",
+   "unstable": false,
+   "seconds": 16.1
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 210.0,
+   "direction": -1,
+   "step_mm": 464.0625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 39.4
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 220.0,
+   "direction": 1,
+   "step_mm": 119.53125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый)",
+   "unstable": false,
+   "seconds": 16.7
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 220.0,
+   "direction": -1,
+   "step_mm": 428.90625,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 35.9
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 150.0,
+   "direction": 1,
+   "step_mm": 421.875,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 26.9
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 150.0,
+   "direction": -1,
+   "step_mm": 457.03125,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 36.9
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 160.0,
+   "direction": 1,
+   "step_mm": 492.1875,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 29.5
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 160.0,
+   "direction": -1,
+   "step_mm": 471.09375,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 38.7
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 170.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 40.1
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 170.0,
+   "direction": -1,
+   "step_mm": 478.125,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 39.7
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 180.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 49.6
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 180.0,
+   "direction": -1,
+   "step_mm": 485.15625,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 44.5
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 190.0,
+   "direction": 1,
+   "step_mm": 119.53125,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), среднее (правый), заднее (правый)",
+   "unstable": false,
+   "seconds": 16.5
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 190.0,
+   "direction": -1,
+   "step_mm": 485.15625,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 44.9
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 200.0,
+   "direction": 1,
+   "step_mm": 119.53125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 17.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 200.0,
+   "direction": -1,
+   "step_mm": 478.125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), переднее (правый), среднее (правый)",
+   "unstable": false,
+   "seconds": 43.2
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 210.0,
+   "direction": 1,
+   "step_mm": 119.53125,
+   "reason": "пробуксовка, не хватает сцепления: среднее (правый), заднее (правый)",
+   "unstable": false,
+   "seconds": 16.8
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 210.0,
+   "direction": -1,
+   "step_mm": 435.9375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 36.5
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 160.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 39.4
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 160.0,
+   "direction": -1,
+   "step_mm": 485.15625,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 39.8
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 170.0,
+   "direction": 1,
+   "step_mm": 527.34375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 42.8
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 170.0,
+   "direction": -1,
+   "step_mm": 492.1875,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 40.7
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 180.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 47.7
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 180.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 44.5
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 190.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 44.6
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 190.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 45.6
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 200.0,
+   "direction": 1,
+   "step_mm": 160.576171875,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый); результат неустойчив: ниже найденной границы встретился непроходимый вариант",
+   "unstable": true,
+   "seconds": 43.1
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 200.0,
+   "direction": -1,
+   "step_mm": 450.0,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 35.7
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 210.0,
+   "direction": 1,
+   "step_mm": 119.53125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (левый), переднее (правый), заднее (правый)",
+   "unstable": false,
+   "seconds": 15.9
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 210.0,
+   "direction": -1,
+   "step_mm": 393.75,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 31.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 160.0,
+   "direction": 1,
+   "step_mm": 520.3125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 41.3
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 160.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 42.6
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 170.0,
+   "direction": 1,
+   "step_mm": 527.34375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 44.1
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 170.0,
+   "direction": -1,
+   "step_mm": 506.25,
+   "reason": "опрокидывание",
+   "unstable": false,
+   "seconds": 39.4
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 180.0,
+   "direction": 1,
+   "step_mm": 527.34375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 43.8
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 180.0,
+   "direction": -1,
+   "step_mm": 513.28125,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 42.3
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 190.0,
+   "direction": 1,
+   "step_mm": 421.875,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)",
+   "unstable": false,
+   "seconds": 35.7
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 190.0,
+   "direction": -1,
+   "step_mm": 513.28125,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 41.6
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 200.0,
+   "direction": 1,
+   "step_mm": 407.8125,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)",
+   "unstable": false,
+   "seconds": 34.4
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 200.0,
+   "direction": -1,
+   "step_mm": 400.78125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 32.3
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 160.0,
+   "direction": 1,
+   "step_mm": 365.625,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)",
+   "unstable": false,
+   "seconds": 29.5
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 160.0,
+   "direction": -1,
+   "step_mm": 316.40625,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)",
+   "unstable": false,
+   "seconds": 23.5
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 170.0,
+   "direction": 1,
+   "step_mm": 365.625,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)",
+   "unstable": false,
+   "seconds": 29.3
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 170.0,
+   "direction": -1,
+   "step_mm": 316.40625,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)",
+   "unstable": false,
+   "seconds": 24.6
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 180.0,
+   "direction": 1,
+   "step_mm": 365.625,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)",
+   "unstable": false,
+   "seconds": 28.8
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 180.0,
+   "direction": -1,
+   "step_mm": 316.40625,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)",
+   "unstable": false,
+   "seconds": 23.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 190.0,
+   "direction": 1,
+   "step_mm": 365.625,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)",
+   "unstable": false,
+   "seconds": 19.6
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 190.0,
+   "direction": -1,
+   "step_mm": 316.40625,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)",
+   "unstable": false,
+   "seconds": 16.7
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 200.0,
+   "direction": 1,
+   "step_mm": 365.625,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)",
+   "unstable": false,
+   "seconds": 18.9
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 200.0,
+   "direction": -1,
+   "step_mm": 309.375,
+   "reason": "задевает препятствие: труба bogie к среднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 14.1
+  }
+ ]
+}

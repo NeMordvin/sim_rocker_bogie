@@ -1,0 +1,582 @@
+{
+ "meta": {
+  "designs": {
+   "start": {
+    "bogie_rear_arm_mm": 192.7,
+    "bogie_front_arm_mm": 231.4,
+    "bogie_angle_deg": 135.7,
+    "rocker_rear_arm_mm": 417.7,
+    "rocker_front_arm_mm": 358.0,
+    "rocker_angle_deg": 150.7,
+    "outer_strut_height_mm": 250.0,
+    "outer_strut_angle_deg": 0.0,
+    "middle_strut_height_mm": 150.0,
+    "middle_strut_angle_deg": 0.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "optimized": {
+    "bogie_rear_arm_mm": 238.0,
+    "bogie_front_arm_mm": 270.8,
+    "bogie_angle_deg": 202.8,
+    "rocker_rear_arm_mm": 248.0,
+    "rocker_front_arm_mm": 356.3,
+    "rocker_angle_deg": 192.4,
+    "outer_strut_height_mm": 250.0,
+    "outer_strut_angle_deg": 18.0,
+    "middle_strut_height_mm": 150.0,
+    "middle_strut_angle_deg": 18.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   }
+  }
+ },
+ "rows": [
+  {
+   "design": "start",
+   "torque_nm": 4.0,
+   "direction": 1,
+   "step_mm": 28.125,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)",
+   "unstable": false,
+   "seconds": 7.3
+  },
+  {
+   "design": "start",
+   "torque_nm": 4.0,
+   "direction": -1,
+   "step_mm": 56.25,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)",
+   "unstable": false,
+   "seconds": 10.3
+  },
+  {
+   "design": "start",
+   "torque_nm": 7.0,
+   "direction": 1,
+   "step_mm": 49.21875,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 11.1
+  },
+  {
+   "design": "start",
+   "torque_nm": 7.0,
+   "direction": -1,
+   "step_mm": 91.40625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)",
+   "unstable": false,
+   "seconds": 16.5
+  },
+  {
+   "design": "start",
+   "torque_nm": 10.0,
+   "direction": 1,
+   "step_mm": 63.28125,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 13.3
+  },
+  {
+   "design": "start",
+   "torque_nm": 10.0,
+   "direction": -1,
+   "step_mm": 105.46875,
+   "reason": "задевает препятствие: стойка заднего колеса (левый борт)",
+   "unstable": false,
+   "seconds": 9.3
+  },
+  {
+   "design": "start",
+   "torque_nm": 11.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 12.3
+  },
+  {
+   "design": "start",
+   "torque_nm": 11.0,
+   "direction": -1,
+   "step_mm": 112.5,
+   "reason": "задевает препятствие: стойка заднего колеса (левый борт)",
+   "unstable": false,
+   "seconds": 8.2
+  },
+  {
+   "design": "start",
+   "torque_nm": 12.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 11.4
+  },
+  {
+   "design": "start",
+   "torque_nm": 12.0,
+   "direction": -1,
+   "step_mm": 105.46875,
+   "reason": "задевает препятствие: стойка заднего колеса (левый борт)",
+   "unstable": false,
+   "seconds": 8.8
+  },
+  {
+   "design": "start",
+   "torque_nm": 13.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 11.6
+  },
+  {
+   "design": "start",
+   "torque_nm": 13.0,
+   "direction": -1,
+   "step_mm": 105.46875,
+   "reason": "задевает препятствие: стойка заднего колеса (левый борт)",
+   "unstable": false,
+   "seconds": 9.1
+  },
+  {
+   "design": "start",
+   "torque_nm": 16.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 11.0
+  },
+  {
+   "design": "start",
+   "torque_nm": 16.0,
+   "direction": -1,
+   "step_mm": 112.5,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 10.1
+  },
+  {
+   "design": "start",
+   "torque_nm": 19.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 11.3
+  },
+  {
+   "design": "start",
+   "torque_nm": 19.0,
+   "direction": -1,
+   "step_mm": 119.53125,
+   "reason": "задевает препятствие: стойка заднего колеса (левый борт)",
+   "unstable": false,
+   "seconds": 7.0
+  },
+  {
+   "design": "start",
+   "torque_nm": 22.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 10.5
+  },
+  {
+   "design": "start",
+   "torque_nm": 22.0,
+   "direction": -1,
+   "step_mm": 119.53125,
+   "reason": "задевает препятствие: стойка заднего колеса (правый борт)",
+   "unstable": false,
+   "seconds": 7.0
+  },
+  {
+   "design": "start",
+   "torque_nm": 25.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый)",
+   "unstable": false,
+   "seconds": 10.4
+  },
+  {
+   "design": "start",
+   "torque_nm": 25.0,
+   "direction": -1,
+   "step_mm": 112.5,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), среднее (правый)",
+   "unstable": false,
+   "seconds": 9.0
+  },
+  {
+   "design": "start",
+   "torque_nm": 28.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 10.5
+  },
+  {
+   "design": "start",
+   "torque_nm": 28.0,
+   "direction": -1,
+   "step_mm": 119.53125,
+   "reason": "задевает препятствие: стойка заднего колеса (левый борт)",
+   "unstable": false,
+   "seconds": 6.6
+  },
+  {
+   "design": "start",
+   "torque_nm": 31.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый)",
+   "unstable": false,
+   "seconds": 11.3
+  },
+  {
+   "design": "start",
+   "torque_nm": 31.0,
+   "direction": -1,
+   "step_mm": 119.53125,
+   "reason": "задевает препятствие: стойка заднего колеса (левый борт)",
+   "unstable": false,
+   "seconds": 6.8
+  },
+  {
+   "design": "start",
+   "torque_nm": 34.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый)",
+   "unstable": false,
+   "seconds": 10.6
+  },
+  {
+   "design": "start",
+   "torque_nm": 34.0,
+   "direction": -1,
+   "step_mm": 119.53125,
+   "reason": "задевает препятствие: стойка заднего колеса (левый борт)",
+   "unstable": false,
+   "seconds": 6.9
+  },
+  {
+   "design": "start",
+   "torque_nm": 37.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (правый)",
+   "unstable": false,
+   "seconds": 10.8
+  },
+  {
+   "design": "start",
+   "torque_nm": 37.0,
+   "direction": -1,
+   "step_mm": 119.53125,
+   "reason": "задевает препятствие: стойка заднего колеса (левый борт)",
+   "unstable": false,
+   "seconds": 6.9
+  },
+  {
+   "design": "start",
+   "torque_nm": 40.0,
+   "direction": 1,
+   "step_mm": 70.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый)",
+   "unstable": false,
+   "seconds": 10.6
+  },
+  {
+   "design": "start",
+   "torque_nm": 40.0,
+   "direction": -1,
+   "step_mm": 112.5,
+   "reason": "застревание",
+   "unstable": false,
+   "seconds": 11.3
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 4.0,
+   "direction": 1,
+   "step_mm": 56.25,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)",
+   "unstable": false,
+   "seconds": 18.7
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 4.0,
+   "direction": -1,
+   "step_mm": 77.34375,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), заднее (левый), переднее (правый), среднее (правый), заднее (правый)",
+   "unstable": false,
+   "seconds": 7.5
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 7.0,
+   "direction": 1,
+   "step_mm": 84.375,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)",
+   "unstable": false,
+   "seconds": 16.7
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 7.0,
+   "direction": -1,
+   "step_mm": 485.15625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)",
+   "unstable": false,
+   "seconds": 39.3
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 10.0,
+   "direction": 1,
+   "step_mm": 112.5,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)",
+   "unstable": false,
+   "seconds": 17.3
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 10.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 40.8
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 11.0,
+   "direction": 1,
+   "step_mm": 207.587890625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый), среднее (правый); результат неустойчив: ниже найденной границы встретился непроходимый вариант",
+   "unstable": true,
+   "seconds": 41.9
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 11.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 40.6
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 12.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 42.7
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 12.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 39.7
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 13.0,
+   "direction": 1,
+   "step_mm": 315.615234375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), среднее (правый); результат неустойчив: ниже найденной границы встретился непроходимый вариант",
+   "unstable": true,
+   "seconds": 59.1
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 13.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 40.2
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 16.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 41.0
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 16.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый), среднее (правый)",
+   "unstable": false,
+   "seconds": 41.4
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 19.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 41.4
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 19.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), переднее (правый), среднее (правый)",
+   "unstable": false,
+   "seconds": 40.9
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 22.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 40.6
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 22.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 40.1
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 25.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 41.1
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 25.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 38.2
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 28.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 34.2
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 28.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 32.3
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 31.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 32.7
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 31.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 32.2
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 34.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 32.5
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 34.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "пробуксовка, не хватает сцепления: среднее (правый)",
+   "unstable": false,
+   "seconds": 31.0
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 37.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 31.7
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 37.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 30.4
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 40.0,
+   "direction": 1,
+   "step_mm": 534.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)",
+   "unstable": false,
+   "seconds": 30.4
+  },
+  {
+   "design": "optimized",
+   "torque_nm": 40.0,
+   "direction": -1,
+   "step_mm": 499.21875,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (левый), переднее (правый)",
+   "unstable": false,
+   "seconds": 30.2
+  }
+ ]
+}

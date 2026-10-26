@@ -1,0 +1,50 @@
+{
+ "start": {
+  "limits": {
+   "step_up": 70.3125,
+   "step_down": 238.28125,
+   "ditch": 183.59375,
+   "bump_120": 70.3125,
+   "bump_250": 70.3125
+  },
+  "torque": {
+   "step_up": Infinity,
+   "step_down": Infinity,
+   "ditch": 10.3125,
+   "bump_120": 8.90625,
+   "bump_250": Infinity
+  }
+ },
+ "user": {
+  "limits": {
+   "step_up": 300.0,
+   "step_down": 484.375,
+   "ditch": 207.03125,
+   "bump_120": 126.5625,
+   "bump_250": 103.125
+  },
+  "torque": {
+   "step_up": 6.5625,
+   "step_down": 0.46875,
+   "ditch": 5.15625,
+   "bump_120": 4.6875,
+   "bump_250": Infinity
+  }
+ },
+ "best": {
+  "limits": {
+   "step_up": 89.0625,
+   "step_down": 375.0,
+   "ditch": 187.5,
+   "bump_120": 112.5,
+   "bump_250": 300.0
+  },
+  "torque": {
+   "step_up": 9.84375,
+   "step_down": 0.46875,
+   "ditch": 10.78125,
+   "bump_120": 8.4375,
+   "bump_250": 11.25
+  }
+ }
+}
