@@ -3,8 +3,9 @@ import unittest
 from streamlit.testing.v1 import AppTest
 
 from model import Design, Platform
-from optimize import FAILED_TORQUE_FACTOR, INVALID_COST, Criterion, Goal, evaluate, jobs_for, optimize, summarize
-from simulate import Obstacle, TorqueResult
+from optimize import (FAILED_TORQUE_FACTOR, INVALID_COST, Criterion, Goal, criterion_label, evaluate, jobs_for,
+                      optimize, summarize)
+from simulate import LimitResult, Obstacle, TorqueResult
 
 QUICK_GOAL = Goal(criteria=(Criterion("step_up", 1.0, 80.0),), tolerance_mm=20.0)
 
@@ -12,8 +13,19 @@ QUICK_GOAL = Goal(criteria=(Criterion("step_up", 1.0, 80.0),), tolerance_mm=20.0
 class OptimizeTests(unittest.TestCase):
     def test_jobs_cover_both_directions_and_sides(self):
         goal = Goal(one_side=True)
-        self.assertEqual(len(jobs_for(goal)), 3 * 2 * 2)
-        self.assertEqual(len(jobs_for(Goal())), 3 * 2)
+        self.assertEqual(len(jobs_for(goal)), 5 * 2 * 2)
+        self.assertEqual(len(jobs_for(Goal())), 5 * 2)
+
+    def test_bumps_of_different_width_are_scored_separately(self):
+        goal = Goal(criteria=(Criterion("bump", 1.0, 300.0, 0.0, 120.0), Criterion("bump", 0.5, 300.0, 0.0, 250.0)))
+        self.assertEqual({job.width_mm for job in jobs_for(goal)}, {120.0, 250.0})
+        results = [LimitResult(Obstacle("bump", value, direction, bump_width_mm=width), value, "", 300.0, 1)
+                   for width, direction, value in ((120.0, 1, 90.0), (120.0, -1, 70.0),
+                                                   (250.0, 1, 60.0), (250.0, -1, 80.0))]
+        evaluation = summarize(Design(), goal, results)
+        self.assertEqual(evaluation.values, {"bump_120": 70.0, "bump_250": 60.0})
+        self.assertAlmostEqual(evaluation.score, 70.0 + 0.5 * 60.0)
+        self.assertEqual(criterion_label("bump_250"), "кочка 250 мм")
 
     def test_score_uses_worst_direction(self):
         evaluation = evaluate(Design(), Platform(), QUICK_GOAL)

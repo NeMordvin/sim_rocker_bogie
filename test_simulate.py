@@ -171,6 +171,26 @@ class Traversal(unittest.TestCase):
         model, *_ = make_model(DESIGN, PLATFORM, Obstacle("step_up", 100.0, 1))
         self.assertGreaterEqual(mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, "ground0_edge_x0"), 0)
 
+    def test_bump_is_block_of_given_width(self):
+        boxes, _, _, finish = build_terrain(DESIGN, PLATFORM, Obstacle("bump", 80.0, 1, bump_width_mm=250.0))
+        self.assertEqual(len(boxes), 1)
+        bump = boxes[0]
+        self.assertAlmostEqual(bump.x1 - bump.x0, 250.0)
+        self.assertEqual(bump.z_top, 80.0)
+        self.assertEqual((bump.round_x0, bump.round_x1), (PLATFORM.tire_edge_wrap_mm,) * 2)
+        self.assertGreater(finish, bump.x1 + PLATFORM.wheel_radius_mm)
+        backward, *_ = build_terrain(DESIGN, PLATFORM, Obstacle("bump", 80.0, -1, bump_width_mm=250.0))
+        self.assertLess(backward[0].x1, neutral_points(DESIGN, PLATFORM).wheels["rear"][0])
+        self.assertAlmostEqual(backward[0].x1 - backward[0].x0, 250.0)
+        thin, *_ = build_terrain(DESIGN, PLATFORM, Obstacle("bump", 80.0, 1, bump_width_mm=12.0))
+        self.assertEqual(thin[0].round_x0, 6.0)  # не больше половины ширины
+
+    def test_low_bump_is_passed(self):
+        for direction in (1, -1):
+            with self.subTest(direction=direction):
+                result = run(DESIGN, PLATFORM, Obstacle("bump", 40.0, direction, bump_width_mm=120.0), record=False)
+                self.assertTrue(result.success, result.reason)
+
     def test_rounded_outline_follows_arc(self):
         boxes, *_ = build_terrain(DESIGN, PLATFORM, Obstacle("step_up", 100.0, 1))
         box = boxes[0]

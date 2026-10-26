@@ -27,6 +27,8 @@ from optimize import (
     Goal,
     Mode,
     OptimizationResult,
+    criterion_key,
+    criterion_label,
     default_population,
     evaluate_parallel,
     optimize,
@@ -245,11 +247,15 @@ def _value_text(evaluation: Evaluation, value: float) -> str:
     return f"{value:.0f} мм" if evaluation.mode == "limits" else _torque_text(value)
 
 
+def _obstacle_kind_text(obstacle: Obstacle) -> str:
+    return criterion_label(criterion_key(obstacle.kind, obstacle.bump_width_mm))
+
+
 def _result_rows(evaluation: Evaluation) -> list[dict[str, object]]:
     rows = []
     for result in evaluation.results:
         row: dict[str, object] = {
-            "Препятствие": KIND_LABELS[result.obstacle.kind],
+            "Препятствие": _obstacle_kind_text(result.obstacle),
             "Направление": DIRECTION_LABELS[result.obstacle.direction],
             "Сценарий": "под левым бортом" if result.obstacle.one_side else "по всей ширине",
         }
@@ -266,7 +272,7 @@ def _result_rows(evaluation: Evaluation) -> list[dict[str, object]]:
 
 def _result_case(result, platform: Platform) -> tuple[str, Platform]:
     """Подпись для выбора прохождения и платформа, с которой его показывать."""
-    text = (f"{KIND_LABELS[result.obstacle.kind]}, {DIRECTION_LABELS[result.obstacle.direction]}"
+    text = (f"{_obstacle_kind_text(result.obstacle)}, {DIRECTION_LABELS[result.obstacle.direction]}"
             f"{', под левым бортом' if result.obstacle.one_side else ''}")
     if isinstance(result, LimitResult):
         return f"{text}: {result.value_mm:.0f} мм", platform
@@ -277,23 +283,33 @@ def _result_case(result, platform: Platform) -> tuple[str, Platform]:
 
 def _criteria_inputs(mode: Mode, prefix: str, weights: bool) -> tuple[Criterion, ...]:
     """Поля целей по видам препятствий для выбранного режима."""
-    defaults = {item.kind: item for item in Goal().criteria}
+    defaults = Goal().criteria
+    bumps = 0
     criteria = []
-    for column, kind in zip(st.columns(3), KIND_LABELS):
-        default = defaults[kind]
+    for column, default in zip(st.columns(len(defaults)), defaults):
+        kind = default.kind
+        key = f"{kind}_{bumps}" if kind == "bump" else kind
         with column:
-            st.markdown(f"**{KIND_LABELS[kind].capitalize()}**")
+            if kind == "bump":
+                bumps += 1
+                st.markdown(f"**{KIND_LABELS[kind].capitalize()} {bumps}**")
+                width = st.number_input("Ширина вдоль хода, мм", min_value=20.0, value=default.width_mm,
+                                        step=10.0, key=f"{prefix}_width_{key}")
+            else:
+                st.markdown(f"**{KIND_LABELS[kind].capitalize()}**")
+                width = default.width_mm
             if mode == "limits":
                 weight = (st.number_input("Вес", min_value=0.0, value=default.weight, step=0.05,
-                                          key=f"{prefix}_weight_{kind}") if weights else 1.0)
+                                          key=f"{prefix}_weight_{key}") if weights else 1.0)
                 upper = st.number_input("Искать до, мм", min_value=20.0, value=default.upper_mm, step=25.0,
-                                        key=f"{prefix}_upper_{kind}")
-                criteria.append(Criterion(kind, float(weight), float(upper), default.target_mm))
+                                        key=f"{prefix}_upper_{key}")
+                criteria.append(Criterion(kind, float(weight), float(upper), default.target_mm, float(width)))
             else:
-                active = st.checkbox("Учитывать", value=True, key=f"{prefix}_use_{kind}")
+                active = st.checkbox("Учитывать", value=True, key=f"{prefix}_use_{key}")
                 target = st.number_input("Ширина рва, мм" if kind == "ditch" else "Высота, мм", min_value=10.0,
-                                         value=default.target_mm, step=10.0, key=f"{prefix}_target_{kind}")
-                criteria.append(Criterion(kind, 1.0 if active else 0.0, default.upper_mm, float(target)))
+                                         value=default.target_mm, step=10.0, key=f"{prefix}_target_{key}")
+                criteria.append(Criterion(kind, 1.0 if active else 0.0, default.upper_mm, float(target),
+                                          float(width)))
     return tuple(criteria)
 
 
@@ -447,13 +463,17 @@ def main() -> None:
         st.subheader("Проверка одного препятствия")
         columns = st.columns(5)
         kind = columns[0].selectbox("Препятствие", tuple(KIND_LABELS), format_func=KIND_LABELS.get)
-        size = columns[1].number_input("Ширина рва, мм" if kind == "ditch" else "Высота ступени, мм",
-                                       min_value=0.0, value=40.0, step=10.0)
+        size_label = {"ditch": "Ширина рва, мм", "bump": "Высота кочки, мм"}.get(kind, "Высота ступени, мм")
+        size = columns[1].number_input(size_label, min_value=0.0, value=40.0, step=10.0)
         direction = columns[2].selectbox("Направление", (1, -1), format_func=DIRECTION_LABELS.get)
         one_side = columns[3].checkbox("Только под левым бортом")
-        depth = columns[4].number_input("Глубина рва, мм", min_value=50.0, value=500.0, step=50.0,
-                                        disabled=kind != "ditch")
-        obstacle = Obstacle(kind, float(size), int(direction), bool(one_side), float(depth))
+        depth, width = 500.0, 120.0
+        if kind == "bump":
+            width = columns[4].number_input("Ширина кочки вдоль хода, мм", min_value=20.0, value=120.0, step=10.0)
+        else:
+            depth = columns[4].number_input("Глубина рва, мм", min_value=50.0, value=500.0, step=50.0,
+                                            disabled=kind != "ditch")
+        obstacle = Obstacle(kind, float(size), int(direction), bool(one_side), float(depth), float(width))
         if st.button("Смоделировать", type="primary", disabled=bool(errors)):
             st.session_state["obstacle_run"] = (design, platform, obstacle)
         stored = st.session_state.get("obstacle_run")
@@ -469,8 +489,8 @@ def main() -> None:
                                format_func=lambda m: {"limits": "наибольшие препятствия при моменте платформы",
                                                       "torque": "момент, нужный для заданных препятствий"}[m])
         if limits_mode == "limits":
-            st.write("Поиск наибольшей ступени, высоты съезда и ширины рва в обоих направлениях "
-                     "с шагом 2,5 мм. Каждый предел считается в отдельном процессе.")
+            st.write("Поиск наибольшей ступени, высоты съезда, ширины рва и высоты кочек заданной ширины "
+                     "в обоих направлениях с шагом 2,5 мм. Каждый предел считается в отдельном процессе.")
         else:
             st.write("Для каждого препятствия ищется наименьший пиковый момент колеса, при котором оно "
                      "проходится (шаг 0,25 Н·м). Сравните с моментом мотор-колеса на боковой панели.")
@@ -567,15 +587,15 @@ def main() -> None:
             else:
                 start = next((e for e in result.evaluations if e.design == source and not e.refined), None)
                 best = result.best
-                metrics = st.columns(4)
+                metrics = st.columns(1 + len(best.values))
                 delta = None
                 if start is not None and start.valid and abs(start.score) != float("inf"):
                     unit = "" if best.mode == "limits" else " Н·м"
                     delta = f"{best.score - start.score:+.1f}{unit} к исходному"
                 metrics[0].metric("Оценка лучшего", _score_text(best), delta,
                                   delta_color="normal" if best.mode == "limits" else "inverse")
-                for column, (crit_kind, value) in zip(metrics[1:], best.values.items()):
-                    column.metric(KIND_LABELS[crit_kind], _value_text(best, value))
+                for column, (crit_key, value) in zip(metrics[1:], best.values.items()):
+                    column.metric(criterion_label(crit_key), _value_text(best, value))
                 if best.mode == "torque":
                     if best.score <= opt_platform.wheel_torque_nm:
                         st.success(f"Лучшему варианту хватает {best.score:.1f} Н·м — у платформы "
@@ -605,7 +625,7 @@ def main() -> None:
                 st.dataframe(
                     [
                         {"Место": index, "Оценка": _score_text(item), "Уточнён": item.refined,
-                         **{KIND_LABELS[k]: _value_text(item, v) for k, v in item.values.items()},
+                         **{criterion_label(k): _value_text(item, v) for k, v in item.values.items()},
                          **{_short_label(name): getattr(item.design, name) for name in free_ranges}}
                         for index, item in enumerate(ranked, start=1)
                     ],
@@ -627,7 +647,8 @@ def main() -> None:
     главных шарнирах, связанные классическим дифференциалом (угол левого = −угол правого относительно
     корпуса), на каждом rocker — bogie на свободном шарнире. Колесо висит на стойке высотой *h* с наклоном
     *α*; трубы идут от шарниров к верху стоек. Колёса — цилиндры M365 Pro, у каждого свой мотор с
-    ограничением пикового момента. Препятствия — блоки с острой кромкой 90°.
+    ограничением пикового момента. Препятствия — блоки с острой кромкой 90°: ступень вверх и вниз, ров
+    и кочка (блок заданной ширины вдоль хода — лежащий кирпич, упавшее дерево), у которой ищется высота.
 
     **Шина.** Обод колеса подвешен к оси на двух пружинах с демпферами — вдоль и поперёк рычага, так что
     шина прогибается одинаково под грунтом и под кромкой ступени (радиальная жёсткость в Н/мм).

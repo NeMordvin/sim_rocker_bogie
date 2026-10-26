@@ -18,12 +18,13 @@ import numpy as np
 
 from model import FAR, SIDES, WHEELS, WHEEL_LABELS, SIDE_LABELS, Box, Design, Platform, build_mjcf, neutral_points
 
-ObstacleKind = Literal["step_up", "step_down", "ditch"]
+ObstacleKind = Literal["step_up", "step_down", "ditch", "bump"]
 
 KIND_LABELS: dict[str, str] = {
     "step_up": "подъём на ступень",
     "step_down": "съезд со ступени",
     "ditch": "ров",
+    "bump": "кочка",
 }
 DIRECTION_LABELS = {1: "одиночное колесо вперёд", -1: "bogie вперёд"}
 
@@ -55,13 +56,16 @@ class Obstacle:
     direction: int = 1
     one_side: bool = False
     ditch_depth_mm: float = 500.0
+    # Кочка — блок высотой size_mm и такой длины вдоль хода (бревно, кирпич).
+    bump_width_mm: float = 120.0
 
     @property
     def label(self) -> str:
         unit = "ширина" if self.kind == "ditch" else "высота"
         side = ", под левым бортом" if self.one_side else ""
+        width = f" × ширина {self.bump_width_mm:.0f}" if self.kind == "bump" else ""
         return (
-            f"{KIND_LABELS[self.kind]}, {unit} {self.size_mm:.0f} мм, "
+            f"{KIND_LABELS[self.kind]}, {unit} {self.size_mm:.0f}{width} мм, "
             f"{DIRECTION_LABELS[self.direction]}{side}"
         )
 
@@ -126,8 +130,10 @@ def build_terrain(design: Design, platform: Platform, obstacle: Obstacle) -> tup
     right = (-FAR, 0.0)
 
     # Кромки, через которые переезжают колёса, скругляются (обминание шины);
-    # радиус не больше высоты стенки.
+    # радиус не больше высоты стенки (и половины ширины кочки).
     wall = obstacle.ditch_depth_mm if obstacle.kind == "ditch" else size
+    if obstacle.kind == "bump":
+        wall = min(wall, obstacle.bump_width_mm / 2.0)
     wrap = max(0.0, min(platform.tire_edge_wrap_mm, wall))
 
     def box(s0: float, s1: float, ys: tuple[float, float], z_top: float,
@@ -151,6 +157,10 @@ def build_terrain(design: Design, platform: Platform, obstacle: Obstacle) -> tup
         boxes.append(box(-FAR, start, edge_side, size, round_s1=True))
         if obstacle.one_side:
             boxes.append(box(-FAR, FAR, right, size))
+    elif obstacle.kind == "bump":
+        width = obstacle.bump_width_mm
+        boxes.append(box(start, start + width, edge_side, size, round_s0=True, round_s1=True))
+        finish = start + width + radius + FINISH_MARGIN_MM
     else:
         floor = -obstacle.ditch_depth_mm
         boxes.append(box(-FAR, start, edge_side, 0.0, round_s1=True))
@@ -368,6 +378,8 @@ def run(
     distance = finish_s - min(_wheel_s(design, platform, direction))
     if obstacle.kind == "step_up":
         distance += obstacle.size_mm
+    elif obstacle.kind == "bump":
+        distance += 2.0 * obstacle.size_mm
     time_limit = SETTLE_S + 2.5 * distance / 1000.0 / platform.speed_m_s + STUCK_WINDOW_S + 3.0
     # Рекорды продвижения: корпус и колёса вперёд, колёса вверх. Подъём колеса
     # по стенке, пока корпус стоит или откатывается, — тоже продвижение;
@@ -684,6 +696,7 @@ def find_limit(
     upper_mm: float = 600.0,
     tolerance_mm: float = 10.0,
     ditch_depth_mm: float = 500.0,
+    bump_width_mm: float = 120.0,
     timestep: float = 0.001,
     guess_mm: float | None = None,
     verify: bool = True,
@@ -694,11 +707,11 @@ def find_limit(
     """
 
     def attempt(size: float) -> SimResult:
-        obstacle = Obstacle(kind, size, direction, one_side, ditch_depth_mm)
+        obstacle = Obstacle(kind, size, direction, one_side, ditch_depth_mm, bump_width_mm)
         return run(design, platform, obstacle, record=False, timestep=timestep)
 
     def limit(value: float, reason: str, runs: int, unstable: bool = False) -> LimitResult:
-        return LimitResult(Obstacle(kind, value, direction, one_side, ditch_depth_mm), value,
+        return LimitResult(Obstacle(kind, value, direction, one_side, ditch_depth_mm, bump_width_mm), value,
                            _unstable_note(reason, unstable), upper_mm, runs, unstable)
 
     top = None

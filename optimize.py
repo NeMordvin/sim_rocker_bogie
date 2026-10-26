@@ -5,6 +5,7 @@
 * ``limits`` — наибольшие препятствия при заданном моменте колёс. Оценка —
   Σ вес × предел (мм); для каждого вида препятствия берётся худшее из двух
   направлений (и из сценариев «по всей ширине» / «под одним бортом»).
+  Кочек может быть несколько — с разной шириной; у кочки ищется высота.
 * ``torque`` — наименьший пиковый момент колеса, при котором проходятся все
   заданные препятствия. Оценка — наибольший из требуемых моментов (Н·м).
   Момент — непрерывная величина, и геометрия влияет на неё плавно, поэтому
@@ -56,6 +57,15 @@ class Criterion:
     upper_mm: float
     # Режим torque: размер препятствия, которое нужно пройти.
     target_mm: float = 0.0
+    # Кочка: ширина вдоль хода, мм.
+    width_mm: float = 0.0
+
+    @property
+    def key(self) -> str:
+        return criterion_key(self.kind, self.width_mm)
+
+    def matches(self, obstacle: Obstacle) -> bool:
+        return criterion_key(obstacle.kind, obstacle.bump_width_mm) == self.key
 
 
 @dataclass(frozen=True)
@@ -64,6 +74,9 @@ class Goal:
         Criterion("step_up", 1.0, 300.0, 80.0),
         Criterion("step_down", 0.3, 500.0, 300.0),
         Criterion("ditch", 0.5, 500.0, 180.0),
+        # Кирпич плашмя поперёк хода и небольшое бревно.
+        Criterion("bump", 0.5, 300.0, 65.0, 120.0),
+        Criterion("bump", 0.5, 300.0, 150.0, 250.0),
     )
     mode: Mode = "limits"
     one_side: bool = False
@@ -87,6 +100,7 @@ class Job:
     one_side: bool
     # limits — верхняя граница поиска, torque — размер препятствия.
     size_mm: float
+    width_mm: float = 0.0
 
 
 @dataclass
@@ -110,7 +124,8 @@ class Evaluation:
 def jobs_for(goal: Goal) -> list[Job]:
     sides = (False, True) if goal.one_side else (False,)
     return [
-        Job(item.kind, direction, one_side, item.upper_mm if goal.mode == "limits" else item.target_mm)
+        Job(item.kind, direction, one_side, item.upper_mm if goal.mode == "limits" else item.target_mm,
+            item.width_mm)
         for item in goal.active
         for one_side in sides
         for direction in (1, -1)
@@ -128,9 +143,10 @@ def run_job(design: Design, platform: Platform, goal: Goal, job: Job, guess: flo
             upper_mm=job.size_mm,
             tolerance_mm=goal.tolerance_mm,
             ditch_depth_mm=goal.ditch_depth_mm,
+            bump_width_mm=job.width_mm,
             guess_mm=guess,
         )
-    obstacle = Obstacle(job.kind, job.size_mm, job.direction, job.one_side, goal.ditch_depth_mm)
+    obstacle = Obstacle(job.kind, job.size_mm, job.direction, job.one_side, goal.ditch_depth_mm, job.width_mm)
     return required_torque(design, platform, obstacle, upper_nm=goal.max_torque_nm,
                            tolerance_nm=goal.tolerance_nm, guess_nm=guess)
 
@@ -144,13 +160,13 @@ def summarize(design: Design, goal: Goal, results: list[JobResult]) -> Evaluatio
     if goal.mode == "limits":
         score = 0.0
         for item in goal.active:
-            relevant = [result.value_mm for result in results if result.obstacle.kind == item.kind]
-            values[item.kind] = min(relevant) if relevant else 0.0
-            score += item.weight * values[item.kind]
+            relevant = [result.value_mm for result in results if item.matches(result.obstacle)]
+            values[item.key] = min(relevant) if relevant else 0.0
+            score += item.weight * values[item.key]
         return Evaluation(design, [], goal.mode, score, -score, values, results)
     for item in goal.active:
-        relevant = [result.torque_nm for result in results if result.obstacle.kind == item.kind]
-        values[item.kind] = max(relevant) if relevant else 0.0
+        relevant = [result.torque_nm for result in results if item.matches(result.obstacle)]
+        values[item.key] = max(relevant) if relevant else 0.0
     score = max((result.torque_nm for result in results), default=0.0)
     effective = [
         result.torque_nm if isfinite(result.torque_nm) else FAILED_TORQUE_FACTOR * goal.max_torque_nm
@@ -351,5 +367,12 @@ def optimize(
     return result
 
 
-def criterion_label(kind: str) -> str:
-    return KIND_LABELS[kind]
+def criterion_key(kind: str, width_mm: float) -> str:
+    """Ключ цели в Evaluation.values: вид препятствия, у кочки — с шириной."""
+    return f"bump_{width_mm:.0f}" if kind == "bump" else kind
+
+
+def criterion_label(key: str) -> str:
+    if key.startswith("bump_"):
+        return f"{KIND_LABELS['bump']} {key.removeprefix('bump_')} мм"
+    return KIND_LABELS[key]
