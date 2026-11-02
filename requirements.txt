@@ -5,3 +5,4 @@ plotly>=6.0,<7.0
 streamlit>=1.40,<2.0
 matplotlib>=3.8,<4.0
 cma>=3.3,<5.0
+scipy>=1.11,<2.0
