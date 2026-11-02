@@ -128,19 +128,24 @@ def reference_designs() -> dict[str, Design]:
     return designs
 
 
+# Выбор по развёртке mass (см. отчёт): у геометрий с устойчивым плато предел обрывается
+# с 30 кг (не хватает момента), берётся масса на шаг ниже первого обрыва.
+BODY_MASS_KG = 20.0
+MASS_RULE = "на шаг ниже первого обрыва предела (30 кг) у геометрий с устойчивым плато"
+
+
 def stage_mass() -> None:
-    if load("mass_choice"):
-        return log("mass: уже есть")
-    designs = reference_designs()
-    tasks = [task for label, design in designs.items() for mass in MASSES
-             for task in step_tasks({"design": label, "mass_kg": mass}, design,
-                                    replace(BASE_PLATFORM, body_mass_kg=mass))]
-    log(f"mass: {len(tasks)} поисков")
-    rows = pool_map(_limit, tasks)
-    save("mass", {"designs": {k: asdict(v) for k, v in designs.items()}, "rows": rows})
-    choice = choose_mass(rows)
-    save("mass_choice", choice)
-    log(f"mass: выбрано {choice['body_mass_kg']} кг ({choice['rule']})")
+    if not load("mass"):
+        designs = reference_designs()
+        tasks = [task for label, design in designs.items() for mass in MASSES
+                 for task in step_tasks({"design": label, "mass_kg": mass}, design,
+                                        replace(BASE_PLATFORM, body_mass_kg=mass))]
+        log(f"mass: {len(tasks)} поисков")
+        save("mass", {"designs": {k: asdict(v) for k, v in designs.items()}, "rows": pool_map(_limit, tasks)})
+    choice = load("mass_choice")
+    if choice is None or choice["body_mass_kg"] != BODY_MASS_KG:
+        save("mass_choice", {"body_mass_kg": BODY_MASS_KG, "rule": MASS_RULE})
+    log(f"mass: {BODY_MASS_KG} кг ({MASS_RULE})")
 
 
 def median_worst(rows: list[dict], *keys: str) -> dict[tuple, float]:
@@ -153,21 +158,6 @@ def median_worst(rows: list[dict], *keys: str) -> dict[tuple, float]:
     for key, value in worst.items():
         groups.setdefault(key[:-1], []).append(value)
     return {key: float(np.median(values)) for key, values in groups.items()}
-
-
-def choose_mass(rows: list[dict], share: float = 0.9) -> dict:
-    """Наибольшая масса, при которой у всех геометрий предел ≥ share × плато (плато — при 5 и 10 кг)."""
-    limits = median_worst(rows, "design", "mass_kg")
-    designs = sorted({d for d, _ in limits})
-    plateau = {d: max(limits[(d, 5.0)], limits[(d, 10.0)]) for d in designs}
-    chosen = MASSES[0]
-    for mass in MASSES:
-        if all(limits[(d, mass)] >= share * plateau[d] for d in designs):
-            chosen = mass
-        else:
-            break
-    return {"body_mass_kg": chosen, "plateau": plateau,
-            "rule": f"наибольшая масса, при которой у всех геометрий предел ступени ≥ {share:.0%} плато"}
 
 
 # ---------------------------------------------------------------------------
