@@ -10,7 +10,8 @@
     final    — дообучение лучшего результата из его же точки;
     weights  — 4 набора весов × 3 seed из лучшей точки ЛГК («weights:1,2» — только эти seed);
     analysis — развёртки для итоговой геометрии (лучшая по базовым весам среди всех запусков);
-    weights_heights — все высоты для геометрий из опыта с весами (когда готовы все запуски).
+    weights_heights — все высоты для геометрий из опыта с весами (когда готовы все запуски);
+    angles_local — мелкая сетка углов вокруг итоговой геометрии (она у границы габарита).
 
 Две машины параллельно:
     ПК:      experiments.py mass lhs  → git push → experiments.py starts final weights:3 analysis
@@ -322,23 +323,35 @@ def stage_analysis() -> None:
                                         scaled_platform, upper=6.0 * radius)
         log(f"analysis: радиус, {len(tasks)} поисков")
         save("an_radius", {"design": asdict(final), "rows": pool_map(_limit, tasks)})
-    if not load("an_angles"):
-        bogie = [float(a) for a in range(140, 271, 10)]
-        rocker = [float(a) for a in range(120, 251, 10)]
-        tasks, invalid = [], []
-        for b in bogie:
-            for r in rocker:
-                design = replace(final, bogie_angle_deg=b, rocker_angle_deg=r)
-                key = {"bogie_angle_deg": b, "rocker_angle_deg": r}
-                if validate(design, plat):
-                    invalid.append(key)
-                    continue
-                tasks += [(key, design, plat, "step_up", d, 700.0, 120.0) for d in (1, -1)]
-        log(f"analysis: углы, {len(tasks)} поисков")
-        save("an_angles", {"design": asdict(final), "bogie": bogie, "rocker": rocker, "invalid": invalid,
-                           "rows": pool_map(_limit, tasks)})
+    angles("an_angles", final, [float(a) for a in range(140, 271, 10)], [float(a) for a in range(120, 251, 10)])
     heights("an_heights", {"final": final})
     log("analysis: готово")
+
+
+def angles(name: str, final: Design, bogie: list[float], rocker: list[float]) -> None:
+    """Наибольшая ступень на сетке углов bogie × rocker; остальные параметры — как у итоговой."""
+    if load(name):
+        return log(f"{name}: уже есть")
+    plat = platform()
+    tasks, invalid = [], []
+    for b in bogie:
+        for r in rocker:
+            design = replace(final, bogie_angle_deg=b, rocker_angle_deg=r)
+            key = {"bogie_angle_deg": b, "rocker_angle_deg": r}
+            if validate(design, plat):
+                invalid.append(key)
+                continue
+            tasks += [(key, design, plat, "step_up", d, 700.0, 120.0) for d in (1, -1)]
+    log(f"{name}: {len(tasks)} поисков")
+    save(name, {"design": asdict(final), "bogie": bogie, "rocker": rocker, "invalid": invalid,
+                "rows": pool_map(_limit, tasks)})
+
+
+def stage_angles_local() -> None:
+    """Мелкая сетка углов вокруг итоговой геометрии: она стоит у границы габарита по длине
+    (rocker ≥ 128° — длиннее 1200 мм), и общая сетка с шагом 10° почти вся недопустима."""
+    angles("an_angles_local", final_design(), [float(a) for a in range(200, 251, 5)],
+           [float(a) for a in range(100, 128, 3)])
 
 
 def stage_weights_heights() -> None:
@@ -369,7 +382,8 @@ def heights(name: str, designs: dict[str, Design]) -> None:
 
 
 STAGES = {"mass": stage_mass, "lhs": stage_lhs, "starts": stage_starts, "final": stage_final,
-          "weights": stage_weights, "analysis": stage_analysis, "weights_heights": stage_weights_heights}
+          "weights": stage_weights, "analysis": stage_analysis, "weights_heights": stage_weights_heights,
+          "angles_local": stage_angles_local}
 
 if __name__ == "__main__":
     # «weights:1,2» — только эти seed (чтобы поделить запуски между машинами).

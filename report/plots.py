@@ -56,8 +56,10 @@ KIND_TITLES = {"step_up": "ступень", "step_down": "съезд", "ditch": 
 REFERENCE_LABELS = {"variant3": "геометрия A", "run_hand_s2": "геометрия B", "run_random1_s1": "геометрия C",
                     "run_w_equal": "геометрия D"}
 WHEELS_KG = 6 * 4.0
-BUMP_CEILING_MM = 300.0
-WEIGHTS_BASE = {"step_up": 1.0, "step_down": 0.3, "ditch": 0.5, "bump_120": 0.5, "bump_250": 0.5}  # UPPER["bump_250"] в compute.py
+BUMP_CEILING_MM = 300.0  # UPPER["bump_250"] в compute.py
+WEIGHTS_BASE = {"step_up": 1.0, "step_down": 0.3, "ditch": 0.5, "bump_120": 0.5, "bump_250": 0.5}
+# Геометрический режим подобного масштабирования: h ≈ 4,3R (итоговая геометрия, 466 мм при R = 108 мм).
+GEOMETRIC_K = 4.3
 
 
 def load(name: str) -> dict | None:
@@ -208,7 +210,7 @@ def plot_torque() -> None:
     ax.set_xlabel("Пиковый момент мотор-колеса, Н·м")
     ax.set_ylabel("Наибольшая ступень, мм")
     ax.set_ylim(bottom=0)
-    ax.legend(loc="lower right", fontsize=8)
+    ax.legend(loc="center right", fontsize=8)
     save(fig, "fig_torque")
 
 
@@ -225,9 +227,10 @@ def plot_radius() -> None:
     for ax, (control, title) in zip(axes, titles.items()):
         for index, torque in enumerate(torques):
             line_with_band(ax, radii, [stats[(control, torque, r)] for r in radii], index, f"{torque:.0f} Н·м")
-        ax.plot(radii, 2.0 * radii, color=MUTED, linewidth=1.0, linestyle=":")
-        ax.annotate("h = 2R", (radii[-1], 2.0 * radii[-1]), xytext=(4, -10), textcoords="offset points",
-                    fontsize=8, color=MUTED)
+        for k, style in ((2.0, ":"), (GEOMETRIC_K, "--")):
+            ax.plot(radii, k * radii, color=MUTED, linewidth=1.0, linestyle=style)
+            ax.annotate(f"h = {k:.1f}R".replace(".", ","), (radii[-1], k * radii[-1]), xytext=(4, -10),
+                        textcoords="offset points", fontsize=8, color=MUTED)
         ax.axvline(108.0, color=MUTED, linewidth=1.0, linestyle="--")
         ax.annotate("M365 Pro", (108.0, 0), xytext=(4, 4), textcoords="offset points", fontsize=8, color=MUTED)
         ax.set_title(title, fontsize=10, color=TEXT, loc="left")
