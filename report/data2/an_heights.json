@@ -1,0 +1,3543 @@
+{
+ "designs": {
+  "final": {
+   "bogie_rear_arm_mm": 249.5,
+   "bogie_front_arm_mm": 148.5,
+   "bogie_angle_deg": 235.5,
+   "rocker_rear_arm_mm": 374.5,
+   "rocker_front_arm_mm": 440.2,
+   "rocker_angle_deg": 121.7,
+   "outer_strut_height_mm": 199.9,
+   "outer_strut_angle_deg": 2.8,
+   "middle_strut_height_mm": 225.6,
+   "middle_strut_angle_deg": -22.9,
+   "com_x_mm": 0.0,
+   "com_z_mm": 130.0,
+   "com_y_mm": 0.0,
+   "rocker_limit_deg": 60.0,
+   "bogie_limit_deg": 75.0
+  }
+ },
+ "rows": [
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 10.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 10.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 20.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 20.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 30.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 30.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 40.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 40.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 50.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 50.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 60.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 60.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 70.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 70.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 80.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 80.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 90.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 90.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 100.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 100.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 110.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 110.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 120.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 120.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 130.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 130.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 140.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 140.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 150.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 150.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 160.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 160.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 170.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 170.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 180.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 180.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 190.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 190.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 200.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 200.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 210.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 210.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 220.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 220.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 230.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 230.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 240.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 240.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 250.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 250.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 260.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 260.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 270.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 270.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 280.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 280.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 290.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 290.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 300.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 300.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 310.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 310.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 320.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 320.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 330.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 330.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 340.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 340.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 350.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 350.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 360.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 360.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 370.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 370.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 380.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 380.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 390.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 390.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 400.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 400.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 410.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 410.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 420.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 420.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 430.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 430.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 440.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 440.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 450.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 450.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 460.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 460.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 470.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 470.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 480.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 480.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 490.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 490.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 500.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 500.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 510.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 510.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 520.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 520.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 530.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 530.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 540.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 540.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 550.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 550.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 560.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 560.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 570.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 570.0,
+   "direction": -1,
+   "success": false,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 580.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 580.0,
+   "direction": -1,
+   "success": false,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 590.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 590.0,
+   "direction": -1,
+   "success": false,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 600.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_up",
+   "size_mm": 600.0,
+   "direction": -1,
+   "success": false,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 10.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 10.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 20.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 20.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 30.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 30.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 40.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 40.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 50.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 50.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 60.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 60.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 70.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 70.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 80.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 80.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 90.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 90.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 100.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 100.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 110.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 110.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 120.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 120.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 130.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 130.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 140.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 140.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 150.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 150.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 160.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 160.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 170.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 170.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 180.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 180.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 190.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 190.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 200.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 200.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 210.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 210.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 220.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 220.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 230.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 230.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 240.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 240.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 250.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 250.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 260.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 260.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 270.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 270.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 280.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 280.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 290.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 290.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 300.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 300.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 310.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 310.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 320.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 320.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 330.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 330.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 340.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 340.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 350.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 350.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 360.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 360.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 370.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 370.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 380.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 380.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 390.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 390.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 400.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 400.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 410.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 410.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 420.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 420.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 430.0,
+   "direction": 1,
+   "success": false,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 430.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 440.0,
+   "direction": 1,
+   "success": false,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 440.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 450.0,
+   "direction": 1,
+   "success": false,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 450.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 460.0,
+   "direction": 1,
+   "success": false,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 460.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 470.0,
+   "direction": 1,
+   "success": false,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 470.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 480.0,
+   "direction": 1,
+   "success": false,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 480.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 490.0,
+   "direction": 1,
+   "success": false,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 490.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 500.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 500.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 510.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 510.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 520.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 520.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 530.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 530.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 540.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 540.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 550.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 550.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 560.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 560.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 570.0,
+   "direction": 1,
+   "success": false,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 570.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 580.0,
+   "direction": 1,
+   "success": false,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 580.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 590.0,
+   "direction": 1,
+   "success": false,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 590.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 600.0,
+   "direction": 1,
+   "success": false,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "final",
+   "kind": "step_down",
+   "size_mm": 600.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 10.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 10.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 20.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 20.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 30.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 30.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 40.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 40.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 50.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 50.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 60.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 60.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 70.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 70.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 80.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 80.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 90.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 90.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 100.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 100.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 110.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 110.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 120.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 120.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 130.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 130.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 140.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 140.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 150.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 150.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 160.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 160.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 170.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 170.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 180.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 180.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 190.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 190.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 200.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 200.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 210.0,
+   "direction": 1,
+   "success": false,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 210.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 220.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 220.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 230.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 230.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 240.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 240.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 250.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 250.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 260.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (правый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 260.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 270.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 270.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 280.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 280.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 290.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 290.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 300.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 300.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 310.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 310.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (правый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 320.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 320.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 330.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 330.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 340.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 340.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к среднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 350.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 350.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к среднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 360.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 360.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к среднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 370.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 370.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к среднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 380.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 380.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к среднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 390.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 390.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к среднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 400.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "ditch",
+   "size_mm": 400.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к среднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 10.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 10.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 20.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 20.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 30.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 30.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 40.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 40.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 50.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 50.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 60.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 60.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 70.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 70.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 80.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 80.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 90.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 90.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 100.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 100.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 110.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 110.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 120.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 120.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 130.0,
+   "direction": 1,
+   "success": false,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 130.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 140.0,
+   "direction": 1,
+   "success": false,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 140.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 150.0,
+   "direction": 1,
+   "success": false,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (левый), среднее (правый)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 150.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 160.0,
+   "direction": 1,
+   "success": false,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), среднее (правый)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 160.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 170.0,
+   "direction": 1,
+   "success": false,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 170.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 180.0,
+   "direction": 1,
+   "success": false,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 180.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 190.0,
+   "direction": 1,
+   "success": false,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 190.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 200.0,
+   "direction": 1,
+   "success": false,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 200.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 210.0,
+   "direction": 1,
+   "success": false,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 210.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 220.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 220.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 230.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 230.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 240.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 240.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 250.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 250.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 260.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 260.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 270.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 270.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 280.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 280.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 290.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 290.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 300.0,
+   "direction": 1,
+   "success": false,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_120",
+   "size_mm": 300.0,
+   "direction": -1,
+   "success": false,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 10.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 10.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 20.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 20.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 30.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 30.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 40.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 40.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 50.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 50.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 60.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 60.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 70.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 70.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 80.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 80.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 90.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 90.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 100.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 100.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 110.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 110.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 120.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 120.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 130.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 130.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 140.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 140.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 150.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 150.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 160.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 160.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 170.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 170.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 180.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 180.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 190.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 190.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 200.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 200.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 210.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 210.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 220.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 220.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 230.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 230.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 240.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 240.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 250.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 250.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 260.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 260.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 270.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 270.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 280.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 280.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 290.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 290.0,
+   "direction": -1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 300.0,
+   "direction": 1,
+   "success": true,
+   "reason": ""
+  },
+  {
+   "design": "final",
+   "kind": "bump_250",
+   "size_mm": 300.0,
+   "direction": -1,
+   "success": false,
+   "reason": "застревание"
+  }
+ ]
+}

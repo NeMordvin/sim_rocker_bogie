@@ -1,0 +1,1557 @@
+{
+ "design": {
+  "bogie_rear_arm_mm": 249.5,
+  "bogie_front_arm_mm": 148.5,
+  "bogie_angle_deg": 235.5,
+  "rocker_rear_arm_mm": 374.5,
+  "rocker_front_arm_mm": 440.2,
+  "rocker_angle_deg": 121.7,
+  "outer_strut_height_mm": 199.9,
+  "outer_strut_angle_deg": 2.8,
+  "middle_strut_height_mm": 225.6,
+  "middle_strut_angle_deg": -22.9,
+  "com_x_mm": 0.0,
+  "com_z_mm": 130.0,
+  "com_y_mm": 0.0,
+  "rocker_limit_deg": 60.0,
+  "bogie_limit_deg": 75.0
+ },
+ "rows": [
+  {
+   "torque_nm": 4.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 54.6875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 4.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 76.5625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 4.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 60.15625,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 4.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 82.03125,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 4.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 60.15625,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 4.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 82.03125,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 4.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 49.21875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 4.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 60.15625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 4.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 49.21875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 4.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 60.15625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 4.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 49.21875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 4.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 60.15625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 114.84375,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 120.3125,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 125.78125,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 87.5,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 103.90625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 87.5,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 103.90625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 87.5,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 7.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 103.90625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 117.71484375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), заднее (правый)"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (правый)"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "не хватает момента колёс: заднее (левый)"
+  },
+  {
+   "torque_nm": 10.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 215.2734375,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "не хватает момента колёс: заднее (левый), переднее (правый)"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 125.78125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 124.8046875,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый), среднее (правый), заднее (правый); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 125.78125,
+   "reason": "не хватает момента колёс: заднее (левый), переднее (правый)"
+  },
+  {
+   "torque_nm": 11.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 326.68212890625,
+   "reason": "не хватает момента колёс: заднее (левый), переднее (правый); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 125.78125,
+   "reason": "не успел пройти за отведённое время (не хватает момента колёс: переднее (левый), заднее (правый))"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не успел пройти за отведённое время (не хватает момента колёс: переднее (левый), заднее (правый))"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 116.484375,
+   "reason": "не успел пройти за отведённое время (не хватает момента колёс: переднее (левый), заднее (правый)); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "не успел пройти за отведённое время (не хватает момента колёс: переднее (левый), заднее (правый))"
+  },
+  {
+   "torque_nm": 12.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "не успел пройти за отведённое время (не хватает момента колёс: переднее (левый), заднее (правый))"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не успел пройти за отведённое время (не хватает момента колёс: переднее (левый), заднее (правый))"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 116.484375,
+   "reason": "не успел пройти за отведённое время (не хватает момента колёс: переднее (левый), заднее (правый)); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "не успел пройти за отведённое время (не хватает момента колёс: переднее (левый))"
+  },
+  {
+   "torque_nm": 13.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 125.78125,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый))"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 125.78125,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (левый), среднее (правый), заднее (правый))"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 116.484375,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (левый), переднее (правый), среднее (правый), заднее (правый)); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (левый), переднее (правый), среднее (правый), заднее (правый))"
+  },
+  {
+   "torque_nm": 14.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 322.65625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 333.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 300.78125,
+   "reason": "задевает препятствие: труба bogie к среднему колесу (правый борт)"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 295.3125,
+   "reason": "задевает препятствие: труба bogie к среднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 16.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 339.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 339.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 328.125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 322.65625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 19.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 344.53125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 339.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 333.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 322.65625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 22.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 339.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 333.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 322.65625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 25.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 350.0,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 339.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 333.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 322.65625,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "torque_nm": 28.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 453.90625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 355.46875,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 339.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 333.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 322.65625,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "torque_nm": 31.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 377.34375,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 339.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 333.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 322.65625,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "torque_nm": 34.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 355.46875,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 339.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 333.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 322.65625,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "torque_nm": 37.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "speed",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "speed",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "speed",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 339.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "torque",
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 333.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "torque",
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 322.65625,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "torque_nm": 40.0,
+   "control": "torque",
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  }
+ ]
+}

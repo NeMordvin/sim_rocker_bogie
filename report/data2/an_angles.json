@@ -1,0 +1,949 @@
+{
+ "design": {
+  "bogie_rear_arm_mm": 249.5,
+  "bogie_front_arm_mm": 148.5,
+  "bogie_angle_deg": 235.5,
+  "rocker_rear_arm_mm": 374.5,
+  "rocker_front_arm_mm": 440.2,
+  "rocker_angle_deg": 121.7,
+  "outer_strut_height_mm": 199.9,
+  "outer_strut_angle_deg": 2.8,
+  "middle_strut_height_mm": 225.6,
+  "middle_strut_angle_deg": -22.9,
+  "com_x_mm": 0.0,
+  "com_z_mm": 130.0,
+  "com_y_mm": 0.0,
+  "rocker_limit_deg": 60.0,
+  "bogie_limit_deg": 75.0
+ },
+ "bogie": [
+  140.0,
+  150.0,
+  160.0,
+  170.0,
+  180.0,
+  190.0,
+  200.0,
+  210.0,
+  220.0,
+  230.0,
+  240.0,
+  250.0,
+  260.0,
+  270.0
+ ],
+ "rocker": [
+  120.0,
+  130.0,
+  140.0,
+  150.0,
+  160.0,
+  170.0,
+  180.0,
+  190.0,
+  200.0,
+  210.0,
+  220.0,
+  230.0,
+  240.0,
+  250.0
+ ],
+ "invalid": [
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 120.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 120.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 260.0,
+   "rocker_angle_deg": 250.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 120.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 130.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 140.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 150.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 160.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 170.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 180.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 190.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 200.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 210.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 220.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 230.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 240.0
+  },
+  {
+   "bogie_angle_deg": 270.0,
+   "rocker_angle_deg": 250.0
+  }
+ ],
+ "rows": [
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 120.0,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 140.0,
+   "rocker_angle_deg": 120.0,
+   "direction": -1,
+   "value_mm": 240.625,
+   "reason": "задевает препятствие: стойка заднего колеса (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 120.0,
+   "direction": 1,
+   "value_mm": 98.4375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 150.0,
+   "rocker_angle_deg": 120.0,
+   "direction": -1,
+   "value_mm": 448.4375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 120.0,
+   "direction": 1,
+   "value_mm": 98.4375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый)"
+  },
+  {
+   "bogie_angle_deg": 160.0,
+   "rocker_angle_deg": 120.0,
+   "direction": -1,
+   "value_mm": 202.34375,
+   "reason": "задевает препятствие: стойка заднего колеса (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 120.0,
+   "direction": 1,
+   "value_mm": 103.90625,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 170.0,
+   "rocker_angle_deg": 120.0,
+   "direction": -1,
+   "value_mm": 464.84375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 120.0,
+   "direction": 1,
+   "value_mm": 103.90625,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (левый), переднее (правый), среднее (правый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 180.0,
+   "rocker_angle_deg": 120.0,
+   "direction": -1,
+   "value_mm": 481.25,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 120.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 190.0,
+   "rocker_angle_deg": 120.0,
+   "direction": -1,
+   "value_mm": 492.1875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 120.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 120.0,
+   "direction": -1,
+   "value_mm": 503.125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 120.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 120.0,
+   "direction": -1,
+   "value_mm": 519.53125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 120.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 120.0,
+   "direction": -1,
+   "value_mm": 530.46875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 120.0,
+   "direction": 1,
+   "value_mm": 300.78125,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 120.0,
+   "direction": -1,
+   "value_mm": 546.875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 120.0,
+   "direction": 1,
+   "value_mm": 453.90625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 120.0,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  }
+ ]
+}
