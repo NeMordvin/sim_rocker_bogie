@@ -1,0 +1,1288 @@
+{
+ "design": {
+  "bogie_rear_arm_mm": 249.5,
+  "bogie_front_arm_mm": 148.5,
+  "bogie_angle_deg": 235.5,
+  "rocker_rear_arm_mm": 374.5,
+  "rocker_front_arm_mm": 440.2,
+  "rocker_angle_deg": 121.7,
+  "outer_strut_height_mm": 199.9,
+  "outer_strut_angle_deg": 2.8,
+  "middle_strut_height_mm": 225.6,
+  "middle_strut_angle_deg": -22.9,
+  "com_x_mm": 0.0,
+  "com_z_mm": 130.0,
+  "com_y_mm": 0.0,
+  "rocker_limit_deg": 60.0,
+  "bogie_limit_deg": 75.0
+ },
+ "bogie": [
+  200.0,
+  205.0,
+  210.0,
+  215.0,
+  220.0,
+  225.0,
+  230.0,
+  235.0,
+  240.0,
+  245.0,
+  250.0
+ ],
+ "rocker": [
+  100.0,
+  103.0,
+  106.0,
+  109.0,
+  112.0,
+  115.0,
+  118.0,
+  121.0,
+  124.0,
+  127.0
+ ],
+ "invalid": [
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 124.0
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 127.0
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 124.0
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 127.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 124.0
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 127.0
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 127.0
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 127.0
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 127.0
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 127.0
+  },
+  {
+   "bogie_angle_deg": 245.0,
+   "rocker_angle_deg": 100.0
+  },
+  {
+   "bogie_angle_deg": 245.0,
+   "rocker_angle_deg": 103.0
+  },
+  {
+   "bogie_angle_deg": 245.0,
+   "rocker_angle_deg": 106.0
+  },
+  {
+   "bogie_angle_deg": 245.0,
+   "rocker_angle_deg": 109.0
+  },
+  {
+   "bogie_angle_deg": 245.0,
+   "rocker_angle_deg": 112.0
+  },
+  {
+   "bogie_angle_deg": 245.0,
+   "rocker_angle_deg": 115.0
+  },
+  {
+   "bogie_angle_deg": 245.0,
+   "rocker_angle_deg": 118.0
+  },
+  {
+   "bogie_angle_deg": 245.0,
+   "rocker_angle_deg": 121.0
+  },
+  {
+   "bogie_angle_deg": 245.0,
+   "rocker_angle_deg": 124.0
+  },
+  {
+   "bogie_angle_deg": 245.0,
+   "rocker_angle_deg": 127.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 100.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 103.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 106.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 109.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 112.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 115.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 118.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 121.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 124.0
+  },
+  {
+   "bogie_angle_deg": 250.0,
+   "rocker_angle_deg": 127.0
+  }
+ ],
+ "rows": [
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 100.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 100.0,
+   "direction": -1,
+   "value_mm": 410.15625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 103.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 103.0,
+   "direction": -1,
+   "value_mm": 426.5625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 106.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 106.0,
+   "direction": -1,
+   "value_mm": 442.96875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 109.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 109.0,
+   "direction": -1,
+   "value_mm": 453.90625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 112.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "застревание"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 112.0,
+   "direction": -1,
+   "value_mm": 470.3125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 115.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый)"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 115.0,
+   "direction": -1,
+   "value_mm": 486.71875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 118.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 118.0,
+   "direction": -1,
+   "value_mm": 497.65625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 121.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 200.0,
+   "rocker_angle_deg": 121.0,
+   "direction": -1,
+   "value_mm": 508.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 100.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "колёса висят в воздухе: подвеска не достаёт до опоры"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 100.0,
+   "direction": -1,
+   "value_mm": 415.625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 103.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 103.0,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 106.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 106.0,
+   "direction": -1,
+   "value_mm": 448.4375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 109.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: заднее (левый), переднее (правый), среднее (правый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 109.0,
+   "direction": -1,
+   "value_mm": 464.84375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 112.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), переднее (правый), среднее (правый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 112.0,
+   "direction": -1,
+   "value_mm": 475.78125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 115.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), переднее (правый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 115.0,
+   "direction": -1,
+   "value_mm": 492.1875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 118.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: заднее (левый), переднее (правый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 118.0,
+   "direction": -1,
+   "value_mm": 503.125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 121.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый)"
+  },
+  {
+   "bogie_angle_deg": 205.0,
+   "rocker_angle_deg": 121.0,
+   "direction": -1,
+   "value_mm": 514.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 100.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 100.0,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 103.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 103.0,
+   "direction": -1,
+   "value_mm": 437.5,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 106.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), среднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 106.0,
+   "direction": -1,
+   "value_mm": 453.90625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 109.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 109.0,
+   "direction": -1,
+   "value_mm": 470.3125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 112.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: заднее (левый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 112.0,
+   "direction": -1,
+   "value_mm": 481.25,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 115.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 115.0,
+   "direction": -1,
+   "value_mm": 497.65625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 118.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 118.0,
+   "direction": -1,
+   "value_mm": 508.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 121.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 210.0,
+   "rocker_angle_deg": 121.0,
+   "direction": -1,
+   "value_mm": 525.0,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 100.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 100.0,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 103.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 103.0,
+   "direction": -1,
+   "value_mm": 442.96875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 106.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (левый), переднее (правый), среднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 106.0,
+   "direction": -1,
+   "value_mm": 459.375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 109.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), переднее (правый), среднее (правый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 109.0,
+   "direction": -1,
+   "value_mm": 475.78125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 112.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 112.0,
+   "direction": -1,
+   "value_mm": 492.1875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 115.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 115.0,
+   "direction": -1,
+   "value_mm": 503.125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 118.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 118.0,
+   "direction": -1,
+   "value_mm": 514.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 121.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), среднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 121.0,
+   "direction": -1,
+   "value_mm": 530.46875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 124.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 215.0,
+   "rocker_angle_deg": 124.0,
+   "direction": -1,
+   "value_mm": 541.40625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 100.0,
+   "direction": 1,
+   "value_mm": 158.59375,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 100.0,
+   "direction": -1,
+   "value_mm": 437.5,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 103.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 103.0,
+   "direction": -1,
+   "value_mm": 453.90625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 106.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 106.0,
+   "direction": -1,
+   "value_mm": 464.84375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 109.0,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "застревание"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 109.0,
+   "direction": -1,
+   "value_mm": 481.25,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 112.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 112.0,
+   "direction": -1,
+   "value_mm": 497.65625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 115.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 115.0,
+   "direction": -1,
+   "value_mm": 508.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 118.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 118.0,
+   "direction": -1,
+   "value_mm": 525.0,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 121.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 121.0,
+   "direction": -1,
+   "value_mm": 535.9375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 124.0,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 220.0,
+   "rocker_angle_deg": 124.0,
+   "direction": -1,
+   "value_mm": 546.875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 100.0,
+   "direction": 1,
+   "value_mm": 470.3125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 100.0,
+   "direction": -1,
+   "value_mm": 442.96875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 103.0,
+   "direction": 1,
+   "value_mm": 470.3125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 103.0,
+   "direction": -1,
+   "value_mm": 459.375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 106.0,
+   "direction": 1,
+   "value_mm": 125.78125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 106.0,
+   "direction": -1,
+   "value_mm": 475.78125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 109.0,
+   "direction": 1,
+   "value_mm": 129.931640625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 109.0,
+   "direction": -1,
+   "value_mm": 486.71875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 112.0,
+   "direction": 1,
+   "value_mm": 114.638671875,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (левый), среднее (правый), заднее (правый)); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 112.0,
+   "direction": -1,
+   "value_mm": 503.125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 115.0,
+   "direction": 1,
+   "value_mm": 114.638671875,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый)); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 115.0,
+   "direction": -1,
+   "value_mm": 514.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 118.0,
+   "direction": 1,
+   "value_mm": 125.78125,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), заднее (левый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 118.0,
+   "direction": -1,
+   "value_mm": 530.46875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 121.0,
+   "direction": 1,
+   "value_mm": 169.53125,
+   "reason": "не успел пройти за отведённое время (пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), среднее (правый), заднее (правый))"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 121.0,
+   "direction": -1,
+   "value_mm": 541.40625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 124.0,
+   "direction": 1,
+   "value_mm": 322.65625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), среднее (правый), заднее (правый)"
+  },
+  {
+   "bogie_angle_deg": 225.0,
+   "rocker_angle_deg": 124.0,
+   "direction": -1,
+   "value_mm": 552.34375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 100.0,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 100.0,
+   "direction": -1,
+   "value_mm": 448.4375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 103.0,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 103.0,
+   "direction": -1,
+   "value_mm": 464.84375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 106.0,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 106.0,
+   "direction": -1,
+   "value_mm": 481.25,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 109.0,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 109.0,
+   "direction": -1,
+   "value_mm": 497.65625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 112.0,
+   "direction": 1,
+   "value_mm": 470.3125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 112.0,
+   "direction": -1,
+   "value_mm": 508.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 115.0,
+   "direction": 1,
+   "value_mm": 470.3125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 115.0,
+   "direction": -1,
+   "value_mm": 525.0,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 118.0,
+   "direction": 1,
+   "value_mm": 470.3125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 118.0,
+   "direction": -1,
+   "value_mm": 535.9375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 121.0,
+   "direction": 1,
+   "value_mm": 339.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 121.0,
+   "direction": -1,
+   "value_mm": 546.875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 124.0,
+   "direction": 1,
+   "value_mm": 339.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 230.0,
+   "rocker_angle_deg": 124.0,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 100.0,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 100.0,
+   "direction": -1,
+   "value_mm": 453.90625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 103.0,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 103.0,
+   "direction": -1,
+   "value_mm": 470.3125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 106.0,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 106.0,
+   "direction": -1,
+   "value_mm": 486.71875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 109.0,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 109.0,
+   "direction": -1,
+   "value_mm": 503.125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 112.0,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 112.0,
+   "direction": -1,
+   "value_mm": 514.0625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 115.0,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 115.0,
+   "direction": -1,
+   "value_mm": 530.46875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 118.0,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 118.0,
+   "direction": -1,
+   "value_mm": 541.40625,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 121.0,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 121.0,
+   "direction": -1,
+   "value_mm": 557.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 124.0,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 124.0,
+   "direction": -1,
+   "value_mm": 568.75,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 127.0,
+   "direction": 1,
+   "value_mm": 464.84375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 235.0,
+   "rocker_angle_deg": 127.0,
+   "direction": -1,
+   "value_mm": 579.6875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 100.0,
+   "direction": 1,
+   "value_mm": 448.4375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 100.0,
+   "direction": -1,
+   "value_mm": 464.84375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 103.0,
+   "direction": 1,
+   "value_mm": 448.4375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 103.0,
+   "direction": -1,
+   "value_mm": 475.78125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 106.0,
+   "direction": 1,
+   "value_mm": 453.90625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 106.0,
+   "direction": -1,
+   "value_mm": 492.1875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 109.0,
+   "direction": 1,
+   "value_mm": 453.90625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 109.0,
+   "direction": -1,
+   "value_mm": 508.59375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 112.0,
+   "direction": 1,
+   "value_mm": 453.90625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 112.0,
+   "direction": -1,
+   "value_mm": 525.0,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 115.0,
+   "direction": 1,
+   "value_mm": 453.90625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 115.0,
+   "direction": -1,
+   "value_mm": 535.9375,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 118.0,
+   "direction": 1,
+   "value_mm": 453.90625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 118.0,
+   "direction": -1,
+   "value_mm": 546.875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 121.0,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 121.0,
+   "direction": -1,
+   "value_mm": 563.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 124.0,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 124.0,
+   "direction": -1,
+   "value_mm": 574.21875,
+   "reason": "опрокидывание"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 127.0,
+   "direction": 1,
+   "value_mm": 459.375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "bogie_angle_deg": 240.0,
+   "rocker_angle_deg": 127.0,
+   "direction": -1,
+   "value_mm": 585.15625,
+   "reason": "опрокидывание"
+  }
+ ]
+}

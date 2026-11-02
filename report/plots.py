@@ -243,7 +243,8 @@ def plot_radius() -> None:
 
 
 def plot_geometry() -> None:
-    data = load("an_angles")
+    # Итоговая геометрия у границы габарита: общая сетка (шаг 10°) почти вся недопустима — берём мелкую.
+    data = load("an_angles_local") or load("an_angles")
     if not data:
         return
     limits: dict[tuple, float] = defaultdict(lambda: float("inf"))
