@@ -158,18 +158,20 @@ def lhs_best() -> Design:
 
 
 def final_run() -> dict | None:
-    """Итоговая геометрия — как в experiments.final_design: лучшее из дообучения и запусков из точек ЛГК."""
-    runs = [load(name) for name in ("run_final", "run_lhs1_s1", "run_lhs2_s1", "run_lhs3_s1")]
-    runs = [data for data in runs if data]
-    return max(runs, key=lambda data: data["best_score"]) if runs else None
+    """Итоговая геометрия — та же, что в experiments.final_design (лучшая по базовой метрике)."""
+    from experiments import final_name
+
+    return load(final_name())
 
 
 def designs_figure() -> None:
+    from experiments import base_score
+
     lhs = load("lhs")
     designs = [(f"Лучшая точка ЛГК (J = {lhs['rows'][0]['score']:.0f})", lhs_best())]
     found = final_run()
     if found:
-        designs.append((f"Итоговая геометрия (J = {found['best_score']:.0f})", Design(**found["best"])))
+        designs.append((f"Итоговая геометрия (J = {base_score(found):.0f})", Design(**found["best"])))
     compare_figure(designs, FIG / "fig_designs.png")
 
 

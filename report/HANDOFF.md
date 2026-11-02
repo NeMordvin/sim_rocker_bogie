@@ -166,7 +166,11 @@ J = Σ wᵢ·hᵢ.
 | Ноутбук | После push `lhs.json`: `git pull` → `python report/experiments.py weights:1,2` (в фоне) → push |
 | После обеих | `python report/experiments.py weights_heights` |
 
-Состояние на момент передачи: масса 20 кг закоммичена (`3de5d64`), `lhs.json` удалён, его пересчитывает Ryzen.
+Состояние (2026-11-02, вечер): все запуски CMA-ES готовы (старты, final, веса × 3 seed).
+
+**Итоговая геометрия — `run_w_equal_s3`** (решение пользователя): лучшая по *базовой* метрике среди всех запусков, J = 908 (ступень 466, съезд 429, ров 207, кочка 120 — 127, кочка 250 — 293 мм). Запуски с базовыми весами застряли на плато: лучший `run_lhs2_s1` J = 845, `run_final` улучшения не дал (843). Правило — `final_name()` в `experiments.py`, им же пользуются `schemes.py` и `render.py`.
+
+Старые `an_*.json` (для J = 845) удалены — `analysis` пересчитывает ПК: `git pull` → `python report/experiments.py analysis` → push. Ноутбук считает `weights_heights` → `an_heights_weights.json`.
 
 ## Что осталось сделать
 

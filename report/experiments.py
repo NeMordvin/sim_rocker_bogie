@@ -7,9 +7,9 @@
     mass     — предел ступени от массы корпуса для нескольких разных геометрий; выбор массы;
     lhs      — латинский гиперкуб по 10 параметрам, грубая оценка, отбор стартов;
     starts   — CMA-ES из трёх лучших точек ЛГК;
-    final    — дообучение лучшего результата из его же точки → итоговая геометрия;
+    final    — дообучение лучшего результата из его же точки;
     weights  — 4 набора весов × 3 seed из лучшей точки ЛГК («weights:1,2» — только эти seed);
-    analysis — развёртки для итоговой геометрии: момент, радиус, масса, углы, все высоты;
+    analysis — развёртки для итоговой геометрии (лучшая по базовым весам среди всех запусков);
     weights_heights — все высоты для геометрий из опыта с весами (когда готовы все запуски).
 
 Две машины параллельно:
@@ -276,11 +276,23 @@ def stage_weights(seeds: tuple[int, ...] = SEEDS) -> None:
 # Этап analysis: итоговая геометрия
 # ---------------------------------------------------------------------------
 
+def base_score(data: dict) -> float:
+    """J по базовым весам — чтобы сравнивать запуски с разными весами одной меркой."""
+    return sum(WEIGHTS["base"][key] * value for key, value in data["best_values"].items())
+
+
+def final_name() -> str:
+    """Итоговая геометрия — лучшая по базовой метрике среди всех запусков (старты, дообучение, веса).
+
+    Запуск с равными весами нашёл геометрию лучше, чем запуски с базовыми весами, — перебор весов
+    работает как дополнительный мультистарт.
+    """
+    names = [f"run_{label}_s1" for label in STARTS] + ["run_final"] + weight_runs()
+    return max((n for n in dict.fromkeys(names) if load(n)), key=lambda n: base_score(load(n)))
+
+
 def final_design() -> Design:
-    """Лучшее из дообучения и запусков из точек ЛГК."""
-    candidates = [("run_final", load("run_final")), best_run()]
-    name, data = max(((n, d) for n, d in candidates if d), key=lambda item: item[1]["best_score"])
-    return Design(**data["best"])
+    return Design(**load(final_name())["best"])
 
 
 def stage_analysis() -> None:
