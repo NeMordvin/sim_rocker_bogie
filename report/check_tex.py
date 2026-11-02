@@ -15,5 +15,5 @@ print("символы, которых нет в T2A:", sorted(set(re.findall(r"[
 labels = set(re.findall(r"\\label\{([^}]+)\}", body))
 refs = set(re.findall(r"\\ref\{([^}]+)\}", body))
 print("ссылки без меток:", refs - labels)
-for name in re.findall(r"\\includegraphics\[[^\]]*\]\{([^}]+)\}", body):
+for name in re.findall(r"\\(?:includegraphics|fig)\[[^\]]*\]\{([^}]+)\}", body):
     print(name, (HERE / "fig" / name).exists())
