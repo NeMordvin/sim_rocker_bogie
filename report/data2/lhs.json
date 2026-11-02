@@ -1,0 +1,3462 @@
+{
+ "points": 2048,
+ "valid": 211,
+ "rows": [
+  {
+   "design": {
+    "bogie_rear_arm_mm": 297.8,
+    "bogie_front_arm_mm": 235.0,
+    "bogie_angle_deg": 213.1,
+    "rocker_rear_arm_mm": 369.8,
+    "rocker_front_arm_mm": 256.4,
+    "rocker_angle_deg": 180.4,
+    "outer_strut_height_mm": 226.8,
+    "outer_strut_angle_deg": 10.4,
+    "middle_strut_height_mm": 184.1,
+    "middle_strut_angle_deg": 20.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 874.0625,
+   "values": {
+    "step_up": 525.0,
+    "step_down": 450.0,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 356.8,
+    "bogie_front_arm_mm": 121.4,
+    "bogie_angle_deg": 261.8,
+    "rocker_rear_arm_mm": 290.8,
+    "rocker_front_arm_mm": 450.4,
+    "rocker_angle_deg": 125.8,
+    "outer_strut_height_mm": 275.3,
+    "outer_strut_angle_deg": -8.4,
+    "middle_strut_height_mm": 210.5,
+    "middle_strut_angle_deg": -3.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 740.9375,
+   "values": {
+    "step_up": 375.0,
+    "step_down": 318.75,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 225.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 295.9,
+    "bogie_front_arm_mm": 193.7,
+    "bogie_angle_deg": 247.7,
+    "rocker_rear_arm_mm": 163.8,
+    "rocker_front_arm_mm": 309.0,
+    "rocker_angle_deg": 120.5,
+    "outer_strut_height_mm": 187.2,
+    "outer_strut_angle_deg": 10.5,
+    "middle_strut_height_mm": 294.9,
+    "middle_strut_angle_deg": 12.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 709.0625,
+   "values": {
+    "step_up": 337.5,
+    "step_down": 243.75,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 281.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 260.7,
+    "bogie_front_arm_mm": 182.2,
+    "bogie_angle_deg": 227.1,
+    "rocker_rear_arm_mm": 232.7,
+    "rocker_front_arm_mm": 428.2,
+    "rocker_angle_deg": 187.8,
+    "outer_strut_height_mm": 278.2,
+    "outer_strut_angle_deg": 3.8,
+    "middle_strut_height_mm": 189.9,
+    "middle_strut_angle_deg": 5.4,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 695.9375,
+   "values": {
+    "step_up": 318.75,
+    "step_down": 356.25,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 225.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 203.2,
+    "bogie_front_arm_mm": 105.4,
+    "bogie_angle_deg": 262.4,
+    "rocker_rear_arm_mm": 202.9,
+    "rocker_front_arm_mm": 475.8,
+    "rocker_angle_deg": 153.5,
+    "outer_strut_height_mm": 166.0,
+    "outer_strut_angle_deg": 14.5,
+    "middle_strut_height_mm": 216.5,
+    "middle_strut_angle_deg": -4.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 622.5,
+   "values": {
+    "step_up": 300.0,
+    "step_down": 262.5,
+    "ditch": 187.5,
+    "bump_120": 150.0,
+    "bump_250": 150.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 388.1,
+    "bogie_front_arm_mm": 312.8,
+    "bogie_angle_deg": 206.9,
+    "rocker_rear_arm_mm": 341.4,
+    "rocker_front_arm_mm": 254.1,
+    "rocker_angle_deg": 101.3,
+    "outer_strut_height_mm": 187.5,
+    "outer_strut_angle_deg": 16.7,
+    "middle_strut_height_mm": 229.2,
+    "middle_strut_angle_deg": 10.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 602.65625,
+   "values": {
+    "step_up": 300.0,
+    "step_down": 295.3125,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 261.6,
+    "bogie_front_arm_mm": 284.6,
+    "bogie_angle_deg": 194.9,
+    "rocker_rear_arm_mm": 258.2,
+    "rocker_front_arm_mm": 345.5,
+    "rocker_angle_deg": 147.6,
+    "outer_strut_height_mm": 292.1,
+    "outer_strut_angle_deg": 7.9,
+    "middle_strut_height_mm": 213.2,
+    "middle_strut_angle_deg": 15.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 568.4375,
+   "values": {
+    "step_up": 225.0,
+    "step_down": 431.25,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 268.2,
+    "bogie_front_arm_mm": 222.4,
+    "bogie_angle_deg": 164.8,
+    "rocker_rear_arm_mm": 478.5,
+    "rocker_front_arm_mm": 228.4,
+    "rocker_angle_deg": 221.2,
+    "outer_strut_height_mm": 265.4,
+    "outer_strut_angle_deg": -1.0,
+    "middle_strut_height_mm": 159.2,
+    "middle_strut_angle_deg": -18.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 560.9375,
+   "values": {
+    "step_up": 187.5,
+    "step_down": 468.75,
+    "ditch": 203.125,
+    "bump_120": 131.25,
+    "bump_250": 131.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 320.9,
+    "bogie_front_arm_mm": 251.0,
+    "bogie_angle_deg": 192.9,
+    "rocker_rear_arm_mm": 444.5,
+    "rocker_front_arm_mm": 231.6,
+    "rocker_angle_deg": 178.7,
+    "outer_strut_height_mm": 292.9,
+    "outer_strut_angle_deg": -11.1,
+    "middle_strut_height_mm": 170.0,
+    "middle_strut_angle_deg": 3.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 538.4375,
+   "values": {
+    "step_up": 206.25,
+    "step_down": 393.75,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 270.3,
+    "bogie_front_arm_mm": 124.4,
+    "bogie_angle_deg": 263.6,
+    "rocker_rear_arm_mm": 581.9,
+    "rocker_front_arm_mm": 256.6,
+    "rocker_angle_deg": 187.0,
+    "outer_strut_height_mm": 187.0,
+    "outer_strut_angle_deg": -22.3,
+    "middle_strut_height_mm": 253.9,
+    "middle_strut_angle_deg": -15.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 536.5625,
+   "values": {
+    "step_up": 243.75,
+    "step_down": 262.5,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 373.6,
+    "bogie_front_arm_mm": 149.0,
+    "bogie_angle_deg": 206.6,
+    "rocker_rear_arm_mm": 333.1,
+    "rocker_front_arm_mm": 267.9,
+    "rocker_angle_deg": 152.7,
+    "outer_strut_height_mm": 168.6,
+    "outer_strut_angle_deg": -22.6,
+    "middle_strut_height_mm": 272.2,
+    "middle_strut_angle_deg": -6.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 517.8125,
+   "values": {
+    "step_up": 187.5,
+    "step_down": 262.5,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 187.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 235.0,
+    "bogie_front_arm_mm": 327.7,
+    "bogie_angle_deg": 202.2,
+    "rocker_rear_arm_mm": 513.9,
+    "rocker_front_arm_mm": 268.0,
+    "rocker_angle_deg": 125.5,
+    "outer_strut_height_mm": 216.5,
+    "outer_strut_angle_deg": -8.2,
+    "middle_strut_height_mm": 271.0,
+    "middle_strut_angle_deg": 11.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 512.1875,
+   "values": {
+    "step_up": 168.75,
+    "step_down": 431.25,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 416.9,
+    "bogie_front_arm_mm": 265.3,
+    "bogie_angle_deg": 138.9,
+    "rocker_rear_arm_mm": 448.5,
+    "rocker_front_arm_mm": 287.1,
+    "rocker_angle_deg": 130.5,
+    "outer_strut_height_mm": 226.6,
+    "outer_strut_angle_deg": -16.5,
+    "middle_strut_height_mm": 198.2,
+    "middle_strut_angle_deg": -21.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 502.5,
+   "values": {
+    "step_up": 168.75,
+    "step_down": 300.0,
+    "ditch": 187.5,
+    "bump_120": 150.0,
+    "bump_250": 150.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 219.6,
+    "bogie_front_arm_mm": 395.7,
+    "bogie_angle_deg": 183.9,
+    "rocker_rear_arm_mm": 445.3,
+    "rocker_front_arm_mm": 280.3,
+    "rocker_angle_deg": 143.0,
+    "outer_strut_height_mm": 288.6,
+    "outer_strut_angle_deg": 4.2,
+    "middle_strut_height_mm": 178.0,
+    "middle_strut_angle_deg": 19.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 495.3125,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 562.5,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 304.2,
+    "bogie_front_arm_mm": 154.0,
+    "bogie_angle_deg": 226.6,
+    "rocker_rear_arm_mm": 413.5,
+    "rocker_front_arm_mm": 458.5,
+    "rocker_angle_deg": 102.3,
+    "outer_strut_height_mm": 221.5,
+    "outer_strut_angle_deg": -20.1,
+    "middle_strut_height_mm": 223.8,
+    "middle_strut_angle_deg": 13.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 485.625,
+   "values": {
+    "step_up": 187.5,
+    "step_down": 243.75,
+    "ditch": 187.5,
+    "bump_120": 131.25,
+    "bump_250": 131.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 108.8,
+    "bogie_front_arm_mm": 305.1,
+    "bogie_angle_deg": 170.9,
+    "rocker_rear_arm_mm": 562.6,
+    "rocker_front_arm_mm": 404.8,
+    "rocker_angle_deg": 150.9,
+    "outer_strut_height_mm": 202.4,
+    "outer_strut_angle_deg": -12.9,
+    "middle_strut_height_mm": 180.8,
+    "middle_strut_angle_deg": -14.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 483.75,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 393.75,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 206.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 139.1,
+    "bogie_front_arm_mm": 418.5,
+    "bogie_angle_deg": 213.3,
+    "rocker_rear_arm_mm": 504.9,
+    "rocker_front_arm_mm": 274.8,
+    "rocker_angle_deg": 112.3,
+    "outer_strut_height_mm": 280.1,
+    "outer_strut_angle_deg": 8.9,
+    "middle_strut_height_mm": 182.3,
+    "middle_strut_angle_deg": 18.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 478.4375,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 506.25,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 219.9,
+    "bogie_front_arm_mm": 300.7,
+    "bogie_angle_deg": 215.3,
+    "rocker_rear_arm_mm": 586.7,
+    "rocker_front_arm_mm": 236.8,
+    "rocker_angle_deg": 113.1,
+    "outer_strut_height_mm": 220.4,
+    "outer_strut_angle_deg": -9.0,
+    "middle_strut_height_mm": 212.1,
+    "middle_strut_angle_deg": -20.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 472.8125,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 487.5,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 169.2,
+    "bogie_front_arm_mm": 305.9,
+    "bogie_angle_deg": 161.3,
+    "rocker_rear_arm_mm": 577.4,
+    "rocker_front_arm_mm": 297.6,
+    "rocker_angle_deg": 138.3,
+    "outer_strut_height_mm": 157.2,
+    "outer_strut_angle_deg": -3.1,
+    "middle_strut_height_mm": 241.8,
+    "middle_strut_angle_deg": -9.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 472.8125,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 487.5,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 236.9,
+    "bogie_front_arm_mm": 303.4,
+    "bogie_angle_deg": 179.5,
+    "rocker_rear_arm_mm": 532.8,
+    "rocker_front_arm_mm": 401.7,
+    "rocker_angle_deg": 104.8,
+    "outer_strut_height_mm": 166.8,
+    "outer_strut_angle_deg": -7.2,
+    "middle_strut_height_mm": 274.1,
+    "middle_strut_angle_deg": 15.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 472.8125,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 393.75,
+    "ditch": 203.125,
+    "bump_120": 131.25,
+    "bump_250": 187.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 103.4,
+    "bogie_front_arm_mm": 410.4,
+    "bogie_angle_deg": 278.9,
+    "rocker_rear_arm_mm": 510.6,
+    "rocker_front_arm_mm": 202.8,
+    "rocker_angle_deg": 188.0,
+    "outer_strut_height_mm": 256.2,
+    "outer_strut_angle_deg": 9.5,
+    "middle_strut_height_mm": 185.5,
+    "middle_strut_angle_deg": 14.2,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 472.5,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 356.25,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 206.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 326.2,
+    "bogie_front_arm_mm": 210.3,
+    "bogie_angle_deg": 180.7,
+    "rocker_rear_arm_mm": 484.2,
+    "rocker_front_arm_mm": 250.0,
+    "rocker_angle_deg": 116.8,
+    "outer_strut_height_mm": 277.5,
+    "outer_strut_angle_deg": 1.8,
+    "middle_strut_height_mm": 295.7,
+    "middle_strut_angle_deg": 14.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 458.75,
+   "values": {
+    "step_up": 150.0,
+    "step_down": 300.0,
+    "ditch": 203.125,
+    "bump_120": 84.375,
+    "bump_250": 150.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 351.6,
+    "bogie_front_arm_mm": 287.1,
+    "bogie_angle_deg": 187.7,
+    "rocker_rear_arm_mm": 406.8,
+    "rocker_front_arm_mm": 523.0,
+    "rocker_angle_deg": 117.4,
+    "outer_strut_height_mm": 213.5,
+    "outer_strut_angle_deg": -23.5,
+    "middle_strut_height_mm": 211.0,
+    "middle_strut_angle_deg": 18.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 450.3125,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 412.5,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 374.7,
+    "bogie_front_arm_mm": 145.2,
+    "bogie_angle_deg": 199.3,
+    "rocker_rear_arm_mm": 523.5,
+    "rocker_front_arm_mm": 234.6,
+    "rocker_angle_deg": 203.4,
+    "outer_strut_height_mm": 283.9,
+    "outer_strut_angle_deg": -13.9,
+    "middle_strut_height_mm": 230.5,
+    "middle_strut_angle_deg": -22.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 444.6875,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 393.75,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 366.0,
+    "bogie_front_arm_mm": 198.8,
+    "bogie_angle_deg": 235.6,
+    "rocker_rear_arm_mm": 465.1,
+    "rocker_front_arm_mm": 211.8,
+    "rocker_angle_deg": 102.8,
+    "outer_strut_height_mm": 259.7,
+    "outer_strut_angle_deg": 10.3,
+    "middle_strut_height_mm": 263.4,
+    "middle_strut_angle_deg": -24.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 439.0625,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 375.0,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 271.0,
+    "bogie_front_arm_mm": 223.7,
+    "bogie_angle_deg": 161.6,
+    "rocker_rear_arm_mm": 409.5,
+    "rocker_front_arm_mm": 433.4,
+    "rocker_angle_deg": 160.2,
+    "outer_strut_height_mm": 256.6,
+    "outer_strut_angle_deg": -16.4,
+    "middle_strut_height_mm": 165.6,
+    "middle_strut_angle_deg": -17.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 438.75,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 337.5,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 187.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 127.2,
+    "bogie_front_arm_mm": 359.7,
+    "bogie_angle_deg": 238.1,
+    "rocker_rear_arm_mm": 560.1,
+    "rocker_front_arm_mm": 309.8,
+    "rocker_angle_deg": 106.2,
+    "outer_strut_height_mm": 195.0,
+    "outer_strut_angle_deg": -10.5,
+    "middle_strut_height_mm": 296.4,
+    "middle_strut_angle_deg": 12.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 434.6875,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 318.75,
+    "ditch": 171.875,
+    "bump_120": 150.0,
+    "bump_250": 131.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 322.0,
+    "bogie_front_arm_mm": 123.3,
+    "bogie_angle_deg": 235.9,
+    "rocker_rear_arm_mm": 200.8,
+    "rocker_front_arm_mm": 543.9,
+    "rocker_angle_deg": 158.0,
+    "outer_strut_height_mm": 251.1,
+    "outer_strut_angle_deg": -21.5,
+    "middle_strut_height_mm": 198.8,
+    "middle_strut_angle_deg": 24.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 431.25,
+   "values": {
+    "step_up": 168.75,
+    "step_down": 187.5,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 200.6,
+    "bogie_front_arm_mm": 254.9,
+    "bogie_angle_deg": 249.3,
+    "rocker_rear_arm_mm": 366.4,
+    "rocker_front_arm_mm": 422.0,
+    "rocker_angle_deg": 153.2,
+    "outer_strut_height_mm": 262.1,
+    "outer_strut_angle_deg": -3.8,
+    "middle_strut_height_mm": 259.2,
+    "middle_strut_angle_deg": 12.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 431.25,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 281.25,
+    "ditch": 187.5,
+    "bump_120": 131.25,
+    "bump_250": 150.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 259.8,
+    "bogie_front_arm_mm": 383.2,
+    "bogie_angle_deg": 134.2,
+    "rocker_rear_arm_mm": 486.3,
+    "rocker_front_arm_mm": 204.8,
+    "rocker_angle_deg": 156.4,
+    "outer_strut_height_mm": 244.4,
+    "outer_strut_angle_deg": 9.1,
+    "middle_strut_height_mm": 220.9,
+    "middle_strut_angle_deg": 17.2,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 430.78125,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 435.9375,
+    "ditch": 187.5,
+    "bump_120": 131.25,
+    "bump_250": 131.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 116.0,
+    "bogie_front_arm_mm": 262.4,
+    "bogie_angle_deg": 182.7,
+    "rocker_rear_arm_mm": 472.9,
+    "rocker_front_arm_mm": 404.3,
+    "rocker_angle_deg": 101.8,
+    "outer_strut_height_mm": 161.2,
+    "outer_strut_angle_deg": 1.4,
+    "middle_strut_height_mm": 204.5,
+    "middle_strut_angle_deg": 5.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 429.375,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 337.5,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 168.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 239.3,
+    "bogie_front_arm_mm": 430.8,
+    "bogie_angle_deg": 211.9,
+    "rocker_rear_arm_mm": 448.0,
+    "rocker_front_arm_mm": 238.5,
+    "rocker_angle_deg": 137.8,
+    "outer_strut_height_mm": 259.3,
+    "outer_strut_angle_deg": 6.5,
+    "middle_strut_height_mm": 194.3,
+    "middle_strut_angle_deg": 15.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 427.8125,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 337.5,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 313.2,
+    "bogie_front_arm_mm": 158.8,
+    "bogie_angle_deg": 167.9,
+    "rocker_rear_arm_mm": 201.5,
+    "rocker_front_arm_mm": 408.4,
+    "rocker_angle_deg": 205.5,
+    "outer_strut_height_mm": 179.2,
+    "outer_strut_angle_deg": -5.5,
+    "middle_strut_height_mm": 242.4,
+    "middle_strut_angle_deg": -4.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 422.1875,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 318.75,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 123.9,
+    "bogie_front_arm_mm": 221.9,
+    "bogie_angle_deg": 237.5,
+    "rocker_rear_arm_mm": 492.1,
+    "rocker_front_arm_mm": 316.0,
+    "rocker_angle_deg": 188.9,
+    "outer_strut_height_mm": 182.5,
+    "outer_strut_angle_deg": -4.5,
+    "middle_strut_height_mm": 262.3,
+    "middle_strut_angle_deg": -7.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 421.875,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 281.25,
+    "ditch": 187.5,
+    "bump_120": 131.25,
+    "bump_250": 131.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 145.2,
+    "bogie_front_arm_mm": 164.6,
+    "bogie_angle_deg": 219.8,
+    "rocker_rear_arm_mm": 448.9,
+    "rocker_front_arm_mm": 277.0,
+    "rocker_angle_deg": 156.7,
+    "outer_strut_height_mm": 253.8,
+    "outer_strut_angle_deg": 10.5,
+    "middle_strut_height_mm": 194.0,
+    "middle_strut_angle_deg": -2.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 418.125,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 300.0,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 131.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 269.1,
+    "bogie_front_arm_mm": 439.3,
+    "bogie_angle_deg": 189.8,
+    "rocker_rear_arm_mm": 488.5,
+    "rocker_front_arm_mm": 321.0,
+    "rocker_angle_deg": 172.0,
+    "outer_strut_height_mm": 287.7,
+    "outer_strut_angle_deg": -23.1,
+    "middle_strut_height_mm": 152.1,
+    "middle_strut_angle_deg": 5.4,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 416.5625,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 300.0,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 171.1,
+    "bogie_front_arm_mm": 197.1,
+    "bogie_angle_deg": 171.8,
+    "rocker_rear_arm_mm": 391.8,
+    "rocker_front_arm_mm": 264.5,
+    "rocker_angle_deg": 193.5,
+    "outer_strut_height_mm": 185.7,
+    "outer_strut_angle_deg": 9.4,
+    "middle_strut_height_mm": 195.1,
+    "middle_strut_angle_deg": 9.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 414.375,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 318.75,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 150.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 341.1,
+    "bogie_front_arm_mm": 138.0,
+    "bogie_angle_deg": 194.2,
+    "rocker_rear_arm_mm": 321.4,
+    "rocker_front_arm_mm": 337.2,
+    "rocker_angle_deg": 121.2,
+    "outer_strut_height_mm": 233.2,
+    "outer_strut_angle_deg": -8.2,
+    "middle_strut_height_mm": 189.8,
+    "middle_strut_angle_deg": 1.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 412.5,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 281.25,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 131.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 155.2,
+    "bogie_front_arm_mm": 290.6,
+    "bogie_angle_deg": 193.7,
+    "rocker_rear_arm_mm": 540.6,
+    "rocker_front_arm_mm": 207.5,
+    "rocker_angle_deg": 199.1,
+    "outer_strut_height_mm": 222.7,
+    "outer_strut_angle_deg": -2.9,
+    "middle_strut_height_mm": 291.7,
+    "middle_strut_angle_deg": 9.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 410.625,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 337.5,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 131.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 204.8,
+    "bogie_front_arm_mm": 379.7,
+    "bogie_angle_deg": 150.5,
+    "rocker_rear_arm_mm": 498.9,
+    "rocker_front_arm_mm": 214.2,
+    "rocker_angle_deg": 215.9,
+    "outer_strut_height_mm": 229.8,
+    "outer_strut_angle_deg": 8.5,
+    "middle_strut_height_mm": 216.3,
+    "middle_strut_angle_deg": 3.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 409.0625,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 337.5,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 106.5,
+    "bogie_front_arm_mm": 359.8,
+    "bogie_angle_deg": 178.6,
+    "rocker_rear_arm_mm": 495.4,
+    "rocker_front_arm_mm": 331.6,
+    "rocker_angle_deg": 194.2,
+    "outer_strut_height_mm": 160.3,
+    "outer_strut_angle_deg": -2.2,
+    "middle_strut_height_mm": 248.0,
+    "middle_strut_angle_deg": -9.2,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 405.3125,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 262.5,
+    "ditch": 203.125,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 363.9,
+    "bogie_front_arm_mm": 158.1,
+    "bogie_angle_deg": 167.3,
+    "rocker_rear_arm_mm": 252.1,
+    "rocker_front_arm_mm": 370.7,
+    "rocker_angle_deg": 200.0,
+    "outer_strut_height_mm": 150.8,
+    "outer_strut_angle_deg": -9.7,
+    "middle_strut_height_mm": 274.5,
+    "middle_strut_angle_deg": 23.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 405.3125,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 262.5,
+    "ditch": 203.125,
+    "bump_120": 131.25,
+    "bump_250": 131.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 278.2,
+    "bogie_front_arm_mm": 167.4,
+    "bogie_angle_deg": 167.5,
+    "rocker_rear_arm_mm": 219.7,
+    "rocker_front_arm_mm": 603.4,
+    "rocker_angle_deg": 124.7,
+    "outer_strut_height_mm": 231.8,
+    "outer_strut_angle_deg": -5.9,
+    "middle_strut_height_mm": 169.1,
+    "middle_strut_angle_deg": 16.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 403.125,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 281.25,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 393.9,
+    "bogie_front_arm_mm": 127.1,
+    "bogie_angle_deg": 100.1,
+    "rocker_rear_arm_mm": 258.3,
+    "rocker_front_arm_mm": 328.9,
+    "rocker_angle_deg": 175.7,
+    "outer_strut_height_mm": 203.2,
+    "outer_strut_angle_deg": 7.1,
+    "middle_strut_height_mm": 272.7,
+    "middle_strut_angle_deg": -19.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 399.6875,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 243.75,
+    "ditch": 203.125,
+    "bump_120": 168.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 184.7,
+    "bogie_front_arm_mm": 126.9,
+    "bogie_angle_deg": 271.4,
+    "rocker_rear_arm_mm": 536.8,
+    "rocker_front_arm_mm": 204.4,
+    "rocker_angle_deg": 164.6,
+    "outer_strut_height_mm": 239.6,
+    "outer_strut_angle_deg": 12.8,
+    "middle_strut_height_mm": 214.2,
+    "middle_strut_angle_deg": 6.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 399.375,
+   "values": {
+    "step_up": 131.25,
+    "step_down": 206.25,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 152.2,
+    "bogie_front_arm_mm": 303.3,
+    "bogie_angle_deg": 139.0,
+    "rocker_rear_arm_mm": 308.1,
+    "rocker_front_arm_mm": 236.9,
+    "rocker_angle_deg": 148.6,
+    "outer_strut_height_mm": 264.0,
+    "outer_strut_angle_deg": 23.2,
+    "middle_strut_height_mm": 273.0,
+    "middle_strut_angle_deg": 5.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 397.5,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 450.0,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 441.0,
+    "bogie_front_arm_mm": 222.9,
+    "bogie_angle_deg": 139.7,
+    "rocker_rear_arm_mm": 362.2,
+    "rocker_front_arm_mm": 246.0,
+    "rocker_angle_deg": 226.6,
+    "outer_strut_height_mm": 190.1,
+    "outer_strut_angle_deg": -8.7,
+    "middle_strut_height_mm": 217.3,
+    "middle_strut_angle_deg": -6.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 390.3125,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 337.5,
+    "ditch": 203.125,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 426.2,
+    "bogie_front_arm_mm": 102.2,
+    "bogie_angle_deg": 235.2,
+    "rocker_rear_arm_mm": 466.9,
+    "rocker_front_arm_mm": 293.7,
+    "rocker_angle_deg": 193.4,
+    "outer_strut_height_mm": 290.0,
+    "outer_strut_angle_deg": -24.0,
+    "middle_strut_height_mm": 217.0,
+    "middle_strut_angle_deg": 16.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 386.25,
+   "values": {
+    "step_up": 112.5,
+    "step_down": 225.0,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 195.8,
+    "bogie_front_arm_mm": 195.5,
+    "bogie_angle_deg": 203.2,
+    "rocker_rear_arm_mm": 353.6,
+    "rocker_front_arm_mm": 263.1,
+    "rocker_angle_deg": 111.1,
+    "outer_strut_height_mm": 237.5,
+    "outer_strut_angle_deg": -5.7,
+    "middle_strut_height_mm": 215.8,
+    "middle_strut_angle_deg": 1.2,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 386.25,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 318.75,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 319.3,
+    "bogie_front_arm_mm": 301.9,
+    "bogie_angle_deg": 109.4,
+    "rocker_rear_arm_mm": 555.6,
+    "rocker_front_arm_mm": 367.0,
+    "rocker_angle_deg": 116.9,
+    "outer_strut_height_mm": 173.1,
+    "outer_strut_angle_deg": -4.0,
+    "middle_strut_height_mm": 299.7,
+    "middle_strut_angle_deg": -10.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 384.375,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 468.75,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 173.6,
+    "bogie_front_arm_mm": 184.9,
+    "bogie_angle_deg": 177.8,
+    "rocker_rear_arm_mm": 518.1,
+    "rocker_front_arm_mm": 244.6,
+    "rocker_angle_deg": 126.6,
+    "outer_strut_height_mm": 222.5,
+    "outer_strut_angle_deg": -14.5,
+    "middle_strut_height_mm": 162.1,
+    "middle_strut_angle_deg": -6.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 384.375,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 281.25,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 150.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 413.0,
+    "bogie_front_arm_mm": 446.7,
+    "bogie_angle_deg": 101.1,
+    "rocker_rear_arm_mm": 497.6,
+    "rocker_front_arm_mm": 408.3,
+    "rocker_angle_deg": 169.7,
+    "outer_strut_height_mm": 164.5,
+    "outer_strut_angle_deg": -22.9,
+    "middle_strut_height_mm": 262.4,
+    "middle_strut_angle_deg": -13.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 384.33984375,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 468.6328125,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 145.5,
+    "bogie_front_arm_mm": 361.9,
+    "bogie_angle_deg": 170.6,
+    "rocker_rear_arm_mm": 414.8,
+    "rocker_front_arm_mm": 380.7,
+    "rocker_angle_deg": 161.7,
+    "outer_strut_height_mm": 209.5,
+    "outer_strut_angle_deg": -15.8,
+    "middle_strut_height_mm": 252.8,
+    "middle_strut_angle_deg": 14.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 382.5,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 337.5,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 123.6,
+    "bogie_front_arm_mm": 276.0,
+    "bogie_angle_deg": 116.4,
+    "rocker_rear_arm_mm": 311.1,
+    "rocker_front_arm_mm": 297.4,
+    "rocker_angle_deg": 170.5,
+    "outer_strut_height_mm": 176.1,
+    "outer_strut_angle_deg": 24.8,
+    "middle_strut_height_mm": 267.3,
+    "middle_strut_angle_deg": -0.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 382.03125,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 356.25,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 81.5625
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 310.7,
+    "bogie_front_arm_mm": 107.7,
+    "bogie_angle_deg": 190.2,
+    "rocker_rear_arm_mm": 418.9,
+    "rocker_front_arm_mm": 262.2,
+    "rocker_angle_deg": 154.4,
+    "outer_strut_height_mm": 208.8,
+    "outer_strut_angle_deg": -15.8,
+    "middle_strut_height_mm": 261.9,
+    "middle_strut_angle_deg": 0.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 378.75,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 262.5,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 112.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 137.3,
+    "bogie_front_arm_mm": 386.2,
+    "bogie_angle_deg": 154.7,
+    "rocker_rear_arm_mm": 349.2,
+    "rocker_front_arm_mm": 516.1,
+    "rocker_angle_deg": 186.1,
+    "outer_strut_height_mm": 208.0,
+    "outer_strut_angle_deg": -18.3,
+    "middle_strut_height_mm": 210.5,
+    "middle_strut_angle_deg": 24.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 371.25,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 300.0,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 101.4,
+    "bogie_front_arm_mm": 413.7,
+    "bogie_angle_deg": 128.3,
+    "rocker_rear_arm_mm": 519.7,
+    "rocker_front_arm_mm": 435.2,
+    "rocker_angle_deg": 131.0,
+    "outer_strut_height_mm": 272.3,
+    "outer_strut_angle_deg": -15.4,
+    "middle_strut_height_mm": 273.0,
+    "middle_strut_angle_deg": -14.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 369.6875,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 393.75,
+    "ditch": 203.125,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 415.1,
+    "bogie_front_arm_mm": 119.3,
+    "bogie_angle_deg": 197.8,
+    "rocker_rear_arm_mm": 229.4,
+    "rocker_front_arm_mm": 324.3,
+    "rocker_angle_deg": 109.4,
+    "outer_strut_height_mm": 180.2,
+    "outer_strut_angle_deg": 10.0,
+    "middle_strut_height_mm": 264.7,
+    "middle_strut_angle_deg": 3.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 362.1875,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 243.75,
+    "ditch": 203.125,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 189.3,
+    "bogie_front_arm_mm": 325.8,
+    "bogie_angle_deg": 145.7,
+    "rocker_rear_arm_mm": 439.2,
+    "rocker_front_arm_mm": 267.2,
+    "rocker_angle_deg": 129.0,
+    "outer_strut_height_mm": 206.0,
+    "outer_strut_angle_deg": -12.8,
+    "middle_strut_height_mm": 175.0,
+    "middle_strut_angle_deg": 5.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 361.875,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 393.75,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 272.5,
+    "bogie_front_arm_mm": 252.5,
+    "bogie_angle_deg": 135.3,
+    "rocker_rear_arm_mm": 337.2,
+    "rocker_front_arm_mm": 390.2,
+    "rocker_angle_deg": 122.3,
+    "outer_strut_height_mm": 294.1,
+    "outer_strut_angle_deg": 0.4,
+    "middle_strut_height_mm": 152.4,
+    "middle_strut_angle_deg": -1.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 361.875,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 300.0,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 183.2,
+    "bogie_front_arm_mm": 198.4,
+    "bogie_angle_deg": 134.9,
+    "rocker_rear_arm_mm": 231.6,
+    "rocker_front_arm_mm": 595.8,
+    "rocker_angle_deg": 141.5,
+    "outer_strut_height_mm": 175.0,
+    "outer_strut_angle_deg": -9.2,
+    "middle_strut_height_mm": 207.0,
+    "middle_strut_angle_deg": -6.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 360.0,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 262.5,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 331.0,
+    "bogie_front_arm_mm": 189.3,
+    "bogie_angle_deg": 146.1,
+    "rocker_rear_arm_mm": 278.7,
+    "rocker_front_arm_mm": 366.7,
+    "rocker_angle_deg": 178.5,
+    "outer_strut_height_mm": 212.8,
+    "outer_strut_angle_deg": -24.2,
+    "middle_strut_height_mm": 221.0,
+    "middle_strut_angle_deg": -18.2,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 360.0,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 262.5,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 275.6,
+    "bogie_front_arm_mm": 286.3,
+    "bogie_angle_deg": 141.7,
+    "rocker_rear_arm_mm": 464.4,
+    "rocker_front_arm_mm": 341.1,
+    "rocker_angle_deg": 149.5,
+    "outer_strut_height_mm": 257.6,
+    "outer_strut_angle_deg": -9.0,
+    "middle_strut_height_mm": 201.5,
+    "middle_strut_angle_deg": 15.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 358.125,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 318.75,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 337.7,
+    "bogie_front_arm_mm": 295.4,
+    "bogie_angle_deg": 129.5,
+    "rocker_rear_arm_mm": 223.2,
+    "rocker_front_arm_mm": 274.4,
+    "rocker_angle_deg": 110.0,
+    "outer_strut_height_mm": 266.6,
+    "outer_strut_angle_deg": 23.3,
+    "middle_strut_height_mm": 168.1,
+    "middle_strut_angle_deg": 19.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 354.375,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 243.75,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 103.8,
+    "bogie_front_arm_mm": 304.0,
+    "bogie_angle_deg": 169.9,
+    "rocker_rear_arm_mm": 344.1,
+    "rocker_front_arm_mm": 646.4,
+    "rocker_angle_deg": 194.0,
+    "outer_strut_height_mm": 152.6,
+    "outer_strut_angle_deg": -23.0,
+    "middle_strut_height_mm": 273.7,
+    "middle_strut_angle_deg": 3.2,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 354.375,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 243.75,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 261.5,
+    "bogie_front_arm_mm": 215.9,
+    "bogie_angle_deg": 195.0,
+    "rocker_rear_arm_mm": 223.5,
+    "rocker_front_arm_mm": 380.0,
+    "rocker_angle_deg": 206.8,
+    "outer_strut_height_mm": 230.3,
+    "outer_strut_angle_deg": -21.2,
+    "middle_strut_height_mm": 282.4,
+    "middle_strut_angle_deg": 12.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 348.75,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 225.0,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 220.2,
+    "bogie_front_arm_mm": 120.8,
+    "bogie_angle_deg": 183.0,
+    "rocker_rear_arm_mm": 151.0,
+    "rocker_front_arm_mm": 365.1,
+    "rocker_angle_deg": 121.1,
+    "outer_strut_height_mm": 164.9,
+    "outer_strut_angle_deg": 0.2,
+    "middle_strut_height_mm": 270.1,
+    "middle_strut_angle_deg": -0.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 348.75,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 225.0,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 192.8,
+    "bogie_front_arm_mm": 229.2,
+    "bogie_angle_deg": 255.8,
+    "rocker_rear_arm_mm": 488.1,
+    "rocker_front_arm_mm": 225.3,
+    "rocker_angle_deg": 185.5,
+    "outer_strut_height_mm": 291.0,
+    "outer_strut_angle_deg": -22.5,
+    "middle_strut_height_mm": 231.5,
+    "middle_strut_angle_deg": -10.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 346.5625,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 243.75,
+    "ditch": 171.875,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 265.4,
+    "bogie_front_arm_mm": 388.5,
+    "bogie_angle_deg": 100.1,
+    "rocker_rear_arm_mm": 556.7,
+    "rocker_front_arm_mm": 321.4,
+    "rocker_angle_deg": 238.1,
+    "outer_strut_height_mm": 262.8,
+    "outer_strut_angle_deg": 2.5,
+    "middle_strut_height_mm": 292.0,
+    "middle_strut_angle_deg": -4.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 345.0,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 337.5,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 285.5,
+    "bogie_front_arm_mm": 145.7,
+    "bogie_angle_deg": 140.3,
+    "rocker_rear_arm_mm": 511.7,
+    "rocker_front_arm_mm": 202.6,
+    "rocker_angle_deg": 147.1,
+    "outer_strut_height_mm": 246.3,
+    "outer_strut_angle_deg": -15.1,
+    "middle_strut_height_mm": 205.7,
+    "middle_strut_angle_deg": -6.4,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 345.0,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 243.75,
+    "ditch": 187.5,
+    "bump_120": 112.5,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 338.2,
+    "bogie_front_arm_mm": 109.2,
+    "bogie_angle_deg": 165.4,
+    "rocker_rear_arm_mm": 174.7,
+    "rocker_front_arm_mm": 525.6,
+    "rocker_angle_deg": 210.5,
+    "outer_strut_height_mm": 237.1,
+    "outer_strut_angle_deg": -23.3,
+    "middle_strut_height_mm": 276.4,
+    "middle_strut_angle_deg": -8.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 339.375,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 225.0,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 226.6,
+    "bogie_front_arm_mm": 109.0,
+    "bogie_angle_deg": 219.5,
+    "rocker_rear_arm_mm": 321.7,
+    "rocker_front_arm_mm": 286.3,
+    "rocker_angle_deg": 172.7,
+    "outer_strut_height_mm": 154.8,
+    "outer_strut_angle_deg": -24.6,
+    "middle_strut_height_mm": 186.1,
+    "middle_strut_angle_deg": 7.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 337.5,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 187.5,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 108.1,
+    "bogie_front_arm_mm": 169.6,
+    "bogie_angle_deg": 251.2,
+    "rocker_rear_arm_mm": 570.3,
+    "rocker_front_arm_mm": 283.2,
+    "rocker_angle_deg": 115.7,
+    "outer_strut_height_mm": 227.7,
+    "outer_strut_angle_deg": 13.5,
+    "middle_strut_height_mm": 236.9,
+    "middle_strut_angle_deg": 10.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 337.5,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 187.5,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 302.0,
+    "bogie_front_arm_mm": 278.2,
+    "bogie_angle_deg": 125.4,
+    "rocker_rear_arm_mm": 386.7,
+    "rocker_front_arm_mm": 277.5,
+    "rocker_angle_deg": 119.9,
+    "outer_strut_height_mm": 268.0,
+    "outer_strut_angle_deg": 8.4,
+    "middle_strut_height_mm": 243.9,
+    "middle_strut_angle_deg": -6.4,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 337.5,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 281.25,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 166.5,
+    "bogie_front_arm_mm": 121.9,
+    "bogie_angle_deg": 152.0,
+    "rocker_rear_arm_mm": 235.1,
+    "rocker_front_arm_mm": 342.8,
+    "rocker_angle_deg": 211.2,
+    "outer_strut_height_mm": 247.7,
+    "outer_strut_angle_deg": 1.1,
+    "middle_strut_height_mm": 158.9,
+    "middle_strut_angle_deg": -12.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 337.03125,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 206.25,
+    "ditch": 187.5,
+    "bump_120": 81.5625,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 396.3,
+    "bogie_front_arm_mm": 204.1,
+    "bogie_angle_deg": 141.5,
+    "rocker_rear_arm_mm": 251.4,
+    "rocker_front_arm_mm": 267.6,
+    "rocker_angle_deg": 218.8,
+    "outer_strut_height_mm": 299.2,
+    "outer_strut_angle_deg": 2.3,
+    "middle_strut_height_mm": 191.9,
+    "middle_strut_angle_deg": -13.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 331.875,
+   "values": {
+    "step_up": 93.75,
+    "step_down": 168.75,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 270.9,
+    "bogie_front_arm_mm": 138.7,
+    "bogie_angle_deg": 135.9,
+    "rocker_rear_arm_mm": 393.8,
+    "rocker_front_arm_mm": 331.0,
+    "rocker_angle_deg": 203.2,
+    "outer_strut_height_mm": 265.5,
+    "outer_strut_angle_deg": -12.8,
+    "middle_strut_height_mm": 190.0,
+    "middle_strut_angle_deg": -7.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 330.0,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 225.0,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 240.2,
+    "bogie_front_arm_mm": 353.0,
+    "bogie_angle_deg": 114.1,
+    "rocker_rear_arm_mm": 439.8,
+    "rocker_front_arm_mm": 446.9,
+    "rocker_angle_deg": 107.9,
+    "outer_strut_height_mm": 209.0,
+    "outer_strut_angle_deg": -24.6,
+    "middle_strut_height_mm": 220.6,
+    "middle_strut_angle_deg": 1.4,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 328.125,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 281.25,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 148.4,
+    "bogie_front_arm_mm": 300.1,
+    "bogie_angle_deg": 152.3,
+    "rocker_rear_arm_mm": 560.7,
+    "rocker_front_arm_mm": 266.3,
+    "rocker_angle_deg": 169.2,
+    "outer_strut_height_mm": 297.8,
+    "outer_strut_angle_deg": -1.5,
+    "middle_strut_height_mm": 160.0,
+    "middle_strut_angle_deg": 15.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 328.125,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 281.25,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 133.2,
+    "bogie_front_arm_mm": 306.4,
+    "bogie_angle_deg": 129.2,
+    "rocker_rear_arm_mm": 417.0,
+    "rocker_front_arm_mm": 266.8,
+    "rocker_angle_deg": 172.7,
+    "outer_strut_height_mm": 197.3,
+    "outer_strut_angle_deg": -19.4,
+    "middle_strut_height_mm": 156.6,
+    "middle_strut_angle_deg": -5.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 328.125,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 281.25,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 215.1,
+    "bogie_front_arm_mm": 130.8,
+    "bogie_angle_deg": 248.8,
+    "rocker_rear_arm_mm": 502.2,
+    "rocker_front_arm_mm": 290.8,
+    "rocker_angle_deg": 149.0,
+    "outer_strut_height_mm": 194.1,
+    "outer_strut_angle_deg": -9.1,
+    "middle_strut_height_mm": 242.4,
+    "middle_strut_angle_deg": 4.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 325.3125,
+   "values": {
+    "step_up": 81.5625,
+    "step_down": 187.5,
+    "ditch": 187.5,
+    "bump_120": 93.75,
+    "bump_250": 93.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 199.6,
+    "bogie_front_arm_mm": 304.7,
+    "bogie_angle_deg": 140.5,
+    "rocker_rear_arm_mm": 451.8,
+    "rocker_front_arm_mm": 532.0,
+    "rocker_angle_deg": 134.8,
+    "outer_strut_height_mm": 193.6,
+    "outer_strut_angle_deg": -22.6,
+    "middle_strut_height_mm": 274.7,
+    "middle_strut_angle_deg": 6.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 322.5,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 262.5,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 189.5,
+    "bogie_front_arm_mm": 271.5,
+    "bogie_angle_deg": 171.2,
+    "rocker_rear_arm_mm": 280.7,
+    "rocker_front_arm_mm": 537.8,
+    "rocker_angle_deg": 141.4,
+    "outer_strut_height_mm": 275.7,
+    "outer_strut_angle_deg": -16.1,
+    "middle_strut_height_mm": 295.5,
+    "middle_strut_angle_deg": 3.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 316.875,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 243.75,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 408.6,
+    "bogie_front_arm_mm": 363.2,
+    "bogie_angle_deg": 108.9,
+    "rocker_rear_arm_mm": 469.8,
+    "rocker_front_arm_mm": 415.3,
+    "rocker_angle_deg": 112.8,
+    "outer_strut_height_mm": 193.8,
+    "outer_strut_angle_deg": -20.7,
+    "middle_strut_height_mm": 173.5,
+    "middle_strut_angle_deg": 5.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 316.875,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 243.75,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 315.6,
+    "bogie_front_arm_mm": 144.0,
+    "bogie_angle_deg": 122.9,
+    "rocker_rear_arm_mm": 345.1,
+    "rocker_front_arm_mm": 288.8,
+    "rocker_angle_deg": 182.0,
+    "outer_strut_height_mm": 186.3,
+    "outer_strut_angle_deg": -21.0,
+    "middle_strut_height_mm": 290.7,
+    "middle_strut_angle_deg": -19.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 311.25,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 225.0,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 213.1,
+    "bogie_front_arm_mm": 102.6,
+    "bogie_angle_deg": 145.4,
+    "rocker_rear_arm_mm": 322.5,
+    "rocker_front_arm_mm": 323.2,
+    "rocker_angle_deg": 163.9,
+    "outer_strut_height_mm": 290.3,
+    "outer_strut_angle_deg": -6.1,
+    "middle_strut_height_mm": 269.1,
+    "middle_strut_angle_deg": -16.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 311.25,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 225.0,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 310.3,
+    "bogie_front_arm_mm": 190.4,
+    "bogie_angle_deg": 123.1,
+    "rocker_rear_arm_mm": 240.5,
+    "rocker_front_arm_mm": 333.7,
+    "rocker_angle_deg": 160.4,
+    "outer_strut_height_mm": 190.0,
+    "outer_strut_angle_deg": -22.6,
+    "middle_strut_height_mm": 151.6,
+    "middle_strut_angle_deg": 8.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 305.625,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 206.25,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 366.8,
+    "bogie_front_arm_mm": 274.1,
+    "bogie_angle_deg": 107.1,
+    "rocker_rear_arm_mm": 255.7,
+    "rocker_front_arm_mm": 561.7,
+    "rocker_angle_deg": 195.2,
+    "outer_strut_height_mm": 287.3,
+    "outer_strut_angle_deg": -24.7,
+    "middle_strut_height_mm": 224.5,
+    "middle_strut_angle_deg": 0.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 305.625,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 206.25,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 100.5,
+    "bogie_front_arm_mm": 184.3,
+    "bogie_angle_deg": 144.8,
+    "rocker_rear_arm_mm": 296.0,
+    "rocker_front_arm_mm": 467.5,
+    "rocker_angle_deg": 173.4,
+    "outer_strut_height_mm": 240.3,
+    "outer_strut_angle_deg": -0.8,
+    "middle_strut_height_mm": 238.8,
+    "middle_strut_angle_deg": -8.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 305.625,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 206.25,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 224.1,
+    "bogie_front_arm_mm": 220.4,
+    "bogie_angle_deg": 136.0,
+    "rocker_rear_arm_mm": 354.0,
+    "rocker_front_arm_mm": 413.3,
+    "rocker_angle_deg": 149.9,
+    "outer_strut_height_mm": 175.1,
+    "outer_strut_angle_deg": 0.7,
+    "middle_strut_height_mm": 296.2,
+    "middle_strut_angle_deg": 12.2,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 305.625,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 206.25,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 103.6,
+    "bogie_front_arm_mm": 190.0,
+    "bogie_angle_deg": 187.7,
+    "rocker_rear_arm_mm": 450.0,
+    "rocker_front_arm_mm": 405.7,
+    "rocker_angle_deg": 185.3,
+    "outer_strut_height_mm": 247.8,
+    "outer_strut_angle_deg": -8.3,
+    "middle_strut_height_mm": 150.7,
+    "middle_strut_angle_deg": -7.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 305.625,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 206.25,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 220.1,
+    "bogie_front_arm_mm": 180.8,
+    "bogie_angle_deg": 133.6,
+    "rocker_rear_arm_mm": 401.7,
+    "rocker_front_arm_mm": 505.6,
+    "rocker_angle_deg": 148.5,
+    "outer_strut_height_mm": 184.5,
+    "outer_strut_angle_deg": -18.5,
+    "middle_strut_height_mm": 184.8,
+    "middle_strut_angle_deg": 3.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 305.625,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 206.25,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 176.5,
+    "bogie_front_arm_mm": 133.2,
+    "bogie_angle_deg": 156.9,
+    "rocker_rear_arm_mm": 287.6,
+    "rocker_front_arm_mm": 577.7,
+    "rocker_angle_deg": 231.0,
+    "outer_strut_height_mm": 254.5,
+    "outer_strut_angle_deg": -19.1,
+    "middle_strut_height_mm": 284.0,
+    "middle_strut_angle_deg": -19.4,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 305.625,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 206.25,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 228.5,
+    "bogie_front_arm_mm": 149.6,
+    "bogie_angle_deg": 118.4,
+    "rocker_rear_arm_mm": 234.1,
+    "rocker_front_arm_mm": 601.1,
+    "rocker_angle_deg": 118.4,
+    "outer_strut_height_mm": 153.2,
+    "outer_strut_angle_deg": -4.2,
+    "middle_strut_height_mm": 242.7,
+    "middle_strut_angle_deg": -2.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 300.0,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 187.5,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 217.3,
+    "bogie_front_arm_mm": 204.7,
+    "bogie_angle_deg": 154.8,
+    "rocker_rear_arm_mm": 183.5,
+    "rocker_front_arm_mm": 399.6,
+    "rocker_angle_deg": 159.0,
+    "outer_strut_height_mm": 281.1,
+    "outer_strut_angle_deg": -3.1,
+    "middle_strut_height_mm": 187.0,
+    "middle_strut_angle_deg": 22.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 300.0,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 187.5,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 200.7,
+    "bogie_front_arm_mm": 217.5,
+    "bogie_angle_deg": 124.1,
+    "rocker_rear_arm_mm": 241.5,
+    "rocker_front_arm_mm": 289.2,
+    "rocker_angle_deg": 221.0,
+    "outer_strut_height_mm": 226.5,
+    "outer_strut_angle_deg": -0.7,
+    "middle_strut_height_mm": 158.6,
+    "middle_strut_angle_deg": 19.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 300.0,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 187.5,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 217.7,
+    "bogie_front_arm_mm": 298.4,
+    "bogie_angle_deg": 119.6,
+    "rocker_rear_arm_mm": 549.1,
+    "rocker_front_arm_mm": 230.1,
+    "rocker_angle_deg": 162.7,
+    "outer_strut_height_mm": 283.3,
+    "outer_strut_angle_deg": -3.1,
+    "middle_strut_height_mm": 275.1,
+    "middle_strut_angle_deg": 1.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 296.25,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 300.0,
+    "ditch": 187.5,
+    "bump_120": 56.25,
+    "bump_250": 56.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 141.4,
+    "bogie_front_arm_mm": 153.2,
+    "bogie_angle_deg": 132.9,
+    "rocker_rear_arm_mm": 282.1,
+    "rocker_front_arm_mm": 335.8,
+    "rocker_angle_deg": 120.8,
+    "outer_strut_height_mm": 237.2,
+    "outer_strut_angle_deg": -6.0,
+    "middle_strut_height_mm": 186.9,
+    "middle_strut_angle_deg": -17.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 294.375,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 168.75,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 317.8,
+    "bogie_front_arm_mm": 199.4,
+    "bogie_angle_deg": 103.6,
+    "rocker_rear_arm_mm": 225.7,
+    "rocker_front_arm_mm": 223.2,
+    "rocker_angle_deg": 165.9,
+    "outer_strut_height_mm": 198.2,
+    "outer_strut_angle_deg": 20.1,
+    "middle_strut_height_mm": 213.7,
+    "middle_strut_angle_deg": 14.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 294.375,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 168.75,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 109.9,
+    "bogie_front_arm_mm": 400.5,
+    "bogie_angle_deg": 104.8,
+    "rocker_rear_arm_mm": 538.5,
+    "rocker_front_arm_mm": 244.1,
+    "rocker_angle_deg": 247.8,
+    "outer_strut_height_mm": 290.6,
+    "outer_strut_angle_deg": -3.5,
+    "middle_strut_height_mm": 175.2,
+    "middle_strut_angle_deg": 12.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 290.625,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 281.25,
+    "ditch": 187.5,
+    "bump_120": 56.25,
+    "bump_250": 56.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 328.1,
+    "bogie_front_arm_mm": 218.9,
+    "bogie_angle_deg": 102.4,
+    "rocker_rear_arm_mm": 188.9,
+    "rocker_front_arm_mm": 462.3,
+    "rocker_angle_deg": 174.4,
+    "outer_strut_height_mm": 233.8,
+    "outer_strut_angle_deg": 0.7,
+    "middle_strut_height_mm": 262.9,
+    "middle_strut_angle_deg": 20.4,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 288.75,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 150.0,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 247.2,
+    "bogie_front_arm_mm": 146.3,
+    "bogie_angle_deg": 110.4,
+    "rocker_rear_arm_mm": 178.2,
+    "rocker_front_arm_mm": 515.4,
+    "rocker_angle_deg": 247.6,
+    "outer_strut_height_mm": 274.1,
+    "outer_strut_angle_deg": 5.0,
+    "middle_strut_height_mm": 290.2,
+    "middle_strut_angle_deg": 7.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 288.75,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 150.0,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 174.7,
+    "bogie_front_arm_mm": 185.0,
+    "bogie_angle_deg": 143.9,
+    "rocker_rear_arm_mm": 313.0,
+    "rocker_front_arm_mm": 292.4,
+    "rocker_angle_deg": 156.5,
+    "outer_strut_height_mm": 205.4,
+    "outer_strut_angle_deg": -14.1,
+    "middle_strut_height_mm": 178.5,
+    "middle_strut_angle_deg": 16.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 288.75,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 150.0,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 282.0,
+    "bogie_front_arm_mm": 152.3,
+    "bogie_angle_deg": 157.6,
+    "rocker_rear_arm_mm": 157.7,
+    "rocker_front_arm_mm": 473.3,
+    "rocker_angle_deg": 222.3,
+    "outer_strut_height_mm": 248.3,
+    "outer_strut_angle_deg": -11.8,
+    "middle_strut_height_mm": 254.3,
+    "middle_strut_angle_deg": 21.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 288.75,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 150.0,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 250.8,
+    "bogie_front_arm_mm": 149.8,
+    "bogie_angle_deg": 138.1,
+    "rocker_rear_arm_mm": 266.2,
+    "rocker_front_arm_mm": 584.0,
+    "rocker_angle_deg": 102.7,
+    "outer_strut_height_mm": 254.0,
+    "outer_strut_angle_deg": -6.6,
+    "middle_strut_height_mm": 246.4,
+    "middle_strut_angle_deg": 21.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 283.125,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 131.25,
+    "ditch": 187.5,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 230.2,
+    "bogie_front_arm_mm": 274.8,
+    "bogie_angle_deg": 114.6,
+    "rocker_rear_arm_mm": 584.1,
+    "rocker_front_arm_mm": 224.6,
+    "rocker_angle_deg": 185.2,
+    "outer_strut_height_mm": 284.8,
+    "outer_strut_angle_deg": 0.1,
+    "middle_strut_height_mm": 287.9,
+    "middle_strut_angle_deg": 4.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 279.375,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 243.75,
+    "ditch": 187.5,
+    "bump_120": 56.25,
+    "bump_250": 56.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 300.2,
+    "bogie_front_arm_mm": 278.4,
+    "bogie_angle_deg": 116.0,
+    "rocker_rear_arm_mm": 405.8,
+    "rocker_front_arm_mm": 305.3,
+    "rocker_angle_deg": 143.9,
+    "outer_strut_height_mm": 240.4,
+    "outer_strut_angle_deg": -6.7,
+    "middle_strut_height_mm": 278.5,
+    "middle_strut_angle_deg": 4.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 273.75,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 225.0,
+    "ditch": 187.5,
+    "bump_120": 56.25,
+    "bump_250": 56.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 264.0,
+    "bogie_front_arm_mm": 167.0,
+    "bogie_angle_deg": 143.8,
+    "rocker_rear_arm_mm": 593.8,
+    "rocker_front_arm_mm": 234.0,
+    "rocker_angle_deg": 104.9,
+    "outer_strut_height_mm": 243.2,
+    "outer_strut_angle_deg": -8.1,
+    "middle_strut_height_mm": 223.4,
+    "middle_strut_angle_deg": 17.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 273.4375,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 187.5,
+    "ditch": 171.875,
+    "bump_120": 75.0,
+    "bump_250": 75.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 153.7,
+    "bogie_front_arm_mm": 324.6,
+    "bogie_angle_deg": 115.1,
+    "rocker_rear_arm_mm": 436.8,
+    "rocker_front_arm_mm": 319.4,
+    "rocker_angle_deg": 122.8,
+    "outer_strut_height_mm": 279.4,
+    "outer_strut_angle_deg": -3.4,
+    "middle_strut_height_mm": 296.9,
+    "middle_strut_angle_deg": 7.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 265.9375,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 225.0,
+    "ditch": 171.875,
+    "bump_120": 56.25,
+    "bump_250": 56.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 166.0,
+    "bogie_front_arm_mm": 292.9,
+    "bogie_angle_deg": 203.7,
+    "rocker_rear_arm_mm": 380.7,
+    "rocker_front_arm_mm": 232.4,
+    "rocker_angle_deg": 225.8,
+    "outer_strut_height_mm": 286.0,
+    "outer_strut_angle_deg": -13.2,
+    "middle_strut_height_mm": 179.4,
+    "middle_strut_angle_deg": 13.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 257.5,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 112.5,
+    "ditch": 171.875,
+    "bump_120": 75.0,
+    "bump_250": 50.625
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 328.2,
+    "bogie_front_arm_mm": 147.5,
+    "bogie_angle_deg": 106.0,
+    "rocker_rear_arm_mm": 385.9,
+    "rocker_front_arm_mm": 437.5,
+    "rocker_angle_deg": 122.1,
+    "outer_strut_height_mm": 216.2,
+    "outer_strut_angle_deg": -14.0,
+    "middle_strut_height_mm": 286.8,
+    "middle_strut_angle_deg": -3.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 254.6875,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 187.5,
+    "ditch": 171.875,
+    "bump_120": 56.25,
+    "bump_250": 56.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 292.2,
+    "bogie_front_arm_mm": 150.9,
+    "bogie_angle_deg": 114.8,
+    "rocker_rear_arm_mm": 167.9,
+    "rocker_front_arm_mm": 294.7,
+    "rocker_angle_deg": 160.3,
+    "outer_strut_height_mm": 157.6,
+    "outer_strut_angle_deg": -4.9,
+    "middle_strut_height_mm": 267.1,
+    "middle_strut_angle_deg": 9.8,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 250.9375,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 112.5,
+    "ditch": 171.875,
+    "bump_120": 56.25,
+    "bump_250": 56.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 350.7,
+    "bogie_front_arm_mm": 239.9,
+    "bogie_angle_deg": 105.4,
+    "rocker_rear_arm_mm": 435.3,
+    "rocker_front_arm_mm": 319.1,
+    "rocker_angle_deg": 121.5,
+    "outer_strut_height_mm": 269.1,
+    "outer_strut_angle_deg": -12.3,
+    "middle_strut_height_mm": 207.1,
+    "middle_strut_angle_deg": 20.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 243.4375,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 150.0,
+    "ditch": 171.875,
+    "bump_120": 56.25,
+    "bump_250": 56.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 417.0,
+    "bogie_front_arm_mm": 253.4,
+    "bogie_angle_deg": 101.6,
+    "rocker_rear_arm_mm": 435.5,
+    "rocker_front_arm_mm": 213.4,
+    "rocker_angle_deg": 109.7,
+    "outer_strut_height_mm": 183.9,
+    "outer_strut_angle_deg": 7.5,
+    "middle_strut_height_mm": 284.3,
+    "middle_strut_angle_deg": 12.1,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 237.8125,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 131.25,
+    "ditch": 171.875,
+    "bump_120": 56.25,
+    "bump_250": 56.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 320.5,
+    "bogie_front_arm_mm": 100.6,
+    "bogie_angle_deg": 119.9,
+    "rocker_rear_arm_mm": 248.1,
+    "rocker_front_arm_mm": 258.5,
+    "rocker_angle_deg": 181.2,
+    "outer_strut_height_mm": 205.7,
+    "outer_strut_angle_deg": -18.6,
+    "middle_strut_height_mm": 280.1,
+    "middle_strut_angle_deg": 6.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 232.1875,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 112.5,
+    "ditch": 171.875,
+    "bump_120": 56.25,
+    "bump_250": 56.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 416.8,
+    "bogie_front_arm_mm": 413.5,
+    "bogie_angle_deg": 106.2,
+    "rocker_rear_arm_mm": 356.0,
+    "rocker_front_arm_mm": 258.8,
+    "rocker_angle_deg": 199.4,
+    "outer_strut_height_mm": 289.8,
+    "outer_strut_angle_deg": -14.3,
+    "middle_strut_height_mm": 213.9,
+    "middle_strut_angle_deg": 24.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 220.9375,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 75.0,
+    "ditch": 171.875,
+    "bump_120": 56.25,
+    "bump_250": 56.25
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 117.5,
+    "bogie_front_arm_mm": 215.5,
+    "bogie_angle_deg": 169.3,
+    "rocker_rear_arm_mm": 247.9,
+    "rocker_front_arm_mm": 273.6,
+    "rocker_angle_deg": 128.2,
+    "outer_strut_height_mm": 216.5,
+    "outer_strut_angle_deg": -5.7,
+    "middle_strut_height_mm": 200.6,
+    "middle_strut_angle_deg": 6.0,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 220.9375,
+   "values": {
+    "step_up": 75.0,
+    "step_down": 75.0,
+    "ditch": 171.875,
+    "bump_120": 37.5,
+    "bump_250": 37.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 122.7,
+    "bogie_front_arm_mm": 403.5,
+    "bogie_angle_deg": 138.5,
+    "rocker_rear_arm_mm": 423.7,
+    "rocker_front_arm_mm": 312.3,
+    "rocker_angle_deg": 216.8,
+    "outer_strut_height_mm": 281.3,
+    "outer_strut_angle_deg": -11.7,
+    "middle_strut_height_mm": 220.0,
+    "middle_strut_angle_deg": -2.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 188.75,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 56.25,
+    "ditch": 156.25,
+    "bump_120": 37.5,
+    "bump_250": 37.5
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 149.1,
+    "bogie_front_arm_mm": 206.1,
+    "bogie_angle_deg": 104.7,
+    "rocker_rear_arm_mm": 348.8,
+    "rocker_front_arm_mm": 239.3,
+    "rocker_angle_deg": 166.5,
+    "outer_strut_height_mm": 279.9,
+    "outer_strut_angle_deg": -21.9,
+    "middle_strut_height_mm": 210.4,
+    "middle_strut_angle_deg": -18.3,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 156.5625,
+   "values": {
+    "step_up": 56.25,
+    "step_down": 37.5,
+    "ditch": 140.625,
+    "bump_120": 18.75,
+    "bump_250": 18.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 410.8,
+    "bogie_front_arm_mm": 375.3,
+    "bogie_angle_deg": 137.5,
+    "rocker_rear_arm_mm": 462.9,
+    "rocker_front_arm_mm": 277.1,
+    "rocker_angle_deg": 118.4,
+    "outer_strut_height_mm": 207.7,
+    "outer_strut_angle_deg": -6.3,
+    "middle_strut_height_mm": 162.8,
+    "middle_strut_angle_deg": -12.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 145.625,
+   "values": {
+    "step_up": 37.5,
+    "step_down": 37.5,
+    "ditch": 156.25,
+    "bump_120": 18.75,
+    "bump_250": 18.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 256.0,
+    "bogie_front_arm_mm": 420.3,
+    "bogie_angle_deg": 120.0,
+    "rocker_rear_arm_mm": 426.8,
+    "rocker_front_arm_mm": 211.1,
+    "rocker_angle_deg": 157.0,
+    "outer_strut_height_mm": 252.9,
+    "outer_strut_angle_deg": -10.4,
+    "middle_strut_height_mm": 254.6,
+    "middle_strut_angle_deg": 16.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 137.8125,
+   "values": {
+    "step_up": 37.5,
+    "step_down": 37.5,
+    "ditch": 140.625,
+    "bump_120": 18.75,
+    "bump_250": 18.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 309.2,
+    "bogie_front_arm_mm": 131.0,
+    "bogie_angle_deg": 118.5,
+    "rocker_rear_arm_mm": 247.1,
+    "rocker_front_arm_mm": 203.0,
+    "rocker_angle_deg": 261.9,
+    "outer_strut_height_mm": 277.0,
+    "outer_strut_angle_deg": -2.4,
+    "middle_strut_height_mm": 150.3,
+    "middle_strut_angle_deg": -6.7,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 137.8125,
+   "values": {
+    "step_up": 37.5,
+    "step_down": 37.5,
+    "ditch": 140.625,
+    "bump_120": 18.75,
+    "bump_250": 18.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 281.1,
+    "bogie_front_arm_mm": 143.4,
+    "bogie_angle_deg": 195.0,
+    "rocker_rear_arm_mm": 201.8,
+    "rocker_front_arm_mm": 217.0,
+    "rocker_angle_deg": 171.7,
+    "outer_strut_height_mm": 242.1,
+    "outer_strut_angle_deg": -11.2,
+    "middle_strut_height_mm": 211.6,
+    "middle_strut_angle_deg": 2.6,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 137.8125,
+   "values": {
+    "step_up": 37.5,
+    "step_down": 37.5,
+    "ditch": 140.625,
+    "bump_120": 18.75,
+    "bump_250": 18.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 403.7,
+    "bogie_front_arm_mm": 404.5,
+    "bogie_angle_deg": 155.3,
+    "rocker_rear_arm_mm": 428.5,
+    "rocker_front_arm_mm": 247.6,
+    "rocker_angle_deg": 163.0,
+    "outer_strut_height_mm": 292.8,
+    "outer_strut_angle_deg": -22.7,
+    "middle_strut_height_mm": 285.0,
+    "middle_strut_angle_deg": 17.4,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 137.8125,
+   "values": {
+    "step_up": 37.5,
+    "step_down": 37.5,
+    "ditch": 140.625,
+    "bump_120": 18.75,
+    "bump_250": 18.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 271.5,
+    "bogie_front_arm_mm": 230.6,
+    "bogie_angle_deg": 208.6,
+    "rocker_rear_arm_mm": 252.4,
+    "rocker_front_arm_mm": 302.6,
+    "rocker_angle_deg": 135.5,
+    "outer_strut_height_mm": 223.0,
+    "outer_strut_angle_deg": -19.2,
+    "middle_strut_height_mm": 170.6,
+    "middle_strut_angle_deg": 5.9,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 113.4375,
+   "values": {
+    "step_up": 18.75,
+    "step_down": 18.75,
+    "ditch": 140.625,
+    "bump_120": 18.75,
+    "bump_250": 18.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 265.9,
+    "bogie_front_arm_mm": 280.8,
+    "bogie_angle_deg": 124.2,
+    "rocker_rear_arm_mm": 351.7,
+    "rocker_front_arm_mm": 231.2,
+    "rocker_angle_deg": 217.2,
+    "outer_strut_height_mm": 273.6,
+    "outer_strut_angle_deg": -14.1,
+    "middle_strut_height_mm": 287.0,
+    "middle_strut_angle_deg": 6.2,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 105.625,
+   "values": {
+    "step_up": 18.75,
+    "step_down": 18.75,
+    "ditch": 125.0,
+    "bump_120": 18.75,
+    "bump_250": 18.75
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 212.1,
+    "bogie_front_arm_mm": 132.6,
+    "bogie_angle_deg": 158.6,
+    "rocker_rear_arm_mm": 157.9,
+    "rocker_front_arm_mm": 227.5,
+    "rocker_angle_deg": 110.7,
+    "outer_strut_height_mm": 224.6,
+    "outer_strut_angle_deg": -9.1,
+    "middle_strut_height_mm": 183.0,
+    "middle_strut_angle_deg": 22.5,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 79.0625,
+   "values": {
+    "step_up": 18.75,
+    "step_down": 18.75,
+    "ditch": 109.375,
+    "bump_120": 0.0,
+    "bump_250": 0.0
+   }
+  },
+  {
+   "design": {
+    "bogie_rear_arm_mm": 186.4,
+    "bogie_front_arm_mm": 308.3,
+    "bogie_angle_deg": 130.0,
+    "rocker_rear_arm_mm": 407.8,
+    "rocker_front_arm_mm": 220.9,
+    "rocker_angle_deg": 154.8,
+    "outer_strut_height_mm": 288.8,
+    "outer_strut_angle_deg": -7.1,
+    "middle_strut_height_mm": 212.7,
+    "middle_strut_angle_deg": -23.2,
+    "com_x_mm": 0.0,
+    "com_z_mm": 130.0,
+    "com_y_mm": 0.0,
+    "rocker_limit_deg": 60.0,
+    "bogie_limit_deg": 75.0
+   },
+   "score": 46.875,
+   "values": {
+    "step_up": 0.0,
+    "step_down": 0.0,
+    "ditch": 93.75,
+    "bump_120": 0.0,
+    "bump_250": 0.0
+   }
+  }
+ ]
+}

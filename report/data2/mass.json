@@ -1,0 +1,1994 @@
+{
+ "designs": {
+  "variant3": {
+   "bogie_rear_arm_mm": 238.0,
+   "bogie_front_arm_mm": 270.8,
+   "bogie_angle_deg": 202.8,
+   "rocker_rear_arm_mm": 248.0,
+   "rocker_front_arm_mm": 356.3,
+   "rocker_angle_deg": 192.4,
+   "outer_strut_height_mm": 250.0,
+   "outer_strut_angle_deg": 18.0,
+   "middle_strut_height_mm": 150.0,
+   "middle_strut_angle_deg": 18.5,
+   "com_x_mm": 0.0,
+   "com_z_mm": 130.0,
+   "com_y_mm": 0.0,
+   "rocker_limit_deg": 60.0,
+   "bogie_limit_deg": 75.0
+  },
+  "run_hand_s2": {
+   "bogie_rear_arm_mm": 120.6,
+   "bogie_front_arm_mm": 267.2,
+   "bogie_angle_deg": 239.5,
+   "rocker_rear_arm_mm": 364.2,
+   "rocker_front_arm_mm": 321.5,
+   "rocker_angle_deg": 174.1,
+   "outer_strut_height_mm": 250.0,
+   "outer_strut_angle_deg": 23.7,
+   "middle_strut_height_mm": 150.0,
+   "middle_strut_angle_deg": 4.1,
+   "com_x_mm": 0.0,
+   "com_z_mm": 130.0,
+   "com_y_mm": 0.0,
+   "rocker_limit_deg": 60.0,
+   "bogie_limit_deg": 75.0
+  },
+  "run_random1_s1": {
+   "bogie_rear_arm_mm": 215.9,
+   "bogie_front_arm_mm": 283.1,
+   "bogie_angle_deg": 220.6,
+   "rocker_rear_arm_mm": 435.4,
+   "rocker_front_arm_mm": 348.0,
+   "rocker_angle_deg": 176.7,
+   "outer_strut_height_mm": 250.0,
+   "outer_strut_angle_deg": -3.2,
+   "middle_strut_height_mm": 150.0,
+   "middle_strut_angle_deg": 11.1,
+   "com_x_mm": 0.0,
+   "com_z_mm": 130.0,
+   "com_y_mm": 0.0,
+   "rocker_limit_deg": 60.0,
+   "bogie_limit_deg": 75.0
+  },
+  "run_w_equal": {
+   "bogie_rear_arm_mm": 100.8,
+   "bogie_front_arm_mm": 267.4,
+   "bogie_angle_deg": 178.1,
+   "rocker_rear_arm_mm": 394.5,
+   "rocker_front_arm_mm": 200.0,
+   "rocker_angle_deg": 151.6,
+   "outer_strut_height_mm": 250.0,
+   "outer_strut_angle_deg": 19.5,
+   "middle_strut_height_mm": 150.0,
+   "middle_strut_angle_deg": -5.6,
+   "com_x_mm": 0.0,
+   "com_z_mm": 130.0,
+   "com_y_mm": 0.0,
+   "rocker_limit_deg": 60.0,
+   "bogie_limit_deg": 75.0
+  }
+ },
+ "rows": [
+  {
+   "design": "variant3",
+   "mass_kg": 5.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 557.8125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), переднее (правый), среднее (правый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 5.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 514.0625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 5.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 552.34375,
+   "reason": "пробуксовка, не хватает сцепления: заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 5.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 519.53125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 5.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 557.8125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 5.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 519.53125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 10.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 546.875,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 10.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 508.59375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый), среднее (правый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 10.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 546.875,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 10.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 514.0625,
+   "reason": "застревание"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 10.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 552.34375,
+   "reason": "застревание"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 10.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 514.0625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 15.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 541.40625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 15.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 508.59375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 15.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 541.40625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 15.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 508.59375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 15.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 541.40625,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 15.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 508.59375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 20.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 535.9375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 20.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 503.125,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 20.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 541.40625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 20.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 503.125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 20.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 535.9375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 20.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 503.125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 25.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 535.9375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 25.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 497.65625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 25.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 535.9375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 25.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 503.125,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 25.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 535.9375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 25.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 503.125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 30.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 530.46875,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 30.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 497.65625,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 30.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 535.9375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 30.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 497.65625,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 30.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 535.9375,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 30.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 503.125,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 40.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 40.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 492.1875,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 40.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 40.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 497.65625,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 40.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 140.7373046875,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 40.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 497.65625,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 50.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 50.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 492.1875,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 50.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 50.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 492.1875,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 50.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 50.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 497.65625,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 60.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 103.90625,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 60.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 486.71875,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), среднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 60.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 109.375,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 60.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 486.71875,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 60.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 109.375,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 60.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 486.71875,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 80.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 87.5,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 80.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 475.78125,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 80.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 87.5,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 80.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 475.78125,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 80.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 87.5,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "variant3",
+   "mass_kg": 80.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 475.78125,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 5.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 448.4375,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 5.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 5.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 448.4375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 5.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 5.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 448.4375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 5.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 10.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 442.96875,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 10.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 10.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 442.96875,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 10.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 10.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 442.96875,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 10.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 15.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 15.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 15.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 437.5,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 15.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 15.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 437.5,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 15.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 20.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 20.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 20.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 20.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 20.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 20.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 25.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 426.5625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 25.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 25.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 426.5625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 25.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 25.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 25.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 30.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 426.5625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 30.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 30.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 125.78125,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 30.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 30.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 30.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 40.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 40.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 40.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 40.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 40.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 40.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 50.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 103.90625,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 50.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 50.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 103.90625,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 50.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 50.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 103.90625,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 50.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 60.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 60.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 60.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 60.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 60.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 60.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 80.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 71.09375,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 80.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 92.96875,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 80.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 71.09375,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 80.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 98.4375,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 80.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 71.09375,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_hand_s2",
+   "mass_kg": 80.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 103.90625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 5.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 442.96875,
+   "reason": "задевает препятствие: труба rocker к bogie (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 5.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (правый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 5.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 448.4375,
+   "reason": "задевает препятствие: труба rocker к bogie (правый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 5.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 5.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 448.4375,
+   "reason": "задевает препятствие: труба rocker к bogie (правый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 5.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 10.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 399.21875,
+   "reason": "пробуксовка, не хватает сцепления: заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 10.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 10.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 415.625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (правый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 10.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 10.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 415.625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (правый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 10.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 15.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 15.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 15.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 125.361328125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый), заднее (правый); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 15.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 15.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 295.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 15.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 20.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 20.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 20.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 20.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 20.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 20.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 25.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 136.2841796875,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 25.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 25.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 355.46875,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 25.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 25.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 330.22705078125,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (правый борт); результат неустойчив: ниже найденной границы встретился непроходимый вариант"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 25.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 30.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 278.90625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (правый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 30.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 30.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 278.90625,
+   "reason": "задевает препятствие: труба bogie к заднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 30.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 432.03125,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 30.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 98.4375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 30.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 426.5625,
+   "reason": "задевает препятствие: труба rocker к переднему колесу (левый борт)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 40.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 40.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 40.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 40.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 125.78125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), переднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 40.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 98.4375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 40.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 131.25,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), среднее (левый), среднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 50.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 87.5,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 50.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 109.375,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 50.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 98.4375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 50.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), заднее (левый), среднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 50.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 50.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 114.84375,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 60.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 76.5625,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 60.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 92.96875,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 60.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 76.5625,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 60.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 98.4375,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 60.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 76.5625,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 60.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 98.4375,
+   "reason": "не хватает момента колёс: переднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 80.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 54.6875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 80.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 71.09375,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 80.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 54.6875,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 80.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 76.5625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 80.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 60.15625,
+   "reason": "не хватает момента колёс: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_random1_s1",
+   "mass_kg": 80.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 76.5625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 5.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 114.84375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 5.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), среднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 5.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 103.90625,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 5.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 421.09375,
+   "reason": "пробуксовка, не хватает сцепления: среднее (левый), переднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 5.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 120.3125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 5.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 426.5625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 10.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 98.4375,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 10.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 410.15625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 10.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 98.4375,
+   "reason": "застревание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 10.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 410.15625,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), переднее (правый), среднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 10.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 98.4375,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 10.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 415.625,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 15.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 15.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 404.6875,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 15.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 15.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 404.6875,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 15.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 92.96875,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 15.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 404.6875,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 20.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 87.5,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 20.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 393.75,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 20.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 87.5,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 20.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 399.21875,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 20.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 87.5,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), переднее (правый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 20.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 399.21875,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 25.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 82.03125,
+   "reason": "пробуксовка, не хватает сцепления: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 25.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 388.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 25.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 82.03125,
+   "reason": "пробуксовка, не хватает сцепления: переднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 25.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 393.75,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 25.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 82.03125,
+   "reason": "не хватает момента колёс: заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 25.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 393.75,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 30.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 82.03125,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 30.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 382.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 30.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 82.03125,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 30.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 388.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 30.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 82.03125,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 30.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 388.28125,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 40.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 76.5625,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 40.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 377.34375,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 40.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 76.5625,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 40.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 382.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 40.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 71.09375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 40.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 382.8125,
+   "reason": "опрокидывание"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 50.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 71.09375,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 50.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 120.3125,
+   "reason": "не хватает момента колёс: среднее (левый), среднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 50.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 65.625,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 50.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 120.3125,
+   "reason": "не хватает момента колёс: среднее (левый), среднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 50.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 65.625,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 50.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 125.78125,
+   "reason": "не хватает момента колёс: среднее (левый), среднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 60.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 60.15625,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 60.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 98.4375,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 60.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 60.15625,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 60.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 103.90625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 60.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 60.15625,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 60.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 109.375,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 80.0,
+   "speed": 0.12,
+   "direction": 1,
+   "value_mm": 43.75,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 80.0,
+   "speed": 0.12,
+   "direction": -1,
+   "value_mm": 76.5625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 80.0,
+   "speed": 0.15,
+   "direction": 1,
+   "value_mm": 43.75,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 80.0,
+   "speed": 0.15,
+   "direction": -1,
+   "value_mm": 76.5625,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 80.0,
+   "speed": 0.18,
+   "direction": 1,
+   "value_mm": 43.75,
+   "reason": "не хватает момента колёс: заднее (левый), заднее (правый)"
+  },
+  {
+   "design": "run_w_equal",
+   "mass_kg": 80.0,
+   "speed": 0.18,
+   "direction": -1,
+   "value_mm": 82.03125,
+   "reason": "не хватает момента колёс: переднее (левый), среднее (левый), переднее (правый), среднее (правый)"
+  }
+ ]
+}
