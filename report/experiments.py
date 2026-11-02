@@ -8,8 +8,14 @@
     lhs      — латинский гиперкуб по 10 параметрам, грубая оценка, отбор стартов;
     starts   — CMA-ES из трёх лучших точек ЛГК;
     final    — дообучение лучшего результата из его же точки → итоговая геометрия;
-    weights  — 4 набора весов × 3 seed из лучшей точки ЛГК;
-    analysis — развёртки для итоговой геометрии: момент, радиус, масса, углы, все высоты.
+    weights  — 4 набора весов × 3 seed из лучшей точки ЛГК («weights:1,2» — только эти seed);
+    analysis — развёртки для итоговой геометрии: момент, радиус, масса, углы, все высоты;
+    weights_heights — все высоты для геометрий из опыта с весами (когда готовы все запуски).
+
+Две машины параллельно:
+    ПК:      experiments.py mass lhs  → git push → experiments.py starts final weights:3 analysis
+    ноутбук: git pull → experiments.py weights:1,2
+    в конце, когда обе части запушены: experiments.py weights_heights
 
 Результаты — report/data2/*.json; прерванный расчёт можно перезапустить с того же места.
 """
@@ -245,9 +251,9 @@ def stage_starts() -> None:
 
 
 def best_run() -> tuple[str, dict]:
-    runs = [(n, load(n)) for n in [f"run_{label}_s1" for label in STARTS] + weight_runs()]
-    runs = [(n, d) for n, d in runs if d and d["weights"] == "base"]
-    return max(runs, key=lambda item: item[1]["best_score"])
+    """Лучший из запусков из точек ЛГК (от весов не зависит — их считают на другой машине)."""
+    runs = [(n, load(n)) for n in (f"run_{label}_s1" for label in STARTS)]
+    return max(((n, d) for n, d in runs if d), key=lambda item: item[1]["best_score"])
 
 
 def stage_final() -> None:
@@ -256,20 +262,24 @@ def stage_final() -> None:
     cmaes("run_final", Design(**data["best"]), 2)
 
 
+SEEDS = (1, 2, 3)
+
+
+def weight_run(weights: str, seed: int) -> str:
+    # Базовые веса с seed 1 из лучшей точки ЛГК — это и есть запуск run_lhs1_s1.
+    return "run_lhs1_s1" if weights == "base" and seed == 1 else f"run_w_{weights}_s{seed}"
+
+
 def weight_runs() -> list[str]:
-    return [f"run_w_{weights}_s{seed}" for weights in WEIGHTS for seed in (1, 2, 3)]
+    return [weight_run(weights, seed) for weights in WEIGHTS for seed in SEEDS]
 
 
-def stage_weights() -> None:
+def stage_weights(seeds: tuple[int, ...] = SEEDS) -> None:
     start = lhs_start(0)
     for weights in WEIGHTS:
-        for seed in (1, 2, 3):
-            if weights == "base" and seed == 1 and load("run_lhs1_s1"):
-                # Совпадает с запуском из лучшей точки ЛГК.
-                if not load("run_w_base_s1"):
-                    save("run_w_base_s1", load("run_lhs1_s1"))
-                continue
-            cmaes(f"run_w_{weights}_s{seed}", start, seed, weights)
+        for seed in seeds:
+            if weight_run(weights, seed) != "run_lhs1_s1":
+                cmaes(weight_run(weights, seed), start, seed, weights)
 
 
 # ---------------------------------------------------------------------------
@@ -277,6 +287,7 @@ def stage_weights() -> None:
 # ---------------------------------------------------------------------------
 
 def final_design() -> Design:
+    """Лучшее из дообучения и запусков из точек ЛГК."""
     candidates = [("run_final", load("run_final")), best_run()]
     name, data = max(((n, d) for n, d in candidates if d), key=lambda item: item[1]["best_score"])
     return Design(**data["best"])
@@ -324,32 +335,46 @@ def stage_analysis() -> None:
         log(f"analysis: углы, {len(tasks)} поисков")
         save("an_angles", {"design": asdict(final), "bogie": bogie, "rocker": rocker, "invalid": invalid,
                            "rows": pool_map(_limit, tasks)})
-    if not load("an_heights"):
-        designs = {"final": final}
-        for name in weight_runs():
-            data = load(name)
-            if data:
-                designs[name] = Design(**data["best"])
-        kinds = {"step_up": (600.0, 120.0), "step_down": (600.0, 120.0), "ditch": (400.0, 120.0),
-                 "bump_120": (300.0, 120.0), "bump_250": (300.0, 250.0)}
-        tasks = []
-        for label, design in designs.items():
-            for key, (upper, width) in kinds.items():
-                kind = "bump" if key.startswith("bump") else key
-                for size in np.arange(10.0, upper + 1.0, 10.0):
-                    for direction in (1, -1):
-                        tasks.append(({"design": label, "kind": key, "size_mm": float(size), "direction": direction},
-                                      design, plat, Obstacle(kind, float(size), direction, False, 500.0, width)))
-        log(f"analysis: все высоты, {len(tasks)} прогонов")
-        save("an_heights", {"designs": {k: asdict(v) for k, v in designs.items()},
-                            "rows": pool_map(_single, tasks)})
+    heights("an_heights", {"final": final})
     log("analysis: готово")
 
 
+def stage_weights_heights() -> None:
+    """Все высоты для геометрий из опыта с весами — когда готовы запуски с обеих машин."""
+    missing = [name for name in weight_runs() if not load(name)]
+    if missing:
+        raise SystemExit(f"Ещё не готовы: {', '.join(missing)}")
+    heights("an_heights_weights", {name: Design(**load(name)["best"]) for name in weight_runs()})
+
+
+def heights(name: str, designs: dict[str, Design]) -> None:
+    """Каждый размер препятствий с шагом 10 мм: есть ли непроходимые размеры ниже предела (мель)."""
+    if load(name):
+        return log(f"{name}: уже есть")
+    plat = platform()
+    kinds = {"step_up": (600.0, 120.0), "step_down": (600.0, 120.0), "ditch": (400.0, 120.0),
+             "bump_120": (300.0, 120.0), "bump_250": (300.0, 250.0)}
+    tasks = []
+    for label, design in designs.items():
+        for key, (upper, width) in kinds.items():
+            kind = "bump" if key.startswith("bump") else key
+            for size in np.arange(10.0, upper + 1.0, 10.0):
+                for direction in (1, -1):
+                    tasks.append(({"design": label, "kind": key, "size_mm": float(size), "direction": direction},
+                                  design, plat, Obstacle(kind, float(size), direction, False, 500.0, width)))
+    log(f"{name}: {len(tasks)} прогонов")
+    save(name, {"designs": {k: asdict(v) for k, v in designs.items()}, "rows": pool_map(_single, tasks)})
+
+
 STAGES = {"mass": stage_mass, "lhs": stage_lhs, "starts": stage_starts, "final": stage_final,
-          "weights": stage_weights, "analysis": stage_analysis}
+          "weights": stage_weights, "analysis": stage_analysis, "weights_heights": stage_weights_heights}
 
 if __name__ == "__main__":
+    # «weights:1,2» — только эти seed (чтобы поделить запуски между машинами).
     names = list(STAGES) if sys.argv[1:] == ["all"] else sys.argv[1:]
     for stage in names:
-        STAGES[stage]()
+        name, _, seeds = stage.partition(":")
+        if seeds:
+            STAGES[name](tuple(int(seed) for seed in seeds.split(",")))
+        else:
+            STAGES[name]()
