@@ -18,7 +18,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.patches import Arc, Circle  # noqa: E402
 
-from compute import OPTIMIZED, PLATFORM, start_design  # noqa: E402
+from compute import PLATFORM, start_design  # noqa: E402
 from model import Design, Platform, neutral_points  # noqa: E402
 from plots import FIG, MUTED, TEXT  # noqa: E402
 
@@ -88,12 +88,11 @@ def draw_side(ax, design: Design, platform: Platform, annotate: bool = False, lw
                          color=MUTED, linewidth=1.0, zorder=5))
         ax.annotate(text, (center[0], center[1] + 0.8 * height), xytext=(10 if tilt < 90 else -10, 0),
                     textcoords="offset points", ha="center", fontsize=10, color=TEXT)
-    for name, text, offset, align in (
-            ("front", f"$h_1$ = {design.outer_strut_height_mm:.0f} мм\n(готовая вилка)", (-14, 18), "right"),
-            ("middle", f"$h_2$ = {design.middle_strut_height_mm:.0f} мм", (12, 18), "left")):
+    for name, text, offset, align in (("front", "$h_1$", (-12, 0), "right"), ("rear", "$h_1$", (12, 0), "left"),
+                                      ("middle", "$h_2$", (12, 0), "left")):
         center, top = wheels[name], tops[name]
         ax.annotate(text, ((center[0] + top[0]) / 2.0, (center[1] + top[1]) / 2.0), xytext=offset,
-                    textcoords="offset points", ha=align, va="center", fontsize=8, color=MUTED)
+                    textcoords="offset points", ha=align, va="center", fontsize=10, color=TEXT)
     ax.annotate(f"R = {radius:.0f} мм", (wheels["rear"][0], 0.0), xytext=(0, -12), textcoords="offset points",
                 ha="center", fontsize=8, color=MUTED)
 
@@ -118,7 +117,7 @@ def shape_inset(ax, angle_deg: float, title: str, color: str) -> None:
 def params_figure() -> None:
     fig = plt.figure(figsize=(9.6, 3.6))
     main_ax = fig.add_axes([0.0, 0.0, 0.74, 1.0])
-    # Иллюстрация: начальная геометрия с наклонёнными стойками — все звенья различимы.
+    # Иллюстрация (не старт поиска): наглядная Λ-геометрия, стойки наклонены, чтобы углы были различимы.
     draw_side(main_ax, replace(start_design(), outer_strut_angle_deg=10.0, middle_strut_angle_deg=10.0),
               PLATFORM, annotate=True)
     lambda_ax = fig.add_axes([0.76, 0.52, 0.22, 0.42])
@@ -130,7 +129,8 @@ def params_figure() -> None:
 
 
 def compare_figure(designs: list[tuple[str, Design]], path: Path) -> None:
-    fig, axes = plt.subplots(1, len(designs), figsize=(3.3 * len(designs), 2.2))
+    fig, axes = plt.subplots(1, len(designs), figsize=(3.3 * len(designs), 2.2), squeeze=False)
+    axes = axes[0]
     lows, highs = [], []
     for ax, (title, design) in zip(axes, designs):
         draw_side(ax, design, PLATFORM, lw=2.4)
@@ -145,31 +145,44 @@ def compare_figure(designs: list[tuple[str, Design]], path: Path) -> None:
     plt.close(fig)
 
 
-def load_best(name: str) -> tuple[Design, dict] | None:
-    path = ROOT / "report" / "data" / f"{name}.json"
-    if not path.exists():
-        return None
-    data = json.loads(path.read_text(encoding="utf-8"))
-    return Design(**data["best"]), data
+DATA = ROOT / "report" / "data2"
+
+
+def load(name: str) -> dict | None:
+    path = DATA / f"{name}.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+
+
+def lhs_best() -> Design:
+    return Design(**load("lhs")["rows"][0]["design"])
+
+
+def final_run() -> dict | None:
+    """Итоговая геометрия — как в experiments.final_design: лучшее из дообучения и запусков из точек ЛГК."""
+    runs = [load(name) for name in ("run_final", "run_lhs1_s1", "run_lhs2_s1", "run_lhs3_s1")]
+    runs = [data for data in runs if data]
+    return max(runs, key=lambda data: data["best_score"]) if runs else None
 
 
 def designs_figure() -> None:
-    designs = [("Начальная (ручная)", start_design())]
-    found = load_best("run_hand_s1") or load_best("cmaes_limits")
+    lhs = load("lhs")
+    designs = [(f"Лучшая точка ЛГК (J = {lhs['rows'][0]['score']:.0f})", lhs_best())]
+    found = final_run()
     if found:
-        designs.append((f"CMA-ES, 20 поколений (J = {found[1]['best_score']:.0f})", found[0]))
-    designs.append(("Вариант (3)", OPTIMIZED))
+        designs.append((f"Итоговая геометрия (J = {found['best_score']:.0f})", Design(**found["best"])))
     compare_figure(designs, FIG / "fig_designs.png")
 
 
 def weights_figure() -> None:
-    titles = {"run_hand_s1": "базовые веса", "run_w_step": "упор на ступень", "run_w_bumps": "упор на кочки",
-              "run_w_equal": "равные веса"}
+    """Лучший из трёх seed для каждого набора весов."""
+    titles = {"base": "базовые веса", "step": "упор на ступень", "bumps": "упор на кочки", "equal": "равные веса"}
     designs = []
-    for name, title in titles.items():
-        found = load_best(name)
-        if found:
-            designs.append((title, found[0]))
+    for weights, title in titles.items():
+        runs = [load("run_lhs1_s1" if weights == "base" and seed == 1 else f"run_w_{weights}_s{seed}")
+                for seed in (1, 2, 3)]
+        runs = [data for data in runs if data]
+        if runs:
+            designs.append((title, Design(**max(runs, key=lambda data: data["best_score"])["best"])))
     if len(designs) > 1:
         compare_figure(designs, FIG / "fig_weights_designs.png")
 

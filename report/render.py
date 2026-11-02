@@ -16,10 +16,20 @@ import mujoco  # noqa: E402
 import numpy as np  # noqa: E402
 from PIL import Image  # noqa: E402
 
-from compute import OPTIMIZED, PLATFORM  # noqa: E402
+from dataclasses import replace  # noqa: E402
+
+from compute import PLATFORM as BASE_PLATFORM  # noqa: E402
+from model import Design  # noqa: E402
+from schemes import final_run, lhs_best, load  # noqa: E402
 from simulate import CHECK_STEPS, RAMP_S, SETTLE_S, Obstacle, _Ids, _Motor, make_model, run  # noqa: E402
 
 FIG = Path(__file__).resolve().parent / "fig"
+PLATFORM = replace(BASE_PLATFORM, body_mass_kg=float(load("mass_choice")["body_mass_kg"]))
+# Итоговая геометрия (пока её нет — лучшая точка ЛГК) и её наибольшая ступень, округлённая вниз до 10 мм.
+_FINAL = final_run()
+OPTIMIZED = Design(**_FINAL["best"]) if _FINAL else lhs_best()
+STEP_MM = 10.0 * int(_FINAL["best_values"]["step_up"] // 10) if _FINAL else 300.0
+CLIMB_GIF = FIG / "step_final.gif"
 
 
 def _rgba(hex_color: str, alpha: float = 1.0) -> list[float]:
@@ -153,7 +163,7 @@ def gif(obstacle: Obstacle, path: Path, fps: int = 20, width: int = 720, height:
     print(f"{path.name}: {len(frames)} кадров")
 
 
-def climb_frames(path: Path = FIG / "step_500.gif", fractions=(0.12, 0.32, 0.5, 0.68, 0.98)) -> None:
+def climb_frames(path: Path = CLIMB_GIF, fractions=(0.12, 0.32, 0.5, 0.68, 0.98)) -> None:
     """Раскадровка GIF для печатного отчёта."""
     import matplotlib
 
@@ -180,5 +190,5 @@ if __name__ == "__main__":
         if name == "obstacles":
             obstacles_figure()
         elif name == "gif":
-            gif(Obstacle("step_up", 500.0, 1), FIG / "step_500.gif")
+            gif(Obstacle("step_up", STEP_MM, 1), CLIMB_GIF)
             climb_frames()
