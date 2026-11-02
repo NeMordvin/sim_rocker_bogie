@@ -56,6 +56,7 @@ KIND_TITLES = {"step_up": "ступень", "step_down": "съезд", "ditch": 
 REFERENCE_LABELS = {"variant3": "геометрия A", "run_hand_s2": "геометрия B", "run_random1_s1": "геометрия C",
                     "run_w_equal": "геометрия D"}
 WHEELS_KG = 6 * 4.0
+BUMP_CEILING_MM = 300.0  # UPPER["bump_250"] в compute.py
 
 
 def load(name: str) -> dict | None:
@@ -176,10 +177,14 @@ def plot_weights() -> None:
             ax.scatter([v["step_up"] for v in values], [v["bump_250"] for v in values], s=60, color=SERIES[index],
                        marker=MARKERS[index], edgecolors="white", linewidths=1.5, zorder=3,
                        label=WEIGHT_LABELS[weights])
+    # Кочка ищется не выше 300 мм: точки на этой линии упёрлись в границу поиска, а не в предел.
+    ax.axhline(BUMP_CEILING_MM, color=MUTED, linewidth=1.0, linestyle="--")
+    ax.annotate("граница поиска", (0, BUMP_CEILING_MM), xytext=(4, -10), textcoords="offset points",
+                fontsize=8, color=MUTED)
     ax.set_xlabel("Наибольшая ступень, мм")
     ax.set_ylabel("Наибольшая кочка 250 мм, мм")
     ax.set_xlim(left=0)
-    ax.set_ylim(bottom=0)
+    ax.set_ylim(0, BUMP_CEILING_MM * 1.08)
     ax.legend(title="Веса (3 seed каждый)", loc="center left", bbox_to_anchor=(1.01, 0.5), fontsize=8)
     save(fig, "fig_weights")
 
