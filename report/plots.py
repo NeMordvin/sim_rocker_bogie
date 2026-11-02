@@ -277,19 +277,18 @@ def plot_geometry() -> None:
 
 
 def plot_heights() -> None:
-    """Полосы «прошёл / не прошёл» по всем размерам препятствий с шагом 10 мм."""
-    data = load("an_heights")
-    if not data:
+    """Полосы «прошёл / не прошёл» по всем размерам препятствий с шагом 10 мм для итоговой геометрии."""
+    from experiments import final_name
+
+    name = final_name()
+    # Итоговая геометрия — один из запусков с весами, её прогоны уже есть в an_heights_weights.
+    data = load("an_heights_weights")
+    rows = [r for r in data["rows"] if r["design"] == name] if data else []
+    if not rows and load("an_heights"):
+        rows = [{**r, "design": name} for r in load("an_heights")["rows"]]
+    if not rows:
         return
-    designs = {"final": "Итоговая геометрия"}
-    rows = list(data["rows"])
-    extra = load("an_heights_weights")
-    if extra:
-        # Запуск с «мелью» (если есть) — справа: на нём видно, зачем нужен сплошной предел.
-        holes = [r["design"] for r in extra["rows"] if not r["success"]]
-        if holes:
-            designs[holes[0]] = holes[0]
-        rows += extra["rows"]
+    designs = {name: "Итоговая геометрия"}
     passed = {(r["design"], r["kind"], r["direction"], r["size_mm"]): r["success"] for r in rows}
     fig, axes = plt.subplots(1, len(designs), figsize=(3.6 * len(designs) + 1.2, 3.4), sharey=True, squeeze=False)
     for ax, (design, title) in zip(axes[0], designs.items()):
