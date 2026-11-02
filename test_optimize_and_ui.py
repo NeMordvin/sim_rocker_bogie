@@ -1,10 +1,12 @@
 import unittest
+from concurrent.futures import ThreadPoolExecutor
+from unittest.mock import patch
 
 from streamlit.testing.v1 import AppTest
 
 from model import Design, Platform
-from optimize import (FAILED_TORQUE_FACTOR, INVALID_COST, Criterion, Goal, criterion_label, evaluate, jobs_for,
-                      optimize, summarize)
+from optimize import (FAILED_TORQUE_FACTOR, INVALID_COST, Criterion, Goal, check_continuous, criterion_label,
+                      evaluate, jobs_for, optimize, summarize)
 from simulate import LimitResult, Obstacle, TorqueResult
 
 QUICK_GOAL = Goal(criteria=(Criterion("step_up", 1.0, 80.0),), tolerance_mm=20.0)
@@ -26,6 +28,21 @@ class OptimizeTests(unittest.TestCase):
         self.assertEqual(evaluation.values, {"bump_120": 70.0, "bump_250": 60.0})
         self.assertAlmostEqual(evaluation.score, 70.0 + 0.5 * 60.0)
         self.assertEqual(criterion_label("bump_250"), "кочка 250 мм")
+
+    def test_continuous_check_cuts_limit_below_trap(self):
+        goal = Goal(criteria=(Criterion("bump", 1.0, 300.0, 0.0, 250.0),))
+        results = [LimitResult(Obstacle("bump", value, direction, bump_width_mm=250.0), value, "", 300.0, 1)
+                   for direction, value in ((1, 280.0), (-1, 60.0))]
+        evaluation = summarize(Design(), goal, results)
+        # Мель: кочка 110 мм передним ходом не проходится, хотя бинарный поиск дал 280.
+        trap = lambda design, platform, obstacle: (  # noqa: E731
+            not (obstacle.direction == 1 and obstacle.size_mm == 110.0), "застревание")
+        with patch("optimize._passes", trap), ThreadPoolExecutor(max_workers=2) as pool:
+            checked = check_continuous(pool, evaluation, Platform(), goal, 10.0)
+        self.assertTrue(checked.continuous)
+        self.assertEqual(checked.values["bump_250"], 60.0)
+        self.assertEqual([r.value_mm for r in checked.results], [100.0, 60.0])
+        self.assertIn("110", checked.results[0].reason)
 
     def test_score_uses_worst_direction(self):
         evaluation = evaluate(Design(), Platform(), QUICK_GOAL)

@@ -62,9 +62,9 @@ SPECS = (
          "Rocker (главный рычаг)"),
     Spec("rocker_angle_deg", "Угол между плечами (под шарниром; <180 — Λ, >180 — V)", "°", 100, 280, True, True,
          "Rocker (главный рычаг)"),
-    Spec("outer_strut_height_mm", "Крайние колёса: высота стойки (ось → крепление)", "мм", 120, 400, False, True, "Стойки"),
+    Spec("outer_strut_height_mm", "Крайние колёса: высота стойки (ось → крепление)", "мм", 150, 300, True, True, "Стойки"),
     Spec("outer_strut_angle_deg", "Крайние колёса: наклон стойки (+ верх к центру)", "°", -25, 25, True, True, "Стойки"),
-    Spec("middle_strut_height_mm", "Среднее колесо: высота стойки", "мм", 120, 400, False, True, "Стойки"),
+    Spec("middle_strut_height_mm", "Среднее колесо: высота стойки", "мм", 150, 300, True, True, "Стойки"),
     Spec("middle_strut_angle_deg", "Среднее колесо: наклон стойки (+ верх вперёд)", "°", -25, 25, True, True, "Стойки"),
     Spec("com_x_mm", "Центр масс корпуса: X от главного шарнира", "мм", -200, 200, False, False, "Центр масс и шарниры"),
     Spec("com_z_mm", "Центр масс корпуса: Z над главным шарниром", "мм", -100, 400, False, False, "Центр масс и шарниры"),
@@ -547,8 +547,13 @@ def main() -> None:
                        "это лучший сигнал для поиска, чем предел в миллиметрах. Препятствие, не проходимое "
                        "и при наибольшем моменте (задевает, опрокидывается), считается как 2 × наибольший момент.")
         criteria = _criteria_inputs(mode, "opt", weights=True)
-        columns = st.columns(5)
+        columns = st.columns(6)
         opt_one_side = columns[0].checkbox("Учитывать «под одним бортом»", help="Вдвое дольше.")
+        continuous = columns[5].number_input(
+            "Сплошной предел, шаг мм", min_value=0, max_value=50, value=10, step=5,
+            help="Уточнённые лучшие варианты проверяются на всех размерах препятствий снизу вверх с этим шагом: "
+                 "геометрия, которая садится на мель на низком препятствии, получает предел ниже мели. "
+                 "0 — не проверять.")
         population = columns[1].number_input(
             "Вариантов в поколении", min_value=4, max_value=64, value=12, step=2,
             help=f"Для {len(free_ranges)} свободных параметров стандарт CMA-ES — "
@@ -574,7 +579,7 @@ def main() -> None:
                 bar.progress(done / total, text=text)
 
             result = optimize(design, platform, goal, free_ranges, int(population), int(generations), int(seed),
-                              int(refine), progress=report)
+                              int(refine), progress=report, continuous_mm=float(continuous))
             st.session_state["optimization"] = (design, platform, result)
         stored = st.session_state.get("optimization")
         if stored is not None:
@@ -625,6 +630,7 @@ def main() -> None:
                 st.dataframe(
                     [
                         {"Место": index, "Оценка": _score_text(item), "Уточнён": item.refined,
+                         "Сплошной предел": item.continuous,
                          **{criterion_label(k): _value_text(item, v) for k, v in item.values.items()},
                          **{_short_label(name): getattr(item.design, name) for name in free_ranges}}
                         for index, item in enumerate(ranked, start=1)

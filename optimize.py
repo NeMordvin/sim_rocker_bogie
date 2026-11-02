@@ -17,7 +17,11 @@
 момент) ищется от подсказки — значения у лучшего на данный момент варианта,
 это в 1,5–2 раза сокращает число прогонов. Все прогоны поколения (варианты ×
 препятствия) считаются параллельно. В конце несколько лучших вариантов
-пересчитываются с более мелким шагом поиска.
+пересчитываются с более мелким шагом поиска, а затем проверяются на «сплошной»
+предел: все размеры препятствия снизу вверх с шагом ``continuous_mm``. Бинарный
+поиск предполагает, что всё ниже найденной границы проходится; геометрия, которая
+садится на мель на низком препятствии и проходит высокое, его обманывает.
+Сплошной предел — последний размер перед первой неудачей.
 """
 
 from __future__ import annotations
@@ -32,7 +36,8 @@ import cma
 import numpy as np
 
 from model import Design, Platform, validate, violation_amount
-from simulate import KIND_LABELS, LimitResult, Obstacle, ObstacleKind, TorqueResult, find_limit, required_torque
+from simulate import (KIND_LABELS, LimitResult, Obstacle, ObstacleKind, TorqueResult, find_limit,
+                      required_torque, run)
 
 Mode = Literal["limits", "torque"]
 MODE_LABELS = {
@@ -115,6 +120,8 @@ class Evaluation:
     values: dict[str, float] = field(default_factory=dict)
     results: list[JobResult] = field(default_factory=list)
     refined: bool = False
+    # Пределы проверены на всех размерах снизу вверх (см. check_continuous).
+    continuous: bool = False
 
     @property
     def valid(self) -> bool:
@@ -274,15 +281,59 @@ class OptimizationResult:
     history: list[Generation] = field(default_factory=list)
 
     def ranked(self, count: int = 10) -> list[Evaluation]:
-        """Лучшие уникальные варианты; уточнённая оценка заменяет грубую."""
+        """Лучшие уникальные варианты; проверенная оценка заменяет уточнённую, уточнённая — грубую."""
         latest: dict[tuple, Evaluation] = {}
         for item in self.evaluations:
             if item.valid:
                 key = tuple(asdict(item.design).values())
-                if item.refined or key not in latest or not latest[key].refined:
+                if key not in latest or _rank(item) >= _rank(latest[key]):
                     latest[key] = item
-        ordered = sorted(latest.values(), key=lambda item: (not item.refined, item.cost))
+        ordered = sorted(latest.values(), key=lambda item: (-_rank(item), item.cost))
         return ordered[:count]
+
+
+def _rank(item: Evaluation) -> int:
+    return 2 if item.continuous else 1 if item.refined else 0
+
+
+def _passes(design: Design, platform: Platform, obstacle: Obstacle) -> tuple[bool, str]:
+    result = run(design, platform, obstacle, record=False)
+    return result.success, result.reason
+
+
+def check_continuous(
+    pool: ProcessPoolExecutor,
+    evaluation: Evaluation,
+    platform: Platform,
+    goal: Goal,
+    step_mm: float = 10.0,
+) -> Evaluation:
+    """Сплошные пределы: все размеры от step_mm до найденного предела; первая неудача обрезает предел."""
+    if goal.mode != "limits" or not evaluation.valid:
+        return evaluation
+    futures = {}
+    for slot, result in enumerate(evaluation.results):
+        size = step_mm
+        while size < result.value_mm - 1e-6:
+            obstacle = replace(result.obstacle, size_mm=size)
+            futures[pool.submit(_passes, evaluation.design, platform, obstacle)] = (slot, size)
+            size += step_mm
+    failures: dict[int, tuple[float, str]] = {}
+    for future in as_completed(futures):
+        slot, size = futures[future]
+        success, reason = future.result()
+        if not success and (slot not in failures or size < failures[slot][0]):
+            failures[slot] = (size, reason)
+    results = list(evaluation.results)
+    for slot, (size, reason) in failures.items():
+        old = results[slot]
+        value = size - step_mm
+        results[slot] = replace(old, obstacle=replace(old.obstacle, size_mm=value), value_mm=value,
+                                reason=f"сплошной предел: не проходит {size:.0f} мм ({reason})", unstable=True)
+    checked = summarize(evaluation.design, goal, results)
+    checked.refined = evaluation.refined
+    checked.continuous = True
+    return checked
 
 
 def default_population(free_count: int) -> int:
@@ -299,6 +350,7 @@ def optimize(
     seed: int = 1,
     refine: int = 3,
     progress: Callable[[int, int, Evaluation | None], None] | None = None,
+    continuous_mm: float = 10.0,
 ) -> OptimizationResult:
     """CMA-ES по свободным параметрам; base — первая точка (центр поиска)."""
     names = list(free)
@@ -360,6 +412,9 @@ def optimize(
             for item in refined:
                 item.refined = True
             evaluations.extend(refined)
+            if continuous_mm > 0.0:
+                evaluations.extend(check_continuous(pool, item, platform, fine_goal, continuous_mm)
+                                   for item in refined)
 
     result = OptimizationResult(None, evaluations, goal, history)
     ranked = result.ranked(1)
