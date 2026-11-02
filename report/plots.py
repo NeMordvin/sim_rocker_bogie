@@ -56,7 +56,8 @@ KIND_TITLES = {"step_up": "ступень", "step_down": "съезд", "ditch": 
 REFERENCE_LABELS = {"variant3": "геометрия A", "run_hand_s2": "геометрия B", "run_random1_s1": "геометрия C",
                     "run_w_equal": "геометрия D"}
 WHEELS_KG = 6 * 4.0
-BUMP_CEILING_MM = 300.0  # UPPER["bump_250"] в compute.py
+BUMP_CEILING_MM = 300.0
+WEIGHTS_BASE = {"step_up": 1.0, "step_down": 0.3, "ditch": 0.5, "bump_120": 0.5, "bump_250": 0.5}  # UPPER["bump_250"] в compute.py
 
 
 def load(name: str) -> dict | None:
@@ -140,22 +141,25 @@ def plot_search() -> None:
     ax.set_title(f"а) {len(scores)} допустимых точек ЛГК", fontsize=10, color=TEXT, loc="left")
     if runs:
         ax = axes[0][1]
-        offset = 0
         for data, label, index in runs:
-            history = data["history"]
-            gen = [offset + h["index"] for h in history]
-            best = [h["best_score"] for h in history]
-            ax.plot(gen, best, color=SERIES[index], linestyle=STYLES[index], label=f"{label}: {best[-1]:.0f}")
-            if label.startswith("повторный"):
-                ax.axvline(gen[0] - 0.5, color=GRID, linewidth=1.0)
-            else:
-                offset = max(offset, gen[-1])
+            # Поколение 0 — стартовая точка; в легенде — J после проверки сплошного предела.
+            gen = [0] + [h["index"] for h in data["history"]]
+            best = [data["evaluations"][0]["score"]] + [h["best_score"] for h in data["history"]]
+            ax.plot(gen, best, color=SERIES[index], linestyle=STYLES[index],
+                    label=f"{label}: {data['best_score']:.0f}")
+        final = load("run_w_equal_s3")
+        if final:
+            value = sum(WEIGHTS_BASE[k] * v for k, v in final["best_values"].items())
+            ax.axhline(value, color=TEXT, linewidth=1.0, linestyle=":")
+            ax.annotate(f"итоговая (равные веса, seed 3): {value:.0f}", (20, value), xytext=(0, 3),
+                        textcoords="offset points", ha="right", fontsize=8, color=TEXT)
         ax.axhline(median, color=MUTED, linewidth=1.0, linestyle="--")
         ax.annotate("медиана ЛГК", (0, median), xytext=(2, 3), textcoords="offset points", fontsize=8, color=MUTED)
-        ax.set_xlabel("Поколение CMA-ES")
+        ax.set_xlabel("Поколение CMA-ES (0 — старт)")
         ax.set_ylabel("Лучшая оценка J, мм")
         ax.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(integer=True))
         ax.set_title("б) мультистарт CMA-ES", fontsize=10, color=TEXT, loc="left")
+        ax.set_ylim(0, 980)
         ax.legend(loc="lower right", fontsize=8)
     fig.tight_layout()
     save(fig, "fig_search")
